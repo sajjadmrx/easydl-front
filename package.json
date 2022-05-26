@@ -17,6 +17,7 @@
     "react": "^18.1.0",
     "react-dom": "^18.1.0",
     "react-router-dom": "^5.2.0",
+    "react-router-loading": "^0.4.1",
     "react-scripts": "5.0.1",
     "react-toastify": "^9.0.1",
     "web-vitals": "^2.1.4"

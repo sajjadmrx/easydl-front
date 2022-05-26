@@ -9,7 +9,7 @@ export function SearchForm(props) {
     return (
         <form className="flex flex-col items-center" onSubmit={(e) => submitHandler(e, setSongs)}>
             <input type="text" placeholder="لینک موزیک اسپاتیفای یا رادیوجوان" className="input w-full max-w-xs mb-2" />
-            <button className="btn btn-wide">
+            <button className="btn btn-wide ">
                 📥    جستجو و دانلود
             </button>
             <ToastContainer theme='dark' />
@@ -19,6 +19,7 @@ export function SearchForm(props) {
 async function submitHandler(e, setSongs) {
     e.preventDefault();
     const value = e.target.querySelector('input').value;
+    const button = e.target.querySelector('button');
     if (!value || !isLink(value)) {
         toast.error('لطفا یک لینک معتبر وارد کنید', {
             position: "top-left",
@@ -50,15 +51,22 @@ async function submitHandler(e, setSongs) {
         })
         return;
     }
-    // const result = await axios.get('http://localhost:5000/search?q=' + value, {
-    //     headers: {
-    //         'Content-Type': 'application/json',
-    //         'Access-Control-Allow-Origin': '*',
-    //         'Access-Control-Allow-Methods': 'GET, POST, PATCH, PUT, DELETE, OPTIONS',
-    //         'Access-Control-Allow-Headers': 'Origin, Content-Type, X-Auth-Token'
-    //     },
-    // })
-    // setSongs(result.data);
+    button.classList.add('loading');
+    try {
+        const result = await axios.get('http://localhost:5000/search?q=' + value, {
+            headers: {
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': '*',
+                'Access-Control-Allow-Methods': 'GET, POST, PATCH, PUT, DELETE, OPTIONS',
+                'Access-Control-Allow-Headers': 'Origin, Content-Type, X-Auth-Token'
+            },
+        })
+        setSongs(result.data);
+    } catch (error) {
+
+    } finally {
+        button.classList.remove('loading');
+    }
 }
 
 function isLink(value) {

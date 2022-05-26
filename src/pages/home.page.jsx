@@ -1,16 +1,17 @@
 import React from "react";
 import { SearchForm } from "../components/search-form.component";
-import react, { useEffect, useState } from 'react'
+import react, { useEffect, useState, useContext } from 'react'
 import { SongsComponent } from "../components/songs.component";
 import { SongsContext } from "../contexts/songs.context";
 import { FooterComponent } from "../components/footer.component";
-
+import { LoadingContext } from "react-router-loading";
 
 export function HomePage() {
+    const loadingContext = useContext(LoadingContext);
     const [songs, setSongs] = useState([]);
     useEffect(() => {
         // scrol to bottom
-
+        loadingContext.done()
         window.scrollTo(0, 350);
     }, [songs]);
     return (
