@@ -2,7 +2,6 @@ import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 
 import 'react-toastify/dist/ReactToastify.css';
-import { SongsContext } from '../contexts/songs.context';
 
 export function SearchForm(props) {
     const setSongs = props.setSongs;

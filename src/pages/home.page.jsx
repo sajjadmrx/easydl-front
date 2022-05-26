@@ -11,6 +11,7 @@ export function HomePage() {
     const [songs, setSongs] = useState([]);
     useEffect(() => {
         // scrol to bottom
+        document.title = 'ایزی دانلود'
         loadingContext.done()
         window.scrollTo(0, 350);
     }, [songs]);
