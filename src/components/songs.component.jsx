@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, } from "react";
 import { WarningAlertComponent } from "./alerts.component";
 import { MusicComponent } from "./music.component";
 import { ApiService } from "../service/api.service";
@@ -16,7 +16,8 @@ export function SongsComponent(props) {
             {songs.length > 0 ? <WarningAlertComponent className='mb-2' text="لطفا جهت حمایت از آرتیس و پلتفرم یک بار در پلتفرم مورد نظر گوش بدید" /> : ""}
             <div className="grid grid-flow-row-dense grid-cols-3 grid-rows-3">
                 {songs.map((song, index) => {
-                    return <MusicComponent key={createUniqueId(index)} song={song} downloadHandler={(setValueProgress, setWiting) => {
+
+                    return <MusicComponent song={song} downloadHandler={(setValueProgress, setWiting) => {
                         downloadHandler(song.id, song.platforms, isDownloading, setIsDownloading, setValueProgress, setWiting)
                     }} />
                 })}
@@ -31,6 +32,7 @@ async function downloadHandler(id, platform, isDownloading, setIsDownloading, se
             return toast.info("لطفا تا پایان دانلود صبر کنید")
         }
         setWiting(true);
+
         setIsDownloading(true)
         await spotifyService.download(`download/spotify?id=${id}`, (res) => {
             console.log(res)

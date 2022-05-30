@@ -18,6 +18,9 @@ export function AboutPage() {
                             <div className="hero-overlay bg-opacity-60"></div>
                             <div className="hero-content text-center text-neutral-content">
                                 <h1 className="text-5xl font-bold">درباره ما</h1>
+                                <p className="py-6">
+                                    ایزی دانلود  به شما این امکان را می دهد تا به سرعت به دانلود آهنگ های خود دسترسی داشته باشید. 🔥⚡
+                                </p>
                             </div>
 
                         </div>

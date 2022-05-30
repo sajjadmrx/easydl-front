@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react"
+import React, { useEffect, useId, useState } from "react"
 import { ProgressDownload } from "./progressDownload.component";
 
 
@@ -11,10 +11,10 @@ export function MusicComponent(props) {
     const photo = song.photo;
     const [witing, setWiting] = useState(false);
     const [valueProgress, setValueProgress] = useState(0);
-
+    console.log('valueProgress: ', valueProgress);
     const { downloadHandler } = props
     return (
-        <div className="shadow-md flex flex-col items-center p-8 transition-colors duration-200 transform cursor-pointer group hover:bg-blue-600 rounded-xl">
+        <div id={useId()} className="shadow-md flex flex-col items-center p-8 transition-colors duration-200 transform cursor-pointer group hover:bg-blue-600 rounded-xl">
             <img className="object-cover w-32 h-32 rounded-full ring-4 ring-gray-300" src={photo} alt="" />
 
             <h1 className="mt-4 text-2xl font-semibold text-gray-700 capitalize dark:text-white group-hover:text-white">

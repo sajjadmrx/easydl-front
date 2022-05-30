@@ -84,7 +84,7 @@ async function submitHandler(e, setSongs) {
         }
     } catch (error) {
         console.log(error);
-
+        toast.error('خطایی رخ داده است')
     } finally {
         button.classList.remove('loading');
     }
