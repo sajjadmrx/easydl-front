@@ -1,8 +1,9 @@
 import Axios from 'axios';
+import { hostStore } from '../store/host.store';
 
 
 //set base url
-const baseUrl = process.env.NODE_ENV == 'development' ? "http://localhost:5000" : "https://rj.app";
+const baseUrl = hostStore.url
 const axios = Axios.create({
     baseURL: baseUrl
 })
@@ -32,8 +33,15 @@ export class ApiService extends methods {
     async getSongWithSlug(slug) {
 
     }
-    async searchRadioJavan(slug) {
-
+    async searchRadioJavan(url) {
+        try {
+            const result = await this.get('/search/radiojavan', {
+                url: url
+            })
+            return result
+        } catch (error) {
+            throw error
+        }
     }
     async searchSpotify(query) {
         try {

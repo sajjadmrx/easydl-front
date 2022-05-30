@@ -3,11 +3,13 @@ import { ToastContainer, toast } from 'react-toastify';
 
 import 'react-toastify/dist/ReactToastify.css';
 import { ApiService } from '../service/api.service';
+import { RadioJavanService } from '../service/rj.service';
 import { SpotifyService } from '../service/spotify.service';
 import { isLink, isRjLink, isSpotifyLink } from '../utils/regex.util';
 
 const apiService = new ApiService()
 const spotifyService = new SpotifyService(apiService)
+const rjService = new RadioJavanService(apiService)
 export function SearchForm(props) {
     const setSongs = props.setSongs;
     return (
@@ -59,10 +61,19 @@ async function submitHandler(e, setSongs) {
     try {
         if (targetUrl == 'rj') {
             button.classList.add('loading');
-            //  await downloadRj(value, setSongs);
+
+            await rjService.download(value, (progress) => {
+                //change button text
+                button.innerText = `${progress}% در حال دانلود ...`;
+                if (progress == 100) {
+                    button.innerText = '📥    جستجو و دانلود';
+                    button.classList.remove('loading');
+                }
+            })
+
             button.classList.remove('loading');
         }
-        if (targetUrl == 'spotify') {
+        else if (targetUrl == 'spotify') {
             button.classList.add('loading');
             const data = await spotifyService.search(value)
             setSongs(data);

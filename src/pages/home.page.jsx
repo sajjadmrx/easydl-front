@@ -13,7 +13,8 @@ export function HomePage() {
         // scrol to bottom
         document.title = 'ایزی دانلود'
         loadingContext.done()
-        window.scrollTo(0, 350);
+        if (songs.length > 0)
+            window.scrollTo(0, 350);
     }, [songs]);
     return (
         <div>

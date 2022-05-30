@@ -1,3 +1,4 @@
+import { hostStore } from "../store/host.store";
 
 export class SpotifyService {
     constructor(apiService) {
@@ -13,7 +14,7 @@ export class SpotifyService {
                     description: item.description,
                     title: item.title,
                     id: item.videoId,
-                    photo: `http://localhost:5000/download/photo?url=${item.thumbnail}`,
+                    photo: `${hostStore.url}/download/photo?url=${item.thumbnail}`,
                     artist: item.author.name,
                     platforms: ['spotify', 'youtube'],
                 }
