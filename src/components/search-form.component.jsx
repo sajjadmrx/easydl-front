@@ -2,7 +2,12 @@ import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 
 import 'react-toastify/dist/ReactToastify.css';
+import { ApiService } from '../service/api.service';
+import { SpotifyService } from '../service/spotify.service';
+import { isLink, isRjLink, isSpotifyLink } from '../utils/regex.util';
 
+const apiService = new ApiService()
+const spotifyService = new SpotifyService(apiService)
 export function SearchForm(props) {
     const setSongs = props.setSongs;
     return (
@@ -17,6 +22,7 @@ export function SearchForm(props) {
 }
 async function submitHandler(e, setSongs) {
     e.preventDefault();
+    setSongs([]);
     const value = e.target.querySelector('input').value;
     const button = e.target.querySelector('button');
     if (!value || !isLink(value)) {
@@ -50,33 +56,28 @@ async function submitHandler(e, setSongs) {
         })
         return;
     }
-    button.classList.add('loading');
     try {
-        const result = await axios.get('http://localhost:5000/search?q=' + value, {
-            headers: {
-                'Content-Type': 'application/json',
-                'Access-Control-Allow-Origin': '*',
-                'Access-Control-Allow-Methods': 'GET, POST, PATCH, PUT, DELETE, OPTIONS',
-                'Access-Control-Allow-Headers': 'Origin, Content-Type, X-Auth-Token'
-            },
-        })
-        setSongs(result.data);
+        if (targetUrl == 'rj') {
+            button.classList.add('loading');
+            //  await downloadRj(value, setSongs);
+            button.classList.remove('loading');
+        }
+        if (targetUrl == 'spotify') {
+            button.classList.add('loading');
+            const data = await spotifyService.search(value)
+            setSongs(data);
+            button.classList.remove('loading');
+        }
+        else {
+            toast.error('لطفا یک لینک معتبر وارد کنید')
+        }
     } catch (error) {
+        console.log(error);
 
     } finally {
         button.classList.remove('loading');
     }
 }
 
-function isLink(value) {
-    const regex = /^(http|https):\/\/[^ "]+$/;
-    return regex.test(value);
-}
-function isRjLink(value) {
-    const links = ['https://rj.app/m/', 'https://www.radiojavan.com/mp3s/mp3/']
-    return links.some(link => value.startsWith(link));
-}
-function isSpotifyLink(value) {
-    const regex = /^(http|https):\/\/open\.spotify\.com\/track\/[^ "]+$/;
-    return regex.test(value);
-}
+
+

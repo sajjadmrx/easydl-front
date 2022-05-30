@@ -18,7 +18,7 @@ export function HelpPage() {
                         <div className="hero min-h-screen"  >
                             <div className="hero-overlay bg-opacity-60"></div>
                             <div className="hero-content text-center text-neutral-content">
-                                <h1 class="text-5xl font-bold">راهنما</h1>
+                                <h1 className="text-5xl font-bold">راهنما</h1>
                             </div>
 
                         </div>
