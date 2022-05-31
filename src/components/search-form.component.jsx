@@ -36,7 +36,7 @@ async function submitHandler(e, setSongs, setErrorState) {
     e.preventDefault();
     setSongs([]);
     setErrorState(false);
-    const value = e.target.querySelector('input').value;
+    let value = e.target.querySelector('input').value;
     const button = e.target.querySelector('button');
     if (!value || !isLink(value)) {
         toast.error('لطفا یک لینک معتبر وارد کنید')
@@ -79,6 +79,10 @@ async function submitHandler(e, setSongs, setErrorState) {
         }
         else if (targetUrl == 'spotify') {
             button.classList.add('loading');
+            const indexOf = value.indexOf("&")
+            if (indexOf > 0) {
+                value = value.substring(0, indexOf)
+            }
             const data = await spotifyService.search(value)
             setSongs(data);
             button.classList.remove('loading');
@@ -91,7 +95,6 @@ async function submitHandler(e, setSongs, setErrorState) {
     } finally {
         button.classList.remove('loading');
         button.innerText = '📥    جستجو و دانلود';
-
     }
 }
 
