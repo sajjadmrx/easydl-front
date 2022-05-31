@@ -6,11 +6,15 @@ import { useEffect } from "react";
 
 export function UserGithubCardComponent(props) {
     const [user, setUser] = React.useState({})
-    let username = 'https://github.com' + props.user
+    let username = 'https://github.com' + props.user.username
+    const role = props.user.role
     useEffect(() => {
         async function getUserGithub() {
-            const result = await axios.get(`https://api.github.com/users/${props.user}`);
-            setUser(result.data)
+            try {
+                const result = await axios.get(`https://api.github.com/users/${props.user.username}`);
+                setUser(result.data)
+            } catch (error) {
+            }
         }
         getUserGithub()
     }, [])
@@ -22,10 +26,10 @@ export function UserGithubCardComponent(props) {
                 </div>
                 <div className="flex-grow p-3">
                     <div className="font-semibold text-gray-200">
-                        {user.name || ""}
+                        {user.login || ""}
                     </div>
-                    <div className="text-sm text-blue-500">
-                        توسعه دهنده
+                    <div className="text-sm text-blue-400">
+                        {role}
                     </div>
                 </div>
                 <div className="p-2">

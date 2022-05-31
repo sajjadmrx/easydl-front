@@ -3,9 +3,18 @@ import { FooterComponent } from "../components/footer.component";
 import react, { useEffect, useState, useContext } from 'react'
 import { LoadingContext } from "react-router-loading";
 import { UserGithubCardComponent } from "../components/userGithubCard.component";
-
 export function AboutPage() {
     const loadingContext = useContext(LoadingContext);
+    const users = [
+        {
+            username: "sajjadmrx",
+            role: "مدیریت و توسعه دهنده",
+        },
+        {
+            username: "Cowldy",
+            role: "مدیریت"
+        }
+    ]
     useEffect(() => {
         document.title = "ایزی دانلود - درباره ما";
         loadingContext.done();
@@ -26,9 +35,15 @@ export function AboutPage() {
                                 </p>
 
                                 <div className="mt-0">
-
-                                    <UserGithubCardComponent user="sajjadmrx"></UserGithubCardComponent>
-
+                                    <h2 className="text-2xl font-bold mt-1 mb-3">
+                                        👨‍💻 تیم ما
+                                    </h2>
+                                    <hr className="border-b-2 border-gray-800 mb-2" />
+                                    <div className="grid grid-cols-1 gap-4 md:grid-cols-1 lg:grid-cols-1">
+                                        {users.map((user, index) => {
+                                            return <UserGithubCardComponent key={index} user={user} />
+                                        })}
+                                    </div>
                                 </div>
 
                             </div>
