@@ -11,17 +11,16 @@ export function MusicComponent(props) {
     const photo = song.photo;
     const [witing, setWiting] = useState(false);
     const [valueProgress, setValueProgress] = useState(0);
-    console.log('valueProgress: ', valueProgress);
     const { downloadHandler } = props
     return (
-        <div id={useId()} className="shadow-md flex flex-col items-center p-8 transition-colors duration-200 transform cursor-pointer group hover:bg-blue-600 rounded-xl">
+        <div id={useId()} className="shadow-xl flex flex-col items-center p-5 transition-colors duration-200 transform cursor-pointer group hover:bg-blue-600 rounded-xl ">
             <img className="object-cover w-32 h-32 rounded-full ring-4 ring-gray-300" src={photo} alt="" />
 
-            <h1 className="mt-4 text-2xl font-semibold text-gray-700 capitalize dark:text-white group-hover:text-white">
+            <h1 className="mt-4 text-2xl font-semibold text-gray-300 capitalize dark:text-white group-hover:text-white">
                 {song.artist}
             </h1>
 
-            <p className="mt-2 text-gray-500 capitalize dark:text-gray-300 group-hover:text-gray-300">
+            <p className="mt-2 text-gray-500 capitalize dark:text-gray-100 group-hover:text-gray-300">
                 {song.name.slice(0, 19)}
             </p>
 

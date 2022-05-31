@@ -12,20 +12,18 @@ export function HelpPage() {
     }, [])
     return (
         <div>
-            <div className="bg-dark max-w-7xl mx-auto py-5">
-                <div className=" shadow-md rounded-3xl lg:flex-row dark:bg-zinc-900/95">
-                    <main className=" p-6 lg:py-8 lg:px-10 rounded-3xl dark:bg-zinc-900/95">
-                        <div className="hero min-h-screen"  >
-                            <div className="hero-overlay bg-opacity-60"></div>
-                            <div className="hero-content text-center text-neutral-content">
-                                <h1 className="text-5xl font-bold">راهنما</h1>
-                            </div>
-
+            <div className=" shadow-md rounded-3xl lg:flex-row dark:bg-zinc-900/95">
+                <main className=" p-6 lg:py-8 lg:px-10 rounded-3xl dark:bg-zinc-900/95">
+                    <div className="hero min-h-screen"  >
+                        <div className="hero-overlay bg-opacity-60"></div>
+                        <div className="hero-content text-center text-neutral-content">
+                            <h1 className="text-5xl font-bold">راهنما</h1>
                         </div>
-                    </main>
-                </div>
 
+                    </div>
+                </main>
             </div>
+
             <FooterComponent />
         </div>
     )

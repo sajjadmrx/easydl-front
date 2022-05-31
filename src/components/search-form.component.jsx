@@ -23,7 +23,7 @@ export function SearchForm(props) {
     }, [errorState])
     return (
         <form className="flex flex-col items-center" onSubmit={(e) => submitHandler(e, setSongs, setErrorState)}>
-            <input type="text" placeholder="لینک موزیک اسپاتیفای یا رادیوجوان" className="input w-full max-w-xs mb-2" />
+            <input type="text" placeholder="لینک موزیک اسپاتیفای یا رادیوجوان" className="input w-full max-w-xs mb-2 input-bordered input-accent" />
             {errorState && <ErrroAlertComponent className='mb-2' text={errorState} />}
             <button className="btn btn-wide ">
                 📥  جستجو و دانلود
