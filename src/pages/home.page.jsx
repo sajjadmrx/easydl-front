@@ -5,7 +5,6 @@ import { SongsComponent } from "../components/songs.component";
 import { SongsContext } from "../contexts/songs.context";
 import { FooterComponent } from "../components/footer.component";
 import { LoadingContext } from "react-router-loading";
-
 export function HomePage() {
     const loadingContext = useContext(LoadingContext);
     const [songs, setSongs] = useState([]);
@@ -28,36 +27,46 @@ export function HomePage() {
                                 <div className="max-w-md">
                                     <h1 className="text-5xl font-bold">ایزی دانلود</h1>
                                     <p className="py-6">
-                                        به آسانی و با بهترین کیفیت دانلود کنید
+                                        با ایزی دانلود به صورت رایگان با بهترین کیفیت دانلود کنیـد 🚀
                                     </p>
 
                                     <SearchForm setSongs={setSongs} />
-                                    <div className="mt-3">
+                                    <div className="mt-3 animate__animated  animate__rotateInDownLeft">
                                         <div className="bg-base-100 text-base-content rounded-box shadow-xl">
-                                            <h3 className="text-base-title text-center py-3">
+                                            <h2 className="text-lg text-center py-3">
                                                 پلتفرم های پشتیبانی شده
-                                            </h3>
+                                            </h2>
                                             <div className="grid grid-cols-3 gap-4 mb-4">
                                                 <div className="grid h-25 card rounded-box place-items-center mb-2">
                                                     <div className="avatar online">
                                                         <div className="w-16 rounded-xl ">
-                                                            <img src="https://brandlogos.net/wp-content/uploads/2021/12/spotify-brandlogo.net_.png" />
+                                                            <img src="/brands/spotify.png" alt="sound" />
+
                                                         </div>
                                                     </div>
+                                                    <p className="text-center text-base-content">
+                                                        اسپاتیفای
+                                                    </p>
                                                 </div>
                                                 <div className="grid h-25 card rounded-box place-items-center mb-2">
                                                     <div className="avatar online">
                                                         <div className="w-16 rounded-xl">
-                                                            <img src="https://play-lh.googleusercontent.com/YYRN2L-dUiXTYLPaNUz1CjUHJqkg2kG_TGeNLqEEWU6x-uL13Ab7_bnjPKndn1rVKQ" />
+                                                            <img src="/brands/rj.png" alt="Rj" />
                                                         </div>
                                                     </div>
+                                                    <p className="text-center text-base-content">
+                                                        رادیوجوان
+                                                    </p>
                                                 </div>
                                                 <div className="grid h-25 card rounded-box place-items-center mb-2">
                                                     <div className="avatar online">
                                                         <div className="w-16 rounded-xl">
-                                                            <img src="https://www.freepnglogos.com/uploads/soundcloud-logo-png/soundcloud-logo-soundcloud-social-media-icons-20.png" alt="sound-cloud" />
+                                                            <img src="/brands/soundcloud.png" alt="sound-cloud" />
                                                         </div>
                                                     </div>
+                                                    <p className="text-center text-base-content">
+                                                        سوند کلاود
+                                                    </p>
                                                 </div>
 
 
@@ -66,8 +75,6 @@ export function HomePage() {
                                     </div>
                                 </div>
                             </div>
-
-
                         </div>
 
                         <div className="mb-4" hidden={songs.length > 0 ? false : true}>

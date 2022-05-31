@@ -22,7 +22,7 @@ export function MusicComponent(props) {
             </h1>
 
             <p className="mt-2 text-gray-500 capitalize dark:text-gray-300 group-hover:text-gray-300">
-                {song.name}
+                {song.name.slice(0, 19)}
             </p>
 
             <div className="flex mt-3 -mx-2">

@@ -90,6 +90,8 @@ async function submitHandler(e, setSongs, setErrorState) {
         axiosError(error, setErrorState)
     } finally {
         button.classList.remove('loading');
+        button.innerText = '📥    جستجو و دانلود';
+
     }
 }
 
