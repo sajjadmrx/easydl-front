@@ -16,11 +16,13 @@ function App() {
     //     <Route path="/"> <HomePage /> </Route>
     //   </Switch>
     // </Router>
-    <Switch>
-      <Route exact path="/" component={HomePage} loading />
-      <Route path="/help" component={HelpPage} loading />
-      <Route path="/about" component={AboutPage} loading />
-    </Switch>
+    // <Switch>
+    //   <Route exact path="/" component={HomePage} loading />
+    //   <Route path="/help" component={HelpPage} loading />
+    //   <Route path="/about" component={AboutPage} loading />
+    // </Switch>
+    <small>You are running this application in <b>{process.env.REACT_APP_API_URL}</b> mode.</small>
+
   );
 }
 

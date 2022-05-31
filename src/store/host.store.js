@@ -1,5 +1,3 @@
-import env from "react-dotenv";
-
 export const hostStore = {
-    url: env.API_URL
+    url: process.env.REACT_APP_API_URL
 }

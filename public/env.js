@@ -1,3 +1,3 @@
 window.env = {
-  "API_URL": "http://localhost:5000"
+  "API_URL": "http://192.168.115.118:5000"
 };

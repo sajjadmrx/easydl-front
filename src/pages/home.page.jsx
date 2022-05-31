@@ -31,8 +31,8 @@ export function HomePage() {
 
                                 <SearchForm setSongs={setSongs} />
                                 <div className="mt-3 animate__animated  animate__rotateInDownLeft shadow-xl ">
-                                    <div className="bg-gray-700 text-base-content rounded-box ">
-                                        <h2 className="text-lg text-center py-3">
+                                    <div className="bg-gray-700 text-base-content rounded-box">
+                                        <h2 className="text-lg text-center py-3 text-gray-200">
                                             پلتفرم های پشتیبانی شده
                                         </h2>
                                         <div className="grid grid-cols-3 gap-4 mb-4">
@@ -43,7 +43,7 @@ export function HomePage() {
 
                                                     </div>
                                                 </div>
-                                                <p className="text-center text-base-content">
+                                                <p className="text-center text-base-content text-gray-200">
                                                     اسپاتیفای
                                                 </p>
                                             </div>
@@ -53,7 +53,7 @@ export function HomePage() {
                                                         <img src="/brands/rj.png" alt="Rj" />
                                                     </div>
                                                 </div>
-                                                <p className="text-center text-base-content">
+                                                <p className="text-center text-base-content text-gray-200">
                                                     رادیوجوان
                                                 </p>
                                             </div>
@@ -63,7 +63,7 @@ export function HomePage() {
                                                         <img src="/brands/soundcloud.png" alt="sound-cloud" />
                                                     </div>
                                                 </div>
-                                                <p className="text-center text-base-content">
+                                                <p className="text-center text-base-content text-gray-200">
                                                     سوند کلاود
                                                 </p>
                                             </div>
@@ -77,7 +77,7 @@ export function HomePage() {
                     </div>
 
                     <div className="mb-4" hidden={songs.length > 0 ? false : true}>
-                        <div className="flex items-center text-gray-200 mb-4 dark:text-gray-300">
+                        <div className="flex items-center text-gray-200 mb-4 dark:text-gray-300 ">
                             <svg className="icon dark:text-gray-200" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                 viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"
                                 strokeLinejoin="round">
