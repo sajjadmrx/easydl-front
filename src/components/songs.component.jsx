@@ -4,13 +4,19 @@ import { MusicComponent } from "./music.component";
 import { ApiService } from "../service/api.service";
 import { SpotifyService } from "../service/spotify.service";
 import { toast } from "react-toastify";
+import { axiosError } from "../handlers/error.handler";
 
 const apiService = new ApiService();
 const spotifyService = new SpotifyService(apiService);
 export function SongsComponent(props) {
     const songs = props.songs;
     const [isDownloading, setIsDownloading] = useState(false);
-
+    const [errorState, setErrorState] = useState(false);
+    useEffect(() => {
+        if (errorState && errorState != '') {
+            toast.error(errorState)
+        }
+    }, [errorState])
     return (
         <div>
             {songs.length > 0 ? <WarningAlertComponent className='mb-2' text="لطفا جهت حمایت از آرتیس و پلتفرم یک بار در پلتفرم مورد نظر گوش بدید" /> : ""}
@@ -18,7 +24,7 @@ export function SongsComponent(props) {
                 {songs.map((song, index) => {
 
                     return <MusicComponent song={song} downloadHandler={(setValueProgress, setWiting) => {
-                        downloadHandler(song.id, song.platforms, isDownloading, setIsDownloading, setValueProgress, setWiting)
+                        downloadHandler(song.id, song.platforms, isDownloading, setIsDownloading, setValueProgress, setWiting, setErrorState)
                     }} />
                 })}
             </div>
@@ -26,7 +32,7 @@ export function SongsComponent(props) {
 
     )
 }
-async function downloadHandler(id, platform, isDownloading, setIsDownloading, setValueProgress, setWiting) {
+async function downloadHandler(id, platform, isDownloading, setIsDownloading, setValueProgress, setWiting, setErrorState) {
     try {
         if (isDownloading) {
             return toast.info("لطفا تا پایان دانلود صبر کنید")
@@ -52,8 +58,6 @@ async function downloadHandler(id, platform, isDownloading, setIsDownloading, se
         //reset states
         setValueProgress(0)
         setWiting(false)
+        axiosError(error, setErrorState)
     }
-}
-function createUniqueId(id) {
-    return `${id}-${Math.random() * 100 + new Date().getTime()}`
 }
