@@ -18,14 +18,14 @@ export function UserGithubCardComponent(props) {
         <div className="grid  card rounded-box place-items-center mb-2">
             <div className="bg-gray-600 w-full  flex items-center p-2 rounded-xl shadow ">
                 <div className="flex items-center space-x-4">
-                    <img src="https://avatars.githubusercontent.com/u/66132114?s=400&u=7fa80f451ab04bd93b8277cd46144a39a55601e4&v=4" alt="My profile" className="w-16 h-16 rounded-full" />
+                    <img src={user.avatar_url} alt="My profile" className="w-16 h-16 rounded-full" />
                 </div>
                 <div className="flex-grow p-3">
                     <div className="font-semibold text-gray-200">
                         {user.name || ""}
                     </div>
                     <div className="text-sm text-blue-500">
-                        ساخته شده توسط
+                        توسعه دهنده
                     </div>
                 </div>
                 <div className="p-2">
