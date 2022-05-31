@@ -10,3 +10,7 @@ export function isSpotifyLink(value) {
     const regex = /^(http|https):\/\/open\.spotify\.com\/track\/[^ "]+$/;
     return regex.test(value);
 }
+export function isSoundcloudLink(value) {
+    const regex = /^(http|https):\/\/soundcloud\.com\/[^ "]+$/;
+    return regex.test(value);
+}

@@ -1,24 +1,20 @@
-import Axios from 'axios';
-import { hostStore } from '../store/host.store';
+
+import myAxios from '../utils/axios.util';
 
 
-//set base url
-const baseUrl = hostStore.url
-const axios = Axios.create({
-    baseURL: baseUrl
-})
+
 //cors
 class methods {
     async get(url, params = {}) {
-        const result = await axios.get(url, { params })
+        const result = await myAxios.get(url, { params })
         return result.data
     }
     async post(url, data = {}) {
-        const result = await axios.post(url, data)
+        const result = await myAxios.post(url, data)
         return result.data
     }
     async put(url, data = {}) {
-        const result = await axios.put(url, data)
+        const result = await myAxios.put(url, data)
         return result.data
     }
 }
@@ -62,7 +58,7 @@ export class ApiService extends methods {
             if (!urlInput.startsWith('/'))
                 urlInput = '/' + urlInput;
             console.log(urlInput);
-            const result = await axios.get(urlInput, {
+            const result = await myAxios.get(urlInput, {
                 responseType: 'arraybuffer',
                 onDownloadProgress: (progressEvent) => {
                     const loaded = progressEvent.loaded;

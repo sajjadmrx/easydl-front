@@ -7,7 +7,6 @@ export class SpotifyService {
     async search(url) {
         try {
             const data = await this.apiService.searchSpotify(url)
-            console.log(data);
             const items = await Promise.all(data.map(async (item) => {
                 return {
                     name: item.title,
@@ -21,7 +20,6 @@ export class SpotifyService {
             }))
             return items
         } catch (error) {
-            console.log(error);
             throw error;
         }
     }

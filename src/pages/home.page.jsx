@@ -39,22 +39,22 @@ export function HomePage() {
                                             </h3>
                                             <div className="grid grid-cols-3 gap-4 mb-4">
                                                 <div className="grid h-25 card rounded-box place-items-center mb-2">
-                                                    <div class="avatar online">
-                                                        <div class="w-16 rounded-xl ">
+                                                    <div className="avatar online">
+                                                        <div className="w-16 rounded-xl ">
                                                             <img src="https://brandlogos.net/wp-content/uploads/2021/12/spotify-brandlogo.net_.png" />
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div className="grid h-25 card rounded-box place-items-center mb-2">
-                                                    <div class="avatar online">
-                                                        <div class="w-16 rounded-xl">
+                                                    <div className="avatar online">
+                                                        <div className="w-16 rounded-xl">
                                                             <img src="https://play-lh.googleusercontent.com/YYRN2L-dUiXTYLPaNUz1CjUHJqkg2kG_TGeNLqEEWU6x-uL13Ab7_bnjPKndn1rVKQ" />
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div className="grid h-25 card rounded-box place-items-center mb-2">
-                                                    <div class="avatar online">
-                                                        <div class="w-16 rounded-xl">
+                                                    <div className="avatar online">
+                                                        <div className="w-16 rounded-xl">
                                                             <img src="https://www.freepnglogos.com/uploads/soundcloud-logo-png/soundcloud-logo-soundcloud-social-media-icons-20.png" alt="sound-cloud" />
                                                         </div>
                                                     </div>
