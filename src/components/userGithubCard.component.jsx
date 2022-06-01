@@ -6,7 +6,7 @@ import { useEffect } from "react";
 
 export function UserGithubCardComponent(props) {
     const [user, setUser] = React.useState({})
-    let username = 'https://github.com' + props.user.username
+    let username = 'https://github.com/' + props.user.username
     const role = props.user.role
     useEffect(() => {
         async function getUserGithub() {

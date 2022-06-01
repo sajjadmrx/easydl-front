@@ -30,6 +30,7 @@
     "start:react": "react-scripts start",
     "start": "npm run build && node server.js",
     "start:dev": "node server.js",
+    "start:dev:react": "react-scripts start",
     "build": "GENERATE_SOURCEMAP=false react-scripts build",
     "winBuild": "set \"GENERATE_SOURCEMAP=false\" && react-scripts build",
     "test": "react-scripts test",
