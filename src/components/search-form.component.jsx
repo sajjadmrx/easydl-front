@@ -66,7 +66,7 @@ async function submitHandler(e, setSongs, setErrorState) {
             })
             button.classList.remove('loading');
         }
-        if (targetUrl == 'soundcloud') {
+        else if (targetUrl == 'soundcloud') {
             button.classList.add('loading');
             await soundCloudService.download(value, (progress) => {
                 button.innerText = `${progress}% در حال دانلود ...`;
@@ -76,6 +76,7 @@ async function submitHandler(e, setSongs, setErrorState) {
                 }
             })
             button.classList.remove('loading');
+            return;
         }
         else if (targetUrl == 'spotify') {
             button.classList.add('loading');
@@ -86,6 +87,7 @@ async function submitHandler(e, setSongs, setErrorState) {
             const data = await spotifyService.search(value)
             setSongs(data);
             button.classList.remove('loading');
+            return;
         }
         else {
             toast.error('لطفا یک لینک معتبر وارد کنید')
