@@ -37,7 +37,7 @@ self.addEventListener('fetch', async event => {
     if (url.origin === location.origin) {
         event.respondWith(cacheFirst(req));
     } else {
-        event.respondWith(networkAndCache(req));
+        //   event.respondWith(networkAndCache(req));
     }
 
 
@@ -52,7 +52,13 @@ async function cacheFirst(req) {
 async function networkAndCache(req) {
     const cache = await caches.open(cacheName);
     try {
-        const fresh = await fetch(req);
+        const fresh = await fetch(req, {
+            headers: {
+                'Access-Control-Allow-Origin': '*',
+                'Access-Control-Allow-Methods': 'GET,HEAD,PUT,PATCH,POST,DELETE',
+                'Access-Control-Allow-Headers': 'Origin, Content-Type, Authorization,Accept',
+            },
+        });
         await cache.put(req, fresh.clone());
         return fresh;
     } catch (error) {
