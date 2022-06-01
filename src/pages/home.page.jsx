@@ -35,7 +35,7 @@ export function HomePage() {
                                         <h2 className="text-lg text-center py-3 text-gray-200">
                                             پلتفرم های پشتیبانی شده
                                         </h2>
-                                        <div className="grid grid-cols-3 gap-4 mb-4">
+                                        <div className="grid grid-cols-3 gap-4 mb-4 py-4">
                                             <div className="grid h-25 card rounded-box place-items-center mb-2">
                                                 <div className="avatar online">
                                                     <div className="w-16 rounded-xl ">

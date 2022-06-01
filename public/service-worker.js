@@ -12,7 +12,9 @@ const staticAssets = [
     './brands/rj.png',
     './brands/soundcloud.png',
     './brands/spotify.png',
-    './manifest.webmanifest'
+    './manifest.webmanifest',
+    './amozesh/install.mp4',
+    './amozesh/spotify.mp4'
 ]
 
 self.addEventListener('install', async event => {

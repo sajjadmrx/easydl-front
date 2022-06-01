@@ -9,13 +9,6 @@ import { HomePage } from './pages/home.page';
 
 function App() {
   return (
-    // <Router>
-    //   <Switch>
-    //     <Route path="/about"> <AboutPage /> </Route>
-    //     <Route path="/help"> <HelpPage /></Route>
-    //     <Route path="/"> <HomePage /> </Route>
-    //   </Switch>
-    // </Router>
     <Switch>
       <Route exact path="/" component={HomePage} loading />
       <Route path="/help" component={HelpPage} loading />
