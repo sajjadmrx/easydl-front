@@ -9,7 +9,6 @@ export class SpotifyService {
             const data = await this.apiService.post(`search/spotify`, {
                 url
             })
-            console.log(data)
             const items = await Promise.all(data.map(async (item) => {
                 return {
                     name: item.title,
