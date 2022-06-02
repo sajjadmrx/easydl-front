@@ -5,9 +5,14 @@ import { SongsComponent } from "../components/songs.component";
 import { SongsContext } from "../contexts/songs.context";
 import { FooterComponent } from "../components/footer.component";
 import { LoadingContext } from "react-router-loading";
+import { DiscordModal } from "../components/modals/discord.modal";
+import { CookieUtil } from "../utils/cookie.util";
+import ms from 'ms'
 export function HomePage() {
     const loadingContext = useContext(LoadingContext);
     const [songs, setSongs] = useState([]);
+    const [showState, setShowState] = useState(false);
+
     useEffect(() => {
         // scrol to bottom
         document.title = 'ایزی دانلود'
@@ -74,6 +79,7 @@ export function HomePage() {
                                 </div>
 
                             </div>
+                            {showState && <DiscordModal show={showState} setShow={setShowState} timeout={ms('3s')} />}
                         </div>
                     </div>
 
