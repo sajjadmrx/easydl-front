@@ -5,6 +5,8 @@ export class RadioJavanService {
     }
 
     download(url, cbProgress) {
-        return this.apiService.download(`download/rj?url=${url}`, cbProgress)
+        return this.apiService.download('download/rj', {
+            url: url
+        }, cbProgress)
     }
 }

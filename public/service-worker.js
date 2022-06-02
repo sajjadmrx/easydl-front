@@ -48,7 +48,14 @@ self.addEventListener('fetch', async event => {
 async function cacheFirst(req) {
     const cache = await caches.open(cacheName);
     const cached = await cache.match(req);
-    return cached || fetch(req);
+    if (cache) return cached;
+    try {
+        const networked = await fetch(req);
+        return networked;
+    } catch (e) {
+        console.log(e);
+        //return await cache.match('/offline.html');
+    }
 }
 
 async function networkAndCache(req) {

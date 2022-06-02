@@ -2,63 +2,43 @@
 import myAxios from '../utils/axios.util';
 
 
+const headers = {
 
-//cors
-class methods {
-    async get(url, params = {}) {
-        const result = await myAxios.get(url, { params })
-        return result.data
-    }
-    async post(url, data = {}) {
-        const result = await myAxios.post(url, data)
-        return result.data
-    }
-    async put(url, data = {}) {
-        const result = await myAxios.put(url, data)
-        return result.data
-    }
+    'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, PATCH, OPTIONS',
+    'Access-Control-Allow-Headers': 'X-Requested-With, content-type, Authorization'
+
 }
 
-export class ApiService extends methods {
+export class ApiService {
     constructor() {
-        super();
     }
-    async getSongDetails(link) {
 
-    }
-    async getSongWithSlug(slug) {
-
-    }
-    async searchRadioJavan(url) {
+    async post(url, body) {
         try {
-            const result = await this.get('/search/radiojavan', {
-                url: url
+            const result = await myAxios.post(url, body, { headers })
+            return result.data
+        } catch (error) {
+            throw error
+        }
+    }
+    async get(url, params) {
+        try {
+            const result = await myAxios.get(url, {
+                params: params,
+                headers
             })
             return result
         } catch (error) {
             throw error
         }
     }
-    async searchSpotify(query) {
-        try {
-            const result = await this.post('/search/spotify', {
-                url: query
-            })
-            return result
-        } catch (error) {
-            throw error
-        }
-    }
-    async getOrginalUrlRadioJavan(url) {
 
-    }
-
-    async download(urlInput, cbProgress) {
+    async download(urlInput, data, cbProgress) {
         try {
             if (!urlInput.startsWith('/'))
                 urlInput = '/' + urlInput;
-            console.log(urlInput);
-            const result = await myAxios.get(urlInput, {
+            const result = await myAxios.post(urlInput, data, {
                 responseType: 'arraybuffer',
                 onDownloadProgress: (progressEvent) => {
                     const loaded = progressEvent.loaded;
@@ -66,7 +46,8 @@ export class ApiService extends methods {
                     const total = progressEvent.total || 1
                     const percent = Math.floor((loaded / total) * 100);
                     cbProgress(percent)
-                }
+                },
+                headers: headers
             });
             const blob = new Blob([result.data], { type: 'audio/mp3' });
             const url = window.URL.createObjectURL(blob);

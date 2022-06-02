@@ -13,26 +13,34 @@ const apiService = new ApiService()
 const spotifyService = new SpotifyService(apiService)
 const rjService = new RadioJavanService(apiService)
 const soundCloudService = new SoundCloudService(apiService)
+
+
 export function SearchForm(props) {
     const setSongs = props.setSongs;
     const [errorState, setErrorState] = React.useState(false);
+    const [buttonText, setButtonText] = React.useState('');
+    useEffect(() => {
+        if (!buttonText) {
+            setButtonText('📥    جستجو و دانلود');
+        }
+    }, [buttonText])
     useEffect(() => {
         if (errorState && errorState != '') {
             toast.error(errorState)
         }
     }, [errorState])
     return (
-        <form className="flex flex-col items-center" onSubmit={(e) => submitHandler(e, setSongs, setErrorState)}>
+        <form className="flex flex-col items-center" onSubmit={(e) => submitHandler(e, setSongs, setErrorState, setButtonText)}>
             <input type="text" placeholder="لینک موزیک اسپاتیفای یا رادیوجوان" className="input w-full max-w-xs mb-2 input-bordered input-accent" />
             {errorState && <ErrroAlertComponent className='mb-2' text={errorState} />}
             <button className="btn btn-wide ">
-                📥  جستجو و دانلود
+                {buttonText}
             </button>
             <ToastContainer theme='dark' />
         </form>
     )
 }
-async function submitHandler(e, setSongs, setErrorState) {
+async function submitHandler(e, setSongs, setErrorState, setButtonText) {
     e.preventDefault();
     setSongs([]);
     setErrorState(false);
@@ -58,9 +66,9 @@ async function submitHandler(e, setSongs, setErrorState) {
         if (targetUrl == 'rj') {
             button.classList.add('loading');
             await rjService.download(value, (progress) => {
-                button.innerText = `${progress}% در حال دانلود ...`;
+                setButtonText(`${progress}% در حال دانلود ...`)
                 if (progress == 100) {
-                    button.innerText = '📥    جستجو و دانلود';
+                    setButtonText('')
                     button.classList.remove('loading');
                 }
             })
@@ -69,9 +77,9 @@ async function submitHandler(e, setSongs, setErrorState) {
         else if (targetUrl == 'soundcloud') {
             button.classList.add('loading');
             await soundCloudService.download(value, (progress) => {
-                button.innerText = `${progress}% در حال دانلود ...`;
+                setButtonText(`${progress}% در حال دانلود ...`)
                 if (progress == 100) {
-                    button.innerText = '📥    جستجو و دانلود';
+                    setButtonText('')
                     button.classList.remove('loading');
                 }
             })
@@ -96,7 +104,7 @@ async function submitHandler(e, setSongs, setErrorState) {
         axiosError(error, setErrorState)
     } finally {
         button.classList.remove('loading');
-        button.innerText = '📥    جستجو و دانلود';
+        setButtonText('')
     }
 }
 

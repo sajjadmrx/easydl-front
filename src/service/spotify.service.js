@@ -6,7 +6,10 @@ export class SpotifyService {
     }
     async search(url) {
         try {
-            const data = await this.apiService.searchSpotify(url)
+            const data = await this.apiService.post(`search/spotify`, {
+                url
+            })
+            console.log(data)
             const items = await Promise.all(data.map(async (item) => {
                 return {
                     name: item.title,
@@ -23,7 +26,9 @@ export class SpotifyService {
             throw error;
         }
     }
-    download(url, cbProgress) {
-        return this.apiService.download(url, cbProgress)
+    download(id, cbProgress) {
+        return this.apiService.download('download/spotify', {
+            id
+        }, cbProgress)
     }
 }

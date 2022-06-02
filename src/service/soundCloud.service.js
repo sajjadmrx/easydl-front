@@ -5,6 +5,8 @@ export class SoundCloudService {
     }
 
     download(url, cbProgress) {
-        return this.apiService.download(`download/soundcloud?url=${url}`, cbProgress)
+        return this.apiService.download(`download/soundcloud`, {
+            url: url
+        }, cbProgress)
     }
 }

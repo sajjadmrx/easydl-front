@@ -40,8 +40,7 @@ async function downloadHandler(id, platform, isDownloading, setIsDownloading, se
         setWiting(true);
 
         setIsDownloading(true)
-        await spotifyService.download(`download/spotify?id=${id}`, (res) => {
-            console.log(res)
+        await spotifyService.download(id, (res) => {
             if (res == 100) {
                 setValueProgress(0)
                 setIsDownloading(false)
@@ -53,9 +52,7 @@ async function downloadHandler(id, platform, isDownloading, setIsDownloading, se
                 setWiting(false)
         })
     } catch (error) {
-        console.log(error)
         setIsDownloading(false)
-        //reset states
         setValueProgress(0)
         setWiting(false)
         axiosError(error, setErrorState)
