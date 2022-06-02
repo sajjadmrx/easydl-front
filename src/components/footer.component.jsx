@@ -8,6 +8,7 @@ export function FooterComponent() {
                 <Link className="link link-hover" to="/"> خانه </Link>
                 <Link className="link link-hover" to="/about">درباره ما</Link>
                 <Link className="link link-hover" to="/help">راهنما</Link>
+                <Link className="link link-hover" to="/report">گزارش خطا</Link>
             </div>
             <div>
                 <div className="grid grid-flow-col gap-4">

@@ -3,11 +3,12 @@ import { useEffect, useState, useContext } from 'react'
 import { FooterComponent } from "../components/footer.component";
 import { LoadingContext } from "react-router-loading";
 import { VideoPlayerComponent } from "../components/videoPlayer.component";
+import { infoStore } from "../store/info.store";
 export function HelpPage() {
     const loadingContext = useContext(LoadingContext);
 
     useEffect(() => {
-        document.title = "ایزی دانلود - راهنما";
+        document.title = `${infoStore.brandName.fa} - راهنما`;
         loadingContext.done();
     }, [])
     return (

@@ -3,6 +3,7 @@ import { FooterComponent } from "../components/footer.component";
 import react, { useEffect, useState, useContext } from 'react'
 import { LoadingContext } from "react-router-loading";
 import { UserGithubCardComponent } from "../components/userGithubCard.component";
+import { infoStore } from "../store/info.store";
 export function AboutPage() {
     const loadingContext = useContext(LoadingContext);
     const users = [
@@ -16,7 +17,7 @@ export function AboutPage() {
         }
     ]
     useEffect(() => {
-        document.title = "ایزی دانلود - درباره ما";
+        document.title = `${infoStore.brandName.fa} - درباره`;
         loadingContext.done();
     }, [])
     return (

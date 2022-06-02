@@ -6,6 +6,7 @@ import { AboutPage } from "./pages/about.page";
 import { HelpPage } from "./pages/help.page";
 
 import { HomePage } from './pages/home.page';
+import { ReportPage } from "./pages/report.page";
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
       <Route exact path="/" component={HomePage} loading />
       <Route path="/help" component={HelpPage} loading />
       <Route path="/about" component={AboutPage} loading />
+      <Route path="/report" component={ReportPage} loading />
     </Switch>
   );
 }

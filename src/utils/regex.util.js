@@ -14,3 +14,7 @@ export function isSoundcloudLink(value) {
     const regex = /^(http|https):\/\/soundcloud\.com\/[^ "]+$/;
     return regex.test(value);
 }
+export function removeScript(value) {
+    if (!value) return value;
+    return value.replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '');
+}

@@ -8,14 +8,14 @@ import { LoadingContext } from "react-router-loading";
 import { DiscordModal } from "../components/modals/discord.modal";
 import { CookieUtil } from "../utils/cookie.util";
 import ms from 'ms'
+import { infoStore } from "../store/info.store";
 export function HomePage() {
     const loadingContext = useContext(LoadingContext);
     const [songs, setSongs] = useState([]);
     const [showState, setShowState] = useState(false);
 
     useEffect(() => {
-        // scrol to bottom
-        document.title = 'ایزی دانلود'
+        document.title = infoStore.brandName.fa
         loadingContext.done()
         if (songs.length > 0)
             window.scrollTo(0, 350);
@@ -23,8 +23,7 @@ export function HomePage() {
     return (
         <div>
             <div className=" shadow-md rounded-3xl lg:flex-row dark:bg-zinc-900/95">
-                <main className=" p-6 lg:py-8 lg:px-10 rounded-3xl dark:bg-zinc-900/95">
-
+                <main className="p-6 lg:py-8 lg:px-10 rounded-3xl dark:bg-zinc-900/95">
 
                     <div className="hero min-h-screen ">
                         <div className="hero-content text-center">
