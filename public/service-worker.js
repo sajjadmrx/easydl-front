@@ -77,7 +77,7 @@ const staticAssets = [
 // }
 
 
-const PRECACHE = 'precache-v1';
+const PRECACHE = 'precache-v2';
 const RUNTIME = 'runtime';
 
 
