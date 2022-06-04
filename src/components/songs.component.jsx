@@ -19,7 +19,7 @@ export function SongsComponent(props) {
     }, [errorState])
     return (
         <div>
-            {songs.length > 0 ? <WarningAlertComponent className='mb-2' text="لطفا جهت حمایت از آرتیس و پلتفرم یک بار در پلتفرم مورد نظر گوش بدید" /> : ""}
+            {songs.length > 0 ? <WarningAlertComponent className='mb-2' text="لطفا جهت حمایت از آرتیست و پلتفرم یک بار در پلتفرم مورد نظر گوش بدید" /> : ""}
             <div className="grid grid-flow-row-dense grid-cols-1 grid-rows-3 md:grid-cols-3">
                 {songs.map((song, index) => {
 
