@@ -1,5 +1,5 @@
 export const infoStore = {
-    discordServer: "https://discord.gg/CFe54HCTFu",
+    discordServer: "https://discord.gg/yfbmwMDVCc",
     brandName: {
         en: "EasyDL",
         fa: "ایزی دانلود"
