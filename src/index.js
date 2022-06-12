@@ -16,4 +16,4 @@ root.render(
 
 
 reportWebVitals();
-serviceWorker.register()
+// serviceWorker.register()

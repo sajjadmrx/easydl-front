@@ -11,6 +11,7 @@ import ms from 'ms'
 import { infoStore } from "../store/info.store";
 import { PageWrapper } from "../Wrappers/pages.wrapper";
 import { PlatFormsComponent } from "../components/platforms.component";
+
 export function HomePage() {
     const loadingContext = useContext(LoadingContext);
     const [songs, setSongs] = useState([]);
@@ -32,11 +33,9 @@ export function HomePage() {
                             <div className="max-w-md">
                                 <h1 className="text-5xl font-bold">ایزی دانلود</h1>
                                 <p className="py-6">
-                                    با ایزی دانلود به صورت رایگان با بهترین کیفیت دانلود کنیـد 🚀
+                                    با ایزی دانلود به صورت رایگان با بهترین کیفیت دانلود کنیـد
                                 </p>
-
                                 <SearchForm setSongs={setSongs} />
-                                {/* platforms */}
                                 <PlatFormsComponent />
                             </div>
                             {showState && <DiscordModal show={showState} setShow={setShowState} timeout={ms('3s')} />}
