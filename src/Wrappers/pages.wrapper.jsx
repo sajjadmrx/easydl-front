@@ -5,11 +5,14 @@ import { NavbarComponent } from "../components/navbar.component";
 import AuthContext from "../contexts/auth.context";
 import axios from 'axios'
 import { CookieUtil } from "../utils/cookie.util";
+import { AuthModalComponent } from "../components/modals/auth.modal";
+import { AuthModalContext } from "../contexts/authModal.context";
 export function PageWrapper(props) {
     const [isAuthenticated, setIsAuthenticated] = useState(CookieUtil.has('token'));
     const [user, setUser] = useState({});
     const [statusLoading, setStatusLoading] = useState(true);
     const [token, setToken] = useState(CookieUtil.get('token'));
+    const [showModal, setShowModal] = useState(false);
     const AuthContextValues = {
         isAuthenticated,
         setIsAuthenticated,
@@ -19,6 +22,10 @@ export function PageWrapper(props) {
         setStatusLoading,
         token,
         setToken
+    }
+    const AuthModalContextValues = {
+        showModal,
+        setShowModal
     }
     useEffect(() => {
         async function getUsetWithToken() {
@@ -37,13 +44,18 @@ export function PageWrapper(props) {
         if (isAuthenticated)
             getUsetWithToken();
     }, [isAuthenticated]);
+
+
     return (
         <div>
             <AuthContext.Provider value={AuthContextValues} >
-                <NavbarComponent />
-                {props.children}
-                <FooterComponent />
-                <ToastContainer theme='dark' />
+                <AuthModalContext.Provider value={AuthModalContextValues}>
+                    <NavbarComponent />
+                    {props.children}
+                    <FooterComponent />
+                    <ToastContainer theme='dark' />
+                    <AuthModalComponent show={showModal} />
+                </AuthModalContext.Provider>
             </AuthContext.Provider>
         </div>
     )

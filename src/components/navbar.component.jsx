@@ -7,10 +7,11 @@ import { ThemeSelectorComponent } from './themeSelector.component';
 import { } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Link } from 'react-router-dom';
+import { AuthModalContext } from '../contexts/authModal.context';
 
 export function NavbarComponent() {
     const { isAuthenticated } = useContext(AuthContext)
-
+    const { setShowModal } = useContext(AuthModalContext)
     return (
         <div className="navbar bg-base-100">
             <div className="navbar-start">
@@ -27,18 +28,15 @@ export function NavbarComponent() {
                 <a className="btn btn-ghost normal-case text-xl">{infoStore.brandName.fa}</a>
             </div>
             <div className="navbar-end">
-                {/* row  */}
                 <div className="flex">
                     <div className="flex-1">
                         <ThemeSelectorComponent />
                     </div>
                     <div className="flex">
                         {isAuthenticated ? <ProfileDropDownComponent /> :
-                            <button className="btn btn-ghost">
-                                <Link to='/login'>
-                                    <FontAwesomeIcon icon={['fas', 'sign-in-alt']} className='mr-2' />
-                                    ورود
-                                </Link>
+                            <button className="btn btn-ghost" onClick={() => setShowModal(true)}>
+                                <FontAwesomeIcon icon={['fas', 'sign-in-alt']} className='mr-2' />
+                                ورود
                             </button>
                         }
                     </div>
