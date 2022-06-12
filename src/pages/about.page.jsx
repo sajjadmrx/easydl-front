@@ -4,6 +4,7 @@ import react, { useEffect, useState, useContext } from 'react'
 import { LoadingContext } from "react-router-loading";
 import { UserGithubCardComponent } from "../components/userGithubCard.component";
 import { infoStore } from "../store/info.store";
+import { PageWrapper } from "../Wrappers/pages.wrapper";
 export function AboutPage() {
     const loadingContext = useContext(LoadingContext);
     const users = [
@@ -21,7 +22,7 @@ export function AboutPage() {
         loadingContext.done();
     }, [])
     return (
-        <div>
+        <PageWrapper>
             <div className=" shadow-md rounded-3xl lg:flex-row dark:bg-zinc-900/95">
                 <main className=" p-6 lg:py-8 lg:px-10 rounded-3xl dark:bg-zinc-900/95">
 
@@ -53,8 +54,6 @@ export function AboutPage() {
 
                 </main>
             </div>
-
-            <FooterComponent />
-        </div>
+        </PageWrapper>
     )
 }

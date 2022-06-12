@@ -23,7 +23,7 @@ export function SongsComponent(props) {
             <div className="grid grid-flow-row-dense grid-cols-1 grid-rows-3 md:grid-cols-3">
                 {songs.map((song, index) => {
 
-                    return <MusicComponent song={song} downloadHandler={(setValueProgress, setWiting) => {
+                    return <MusicComponent song={song} key={index + 1} downloadHandler={(setValueProgress, setWiting) => {
                         downloadHandler(song.id, song.platforms, isDownloading, setIsDownloading, setValueProgress, setWiting, setErrorState)
                     }} />
                 })}

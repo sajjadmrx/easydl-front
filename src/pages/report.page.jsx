@@ -8,6 +8,7 @@ import { toast, ToastContainer } from "react-toastify";
 import ms from 'ms'
 import { ApiService } from "../service/api.service";
 import { removeScript } from "../utils/regex.util";
+import { PageWrapper } from "../Wrappers/pages.wrapper";
 
 const apiService = new ApiService()
 
@@ -19,7 +20,7 @@ export function ReportPage() {
         loadingContext.done();
     }, [])
     return (
-        <div>
+        <PageWrapper>
             <div className=" shadow-md rounded-3xl lg:flex-row dark:bg-zinc-900/95">
                 <main className=" p-6 lg:py-8 lg:px-10 rounded-3xl dark:bg-zinc-900/95">
 
@@ -76,11 +77,7 @@ export function ReportPage() {
 
                 </main>
             </div>
-
-            <FooterComponent />
-            <ToastContainer theme='dark' />
-
-        </div>
+        </PageWrapper>
     )
 }
 

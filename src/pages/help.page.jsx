@@ -4,6 +4,7 @@ import { FooterComponent } from "../components/footer.component";
 import { LoadingContext } from "react-router-loading";
 import { VideoPlayerComponent } from "../components/videoPlayer.component";
 import { infoStore } from "../store/info.store";
+import { PageWrapper } from "../Wrappers/pages.wrapper";
 export function HelpPage() {
     const loadingContext = useContext(LoadingContext);
 
@@ -12,7 +13,7 @@ export function HelpPage() {
         loadingContext.done();
     }, [])
     return (
-        <div>
+        <PageWrapper>
             <div className=" shadow-md rounded-3xl lg:flex-row dark:bg-zinc-900/95">
                 <main className=" p-6 lg:py-8 lg:px-10 rounded-3xl dark:bg-zinc-900/95">
                     <div className="hero min-h-screen ">
@@ -22,21 +23,21 @@ export function HelpPage() {
 
                             <div className="grid grid-cols-1 gap-4 mb-4 py-4 md:grid-cols-2 ml-2 mr-2 mt-3">
 
-                                <div tabindex="0" class="grid collapse collapse-open border border-base-300 bg-base-100 rounded-box">
-                                    <div class="collapse-title text-xl font-medium">
+                                <div tabIndex="0" className="grid collapse collapse-open border border-base-300 bg-base-100 rounded-box">
+                                    <div className="collapse-title text-xl font-medium">
                                         🎧   دانلود از اسپاتیفای
                                     </div>
-                                    <div class="collapse-content">
+                                    <div className="collapse-content">
                                         <VideoPlayerComponent url="/amozesh/spotify.mp4" />
                                     </div>
                                 </div>
 
-                                <div tabindex="0" class="grid collapse collapse-open border border-base-300 bg-base-100 rounded-box">
-                                    <div class="collapse-title text-xl font-medium">
+                                <div tabIndex="0" className="grid collapse collapse-open border border-base-300 bg-base-100 rounded-box">
+                                    <div className="collapse-title text-xl font-medium">
 
                                         📥 نحوه نصب اپلیکیشن ایزی دانلود برای دسترسی راحتر
                                     </div>
-                                    <div class="collapse-content">
+                                    <div className="collapse-content">
 
                                         <VideoPlayerComponent url="/amozesh/install.mp4" />
                                     </div>
@@ -49,8 +50,6 @@ export function HelpPage() {
                     </div>
                 </main>
             </div>
-
-            <FooterComponent />
-        </div>
+        </PageWrapper>
     )
 }

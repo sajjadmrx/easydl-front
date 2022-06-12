@@ -9,11 +9,12 @@ import { DiscordModal } from "../components/modals/discord.modal";
 import { CookieUtil } from "../utils/cookie.util";
 import ms from 'ms'
 import { infoStore } from "../store/info.store";
+import { PageWrapper } from "../Wrappers/pages.wrapper";
+import { PlatFormsComponent } from "../components/platforms.component";
 export function HomePage() {
     const loadingContext = useContext(LoadingContext);
     const [songs, setSongs] = useState([]);
     const [showState, setShowState] = useState(false);
-
     useEffect(() => {
         document.title = infoStore.brandName.fa
         loadingContext.done()
@@ -21,8 +22,9 @@ export function HomePage() {
             window.scrollTo(0, 350);
     }, [songs]);
     return (
-        <div>
+        <PageWrapper>
             <div className=" shadow-md rounded-3xl lg:flex-row dark:bg-zinc-900/95">
+
                 <main className="p-6 lg:py-8 lg:px-10 rounded-3xl dark:bg-zinc-900/95">
 
                     <div className="hero min-h-screen ">
@@ -34,49 +36,8 @@ export function HomePage() {
                                 </p>
 
                                 <SearchForm setSongs={setSongs} />
-                                <div className="mt-3 animate__animated  animate__rotateInDownLeft shadow-xl ">
-                                    <div className="bg-gray-700 text-base-content rounded-box">
-                                        <h2 className="text-lg text-center py-3 text-gray-200">
-                                            پلتفرم های پشتیبانی شده
-                                        </h2>
-                                        <div className="grid grid-cols-3 gap-4 mb-4 py-4">
-                                            <div className="grid h-25 card rounded-box place-items-center mb-2">
-                                                <div className="avatar online">
-                                                    <div className="w-16 rounded-xl ">
-                                                        <img src="/brands/spotify.png" alt="sound" />
-
-                                                    </div>
-                                                </div>
-                                                <p className="text-center text-base-content text-gray-200">
-                                                    اسپاتیفای
-                                                </p>
-                                            </div>
-                                            <div className="grid h-25 card rounded-box place-items-center mb-2">
-                                                <div className="avatar online">
-                                                    <div className="w-16 rounded-xl">
-                                                        <img src="/brands/rj.png" alt="Rj" />
-                                                    </div>
-                                                </div>
-                                                <p className="text-center text-base-content text-gray-200">
-                                                    رادیوجوان
-                                                </p>
-                                            </div>
-                                            <div className="grid h-25 card rounded-box place-items-center mb-2">
-                                                <div className="avatar online">
-                                                    <div className="w-16 rounded-xl">
-                                                        <img src="/brands/soundcloud.png" alt="sound-cloud" />
-                                                    </div>
-                                                </div>
-                                                <p className="text-center text-base-content text-gray-200">
-                                                    سوند کلاود
-                                                </p>
-                                            </div>
-
-
-                                        </div>
-                                    </div>
-                                </div>
-
+                                {/* platforms */}
+                                <PlatFormsComponent />
                             </div>
                             {showState && <DiscordModal show={showState} setShow={setShowState} timeout={ms('3s')} />}
                         </div>
@@ -98,9 +59,10 @@ export function HomePage() {
                     </div>
 
                 </main>
+
+
             </div>
 
-            <FooterComponent />
-        </div>
+        </PageWrapper>
     )
 }
