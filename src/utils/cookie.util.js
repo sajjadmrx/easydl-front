@@ -13,4 +13,7 @@ export class CookieUtil {
             Cookies.set(name, value);
         }
     }
+    static get(name) {
+        return Cookies.get(name) || null;
+    }
 }

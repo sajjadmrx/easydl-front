@@ -1,7 +1,9 @@
+import { useContext } from "react";
+import AuthContext from "../contexts/auth.context";
 import { infoStore } from "../store/info.store";
 
 export function FooterComponent() {
-
+    const { isAuthenticated, setIsAuthenticated } = useContext(AuthContext);
     return (
         <footer className="footer items-center p-4 bg-neutral text-neutral-content">
             <div className="items-center grid-flow-col">
