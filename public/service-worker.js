@@ -16,8 +16,8 @@ const staticAssets = [
 
 
 
-const PRECACHE = 'v1.3';
-const RUNTIME = 'runtime1';
+const PRECACHE = 'v1.4';
+const RUNTIME = 'runtime2';
 
 
 self.addEventListener('install', event => {
