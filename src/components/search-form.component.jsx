@@ -34,9 +34,7 @@ export function SearchForm(props) {
             <input type="text" placeholder="لینک موزیک اسپاتیفای یا رادیوجوان" className="input w-full max-w-xs mb-2 input-bordered input-accent" />
             {errorState && <ErrroAlertComponent className='mb-2' text={errorState} />}
             <button className="btn btn-wide ">
-                <span className="countdown font-mono ">
-                    <span style={{ '--value': '60;' }}></span>
-                </span>
+                {buttonText}
             </button>
             <ToastContainer theme='dark' />
         </form>
