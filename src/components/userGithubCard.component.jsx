@@ -19,13 +19,13 @@ export function UserGithubCardComponent(props) {
         getUserGithub()
     }, [])
     return (
-        <div className="grid  card rounded-box place-items-center mb-2">
-            <div className="bg-gray-600 w-full  flex items-center p-2 rounded-xl shadow ">
+        <div className="grid  glass card rounded-box place-items-center mb-2 ">
+            <div className=" w-full  flex items-center p-2 rounded-xl shadow hover:border-none">
                 <div className="flex items-center space-x-4">
                     <img src={user.avatar_url} alt="My profile" className="w-16 h-16 rounded-full" />
                 </div>
                 <div className="flex-grow p-3">
-                    <div className="font-semibold text-gray-200">
+                    <div className="font-semibold">
                         {user.login || ""}
                     </div>
                     <div className="text-sm text-blue-400">
