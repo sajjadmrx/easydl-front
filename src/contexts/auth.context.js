@@ -6,6 +6,8 @@ const AuthContext = createContext({
     setIsAuthenticated: () => { },
     statusLoading: false,
     setStatusLoading: () => { },
+    token: '',
+    setToken: () => { },
 });
 
 export default AuthContext;

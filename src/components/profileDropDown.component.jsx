@@ -1,4 +1,5 @@
 import { useContext, useEffect } from "react";
+import { Link } from "react-router-dom";
 import AuthContext from "../contexts/auth.context";
 import { CookieUtil } from "../utils/cookie.util";
 
@@ -20,10 +21,10 @@ export function ProfileDropDownComponent() {
                 </label>
                 <ul tabIndex="0" className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52">
                     <li>
-                        <a className="justify-between">
+                        <Link className="justify-between" to='/profile'>
                             پروفایل
                             <span className="badge badge-success">جدید</span>
-                        </a>
+                        </Link>
                     </li>
                     <li onClick={() => logoutHandler(authContext)}><a>خروج</a></li>
                 </ul>

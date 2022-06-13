@@ -11,6 +11,7 @@ import { Button, Modal } from 'react-daisyui'
 import { AxiosError } from "axios";
 import { axiosError } from "../../handlers/error.handler";
 import { toast } from "react-toastify";
+import ms from "ms";
 {/* <GoogleButtonComponent responseGoogle={(response) => responseGoogle(response, authContext, setProcessing, setShowModal)} /> */ }
 export function AuthModalComponent(props) {
     const show = props.show;
@@ -69,8 +70,8 @@ async function responseGoogle(response, authContext, setProcessing, setShowModal
         if (credential) {
             setProcessing(2)
             const result = await authService.sendGoogleToken(credential)
-
-            CookieUtil.set('token', result.data);
+            const expireDate = new Date(new Date().getTime() + ms('9d'));
+            CookieUtil.set('token', result.data, expireDate)
             setShowModal(false);
             setProcessing('auth');
             authContext.setIsAuthenticated(true);
