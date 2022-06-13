@@ -129,3 +129,12 @@ html[data-theme="dark"]::-webkit-scrollbar {
 ::-webkit-scrollbar-thumb:hover {
     background-color: #1d1d1d;
 }
+
+#g_a11y_announcement {
+    height: 0px !important;
+    right: 0px !important;
+    overflow: hidden !important;
+    position: none !important;
+    top: none !important;
+    width: 0px !important;
+}

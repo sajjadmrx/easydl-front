@@ -1,6 +1,6 @@
 export const AuthStore = {
     google: {
-        clientId: '556265327750-3ddpmheml102cmv9i3e4evvtfgfhrkpc.apps.googleusercontent.com',
+        clientId: '106953306800-fgei646g46vu8vos46gv4dk8smhh6sag.apps.googleusercontent.com',
         cookiePolicy: 'single_host_origin',
     }
 }

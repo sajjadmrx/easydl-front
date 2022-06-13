@@ -1,8 +1,10 @@
 import { useContext, useEffect } from "react";
 import AuthContext from "../contexts/auth.context";
+import { CookieUtil } from "../utils/cookie.util";
 
 export function ProfileDropDownComponent() {
     const user = useContext(AuthContext).user;
+    const authContext = useContext(AuthContext);
     const statusLoading = useContext(AuthContext).statusLoading;
     if (statusLoading) {
         return <div>
@@ -23,8 +25,12 @@ export function ProfileDropDownComponent() {
                             <span className="badge badge-success">جدید</span>
                         </a>
                     </li>
-                    <li><a>خروج</a></li>
+                    <li onClick={() => logoutHandler(authContext)}><a>خروج</a></li>
                 </ul>
             </div>
         )
+}
+function logoutHandler(authContext) {
+    authContext.setIsAuthenticated(false)
+    CookieUtil.delete('token')
 }

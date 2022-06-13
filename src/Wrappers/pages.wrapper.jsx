@@ -7,6 +7,7 @@ import axios from 'axios'
 import { CookieUtil } from "../utils/cookie.util";
 import { AuthModalComponent } from "../components/modals/auth.modal";
 import { AuthModalContext } from "../contexts/authModal.context";
+import { userService } from "../service/index.service";
 export function PageWrapper(props) {
     const [isAuthenticated, setIsAuthenticated] = useState(CookieUtil.has('token'));
     const [user, setUser] = useState({});
@@ -30,19 +31,16 @@ export function PageWrapper(props) {
     useEffect(() => {
         async function getUsetWithToken() {
             setStatusLoading(true)
-            setTimeout(async () => {
-                const result = await axios.get('https://api.github.com/users/sajjadmrx')
-                const userFetched = result.data
-                const user = {
-                    avatar: userFetched.avatar_url,
-                    name: userFetched.name,
-                }
-                setUser(user)
-                setStatusLoading(false)
-            }, 3000)
+            const profile = await userService.getProfile()
+            console.log('profile', profile)
+            setUser(profile)
+            setStatusLoading(false)
         }
         if (isAuthenticated)
             getUsetWithToken();
+        else {
+            setUser({})
+        }
     }, [isAuthenticated]);
 
 

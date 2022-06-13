@@ -1,4 +1,5 @@
 
+import { hostStore } from '../store/host.store';
 import myAxios from '../utils/axios.util';
 
 
@@ -12,6 +13,11 @@ const headers = {
 
 export class ApiService {
     constructor() {
+    }
+
+    setToken(token) {
+        //bearer token
+        myAxios.defaults.headers.common['Authorization'] = 'Bearer ' + token;
     }
 
     async post(url, body) {
@@ -28,7 +34,7 @@ export class ApiService {
                 params: params,
                 headers
             })
-            return result
+            return result.data
         } catch (error) {
             throw error
         }

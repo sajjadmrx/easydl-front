@@ -16,4 +16,8 @@ export class CookieUtil {
     static get(name) {
         return Cookies.get(name) || null;
     }
+
+    static delete(name) {
+        Cookies.remove(name);
+    }
 }
