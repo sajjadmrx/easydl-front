@@ -2,12 +2,11 @@ import React, { useState, useEffect, } from "react";
 import { WarningAlertComponent } from "./alerts.component";
 import { MusicComponent } from "./music.component";
 import { ApiService } from "../service/api.service";
-import { SpotifyService } from "../service/spotify.service";
 import { toast } from "react-toastify";
 import { axiosError } from "../handlers/error.handler";
+import { spotifyService } from "../service/index.service";
 
-const apiService = new ApiService();
-const spotifyService = new SpotifyService(apiService);
+
 export function SongsComponent(props) {
     const songs = props.songs;
     const [isDownloading, setIsDownloading] = useState(false);

@@ -2,17 +2,10 @@ import React, { useEffect } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { axiosError } from '../handlers/error.handler';
-import { ApiService } from '../service/api.service';
-import { RadioJavanService } from '../service/rj.service';
-import { SoundCloudService } from '../service/soundCloud.service';
-import { SpotifyService } from '../service/spotify.service';
+import { radioJavanService, soundcloudService, spotifyService } from '../service/index.service';
+
 import { isLink, isRjLink, isSoundcloudLink, isSpotifyLink } from '../utils/regex.util';
 import { ErrroAlertComponent } from './alerts.component';
-
-const apiService = new ApiService()
-const spotifyService = new SpotifyService(apiService)
-const rjService = new RadioJavanService(apiService)
-const soundCloudService = new SoundCloudService(apiService)
 
 
 export function SearchForm(props) {
@@ -65,7 +58,7 @@ async function submitHandler(e, setSongs, setErrorState, setButtonText) {
     try {
         if (targetUrl == 'rj') {
             button.classList.add('loading');
-            await rjService.download(value, (progress) => {
+            await radioJavanService.download(value, (progress) => {
                 setButtonText(`${progress}% در حال دانلود ...`)
                 if (progress == 100) {
                     setButtonText('')
@@ -76,7 +69,7 @@ async function submitHandler(e, setSongs, setErrorState, setButtonText) {
         }
         else if (targetUrl == 'soundcloud') {
             button.classList.add('loading');
-            await soundCloudService.download(value, (progress) => {
+            await soundcloudService.download(value, (progress) => {
                 setButtonText(`${progress}% در حال دانلود ...`)
                 if (progress == 100) {
                     setButtonText('')
