@@ -28,19 +28,13 @@ export function NavbarComponent() {
                 <a className="btn btn-ghost normal-case text-xl">{infoStore.brandName.fa}</a>
             </div>
             <div className="navbar-end">
-                <div className="flex">
-                    <div className="flex-1">
-                        <ThemeSelectorComponent />
-                    </div>
-                    <div className="flex">
-                        {isAuthenticated ? <ProfileDropDownComponent /> :
-                            <button className="btn btn-ghost" onClick={() => setShowModal(true)}>
-                                <FontAwesomeIcon icon={['fas', 'sign-in-alt']} className='mr-2' />
-                                ورود
-                            </button>
-                        }
-                    </div>
-                </div>
+                <ThemeSelectorComponent />
+                {isAuthenticated ? <ProfileDropDownComponent /> :
+                    <button className="btn btn-ghost" onClick={() => setShowModal(true)}>
+                        <FontAwesomeIcon icon={['fas', 'sign-in-alt']} className='mr-2' />
+                        ورود
+                    </button>
+                }
             </div>
 
         </div>

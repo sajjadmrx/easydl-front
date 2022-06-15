@@ -5,8 +5,13 @@ export class UserService {
         this.apiService = apiService;
     }
 
-    getProfile() {
+    async getProfile() {
         this.apiService.setToken(CookieUtil.get('token'));
         return this.apiService.get('users/@me/profile');
+    }
+    async getDownloads() {
+        this.apiService.setToken(CookieUtil.get('token'));
+        const result = await this.apiService.get('users/@me/downloads');
+        return result.data;
     }
 }
