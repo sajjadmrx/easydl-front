@@ -5,12 +5,15 @@ import { ApiService } from "../service/api.service";
 import { toast } from "react-toastify";
 import { axiosError } from "../handlers/error.handler";
 import { spotifyService } from "../service/index.service";
+import { InputSearchValueContext } from "../contexts/inputSearchValue.context";
 
 
 export function SongsComponent(props) {
     const songs = props.songs;
     const [isDownloading, setIsDownloading] = useState(false);
     const [errorState, setErrorState] = useState(false);
+    const { inputSearchValue, setinputSearchValue } = React.useContext(InputSearchValueContext)
+
     useEffect(() => {
         if (errorState && errorState != '') {
             toast.error(errorState)
@@ -23,7 +26,7 @@ export function SongsComponent(props) {
                 {songs.map((song, index) => {
 
                     return <MusicComponent song={song} key={index + 1} downloadHandler={(setValueProgress, setWiting) => {
-                        downloadHandler(song.id, song.platforms, isDownloading, setIsDownloading, setValueProgress, setWiting, setErrorState)
+                        downloadHandler(song.id, song.platforms, isDownloading, setIsDownloading, setValueProgress, setWiting, setErrorState, inputSearchValue)
                     }} />
                 })}
             </div>
@@ -31,7 +34,7 @@ export function SongsComponent(props) {
 
     )
 }
-async function downloadHandler(id, platform, isDownloading, setIsDownloading, setValueProgress, setWiting, setErrorState) {
+async function downloadHandler(id, platform, isDownloading, setIsDownloading, setValueProgress, setWiting, setErrorState, inputSearchValue) {
     try {
         if (isDownloading) {
             return toast.info("لطفا تا پایان دانلود صبر کنید")
@@ -39,7 +42,8 @@ async function downloadHandler(id, platform, isDownloading, setIsDownloading, se
         setWiting(true);
 
         setIsDownloading(true)
-        await spotifyService.download(id, (res) => {
+        console.log({ id, spotifyUrl: inputSearchValue })
+        await spotifyService.download({ id, spotifyUrl: inputSearchValue }, (res) => {
             if (res == 100) {
                 setValueProgress(0)
                 setIsDownloading(false)

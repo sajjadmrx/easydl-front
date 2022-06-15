@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { InputSearchValueContext } from '../contexts/inputSearchValue.context';
 import { axiosError } from '../handlers/error.handler';
 import { radioJavanService, soundcloudService, spotifyService } from '../service/index.service';
 
@@ -12,6 +13,7 @@ export function SearchForm(props) {
     const setSongs = props.setSongs;
     const [errorState, setErrorState] = React.useState(false);
     const [buttonText, setButtonText] = React.useState('');
+    const { setinputSearchValue } = React.useContext(InputSearchValueContext);
     useEffect(() => {
         if (!buttonText) {
             setButtonText('📥    جستجو و دانلود');
@@ -23,7 +25,7 @@ export function SearchForm(props) {
         }
     }, [errorState])
     return (
-        <form className="flex flex-col items-center" onSubmit={(e) => submitHandler(e, setSongs, setErrorState, setButtonText)}>
+        <form className="flex flex-col items-center" onSubmit={(e) => submitHandler(e, setSongs, setErrorState, setButtonText, setinputSearchValue)}>
             <input type="text" placeholder="لینک مورد نظر را وارد کنید..." className="input w-full max-w-xs mb-2 input-bordered input-accent" />
             {errorState && <ErrroAlertComponent className='mb-2' text={errorState} />}
             <button className="btn btn-wide ">
@@ -33,7 +35,7 @@ export function SearchForm(props) {
         </form>
     )
 }
-async function submitHandler(e, setSongs, setErrorState, setButtonText) {
+async function submitHandler(e, setSongs, setErrorState, setButtonText, setinputSearchValue) {
     e.preventDefault();
     setSongs([]);
     setErrorState(false);
@@ -88,6 +90,7 @@ async function submitHandler(e, setSongs, setErrorState, setButtonText) {
             const data = await spotifyService.search(value)
             setSongs(data);
             button.classList.remove('loading');
+            setinputSearchValue(value);
             return;
         }
         else {

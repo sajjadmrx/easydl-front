@@ -25,9 +25,10 @@ export class SpotifyService {
             throw error;
         }
     }
-    download(id, cbProgress) {
+    download({ id, spotifyUrl }, cbProgress) {
         return this.apiService.download('download/spotify', {
-            id
+            id,
+            spotifyUrl
         }, cbProgress)
     }
 }
