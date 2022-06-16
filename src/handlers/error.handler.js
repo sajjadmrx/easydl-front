@@ -17,7 +17,5 @@ export function axiosError(error, setStateError) {
 
         setStateError("خطایی در ارتباط با سرور رخ داده است");
     } else {
-        console.log('Error', error.message);
     }
-    console.log(error);
 }

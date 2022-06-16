@@ -4,4 +4,5 @@ export const ResponseMessages = {
     "NO_MUSIC_FOUND": "موزیکی یافت نشد",
     "PLAY_LIST_NOT_SUPPORTED": "درحال حاضر پلی لیست پشتیبانی نمیشود",
     "SERVER_ERROR": "خطایی در ارتباط با سرور رخ داده است",
+    "LIMIT": "لطفا تا پایان محدودیت صبر کنید یا وارد حساب کاربری بشید"
 }

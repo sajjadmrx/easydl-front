@@ -6,7 +6,8 @@ export class UserService {
     }
 
     async getProfile() {
-        this.apiService.setToken(CookieUtil.get('token'));
+        const token = CookieUtil.get('token')
+        this.apiService.setToken(token);
         return this.apiService.get('users/@me/profile');
     }
     async getDownloads() {

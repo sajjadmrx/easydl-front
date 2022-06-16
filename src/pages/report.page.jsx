@@ -99,12 +99,10 @@ async function submitHandler(e, isLoading, setIsLoading) {
     setIsLoading(true)
     try {
         const result = await apiService.post('report', data)
-        console.log(result)
         toast.success("گزارش شما با موفقیت ارسال شد.",
             { rtl: true });
         form.reset();
     } catch (error) {
-        console.log(error)
     }
     finally {
         setIsLoading(false)

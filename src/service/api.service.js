@@ -16,8 +16,7 @@ export class ApiService {
     }
 
     setToken(token) {
-        //bearer token
-        myAxios.defaults.headers.common['Authorization'] = 'Bearer ' + token;
+        myAxios.defaults.headers['Authorization'] = 'Bearer ' + token;
     }
 
     async post(url, body) {

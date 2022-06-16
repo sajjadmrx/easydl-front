@@ -42,7 +42,6 @@ async function downloadHandler(id, platform, isDownloading, setIsDownloading, se
         setWiting(true);
 
         setIsDownloading(true)
-        console.log({ id, spotifyUrl: inputSearchValue })
         await spotifyService.download({ id, spotifyUrl: inputSearchValue }, (res) => {
             if (res == 100) {
                 setValueProgress(0)

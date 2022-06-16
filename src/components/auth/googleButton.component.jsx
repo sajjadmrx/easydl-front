@@ -18,5 +18,4 @@ export function GoogleButtonComponent(props) {
 
 
 function onFailure(response) {
-    console.log('error', response);
 }
