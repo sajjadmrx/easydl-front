@@ -58,6 +58,8 @@ export function AuthModalComponent(props) {
                             </a>
                         </div>
                     </div>
+
+
                 </div>
             </div>
         </Modal>

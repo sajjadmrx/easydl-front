@@ -12,6 +12,7 @@ import { infoStore } from "../store/info.store";
 import { PageWrapper } from "../Wrappers/pages.wrapper";
 import { PlatFormsComponent } from "../components/platforms.component";
 import { InputSearchValueContext } from "../contexts/inputSearchValue.context";
+import { UpdatesModalComponent } from "../components/modals/updates.modal";
 
 export function HomePage() {
     const loadingContext = useContext(LoadingContext);
@@ -61,6 +62,7 @@ export function HomePage() {
                             <SongsComponent songs={songs} />
                         </div>
                     </InputSearchValueContext.Provider>
+                    <UpdatesModalComponent />
                 </main>
 
 
