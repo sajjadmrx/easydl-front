@@ -5,7 +5,7 @@ import { InputSearchValueContext } from '../contexts/inputSearchValue.context';
 import { axiosError } from '../handlers/error.handler';
 import { radioJavanService, soundcloudService, spotifyService } from '../service/index.service';
 
-import { isLink, isRjLink, isSoundcloudLink, isSpotifyLink } from '../utils/regex.util';
+import { isLink, isRjLinkMp3, isRjLinkPodCast, isSoundcloudLink, isSpotifyLink } from '../utils/regex.util';
 import { ErrroAlertComponent } from './alerts.component';
 
 
@@ -47,7 +47,8 @@ async function submitHandler(e, setSongs, setErrorState, setButtonText, setinput
     }
     let targetUrl = ''
     switch (true) {
-        case isRjLink(value): targetUrl = 'rj'; break;
+        case isRjLinkMp3(value): targetUrl = 'rj'; break;
+        case isRjLinkPodCast(value): targetUrl = 'rj-podcast'; break;
         case isSpotifyLink(value): targetUrl = 'spotify'; break;
         case isSoundcloudLink(value): targetUrl = 'soundcloud'; break;
         default: targetUrl = 'unknown';
@@ -60,7 +61,18 @@ async function submitHandler(e, setSongs, setErrorState, setButtonText, setinput
     try {
         if (targetUrl == 'rj') {
             button.classList.add('loading');
-            await radioJavanService.download(value, (progress) => {
+            await radioJavanService.downloadMp3(value, (progress) => {
+                setButtonText(`${progress}% در حال دانلود ...`)
+                if (progress == 100) {
+                    setButtonText('')
+                    button.classList.remove('loading');
+                }
+            })
+            button.classList.remove('loading');
+        }
+        if (targetUrl == 'rj-podcast') {
+            button.classList.add('loading');
+            await radioJavanService.downloadPodCast(value, (progress) => {
                 setButtonText(`${progress}% در حال دانلود ...`)
                 if (progress == 100) {
                     setButtonText('')

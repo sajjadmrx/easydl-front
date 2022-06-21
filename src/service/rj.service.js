@@ -4,8 +4,14 @@ export class RadioJavanService {
         this.apiService = apiService;
     }
 
-    download(url, cbProgress) {
-        return this.apiService.download('download/rj', {
+    downloadMp3(url, cbProgress) {
+        return this.apiService.download('download/rj/mp3', {
+            url: url
+        }, cbProgress)
+    }
+
+    downloadPodCast(url, cbProgress) {
+        return this.apiService.download('download/rj/podcast', {
             url: url
         }, cbProgress)
     }
