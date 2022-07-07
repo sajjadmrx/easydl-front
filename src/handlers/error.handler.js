@@ -4,12 +4,16 @@ import { ResponseMessages } from "../constants/messages.contant";
 export function axiosError(error, setStateError) {
     if (error.response && error.response.status > 0) {
 
-        let text = error.response.data;
-
-        if (typeof text == 'object') {
+        let item = error.response.data;
+        console.log(item)
+        let text;
+        if (typeof item == 'object' && !item.message) {
             const enc = new TextDecoder("utf-8");
-            text = enc.decode(text);
+            text = enc.decode(item);
             text = JSON.parse(text).message;
+        }
+        else if (item.message) {
+            text = item.message
         }
 
         setStateError(ResponseMessages[text] || "خطایی رخ داده است");
