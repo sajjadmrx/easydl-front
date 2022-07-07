@@ -11,7 +11,7 @@ const myAxios = axios.create({
 })
 myAxios.interceptors.request.use((config) => {
     let token = CookieUtil.get('token')
-    console.log("TOKEN: ", token, config)
+
     if (token) {
         config.headers.credentials = 'include';
         config.headers.Authorization = `Bearer ${token}`;
