@@ -7,9 +7,19 @@ const myAxios = axios.create({
         'Access-Control-Allow-Origin': '*',
         'Access-Control-Allow-Methods': 'GET,HEAD,PUT,PATCH,POST,DELETE',
         'Access-Control-Allow-Headers': 'Origin, Content-Type, Authorization,Accept',
-        'Authorization': 'Bearer ' + CookieUtil.get('token') || '',
     }
 })
-
+myAxios.interceptors.request.use((config) => {
+    let token = CookieUtil.get('token')
+    console.log("TOKEN: ", token, config)
+    if (token) {
+        config.headers.credentials = 'include';
+        config.headers.Authorization = `Bearer ${token}`;
+        config.headers['Access-Control-Allow-Origin'] = '*';
+    }
+    else if (config.url != 'users/@me/profile')
+        config.headers.Authorization = null;
+    return config;
+})
 
 export default myAxios;

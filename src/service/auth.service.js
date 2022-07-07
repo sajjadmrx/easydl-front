@@ -5,7 +5,7 @@ export class AuthService {
 
     async sendGoogleToken(token) {
         try {
-            const result = await this.apiService.post('/auth/google', { token })
+            const result = await this.apiService.postWithAxios('/auth/google', { token })
             return result
         } catch (error) {
             throw error

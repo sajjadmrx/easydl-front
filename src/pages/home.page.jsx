@@ -13,9 +13,11 @@ import { PageWrapper } from "../Wrappers/pages.wrapper";
 import { PlatFormsComponent } from "../components/platforms.component";
 import { InputSearchValueContext } from "../contexts/inputSearchValue.context";
 import { UpdatesModalComponent } from "../components/modals/updates.modal";
+import AuthContext from "../contexts/auth.context";
 
 export function HomePage() {
     const loadingContext = useContext(LoadingContext);
+    const authContext = useContext(AuthContext)
     const [songs, setSongs] = useState([]);
     const [showState, setShowState] = useState(false);
     const [inputSearchValue, setinputSearchValue] = useState('');
@@ -25,6 +27,8 @@ export function HomePage() {
         if (songs.length > 0)
             window.scrollTo(0, 350);
     }, [songs]);
+
+
     return (
         <PageWrapper>
             <div className=" shadow-md rounded-3xl lg:flex-row dark:bg-zinc-900/95">

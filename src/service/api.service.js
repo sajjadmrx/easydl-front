@@ -1,4 +1,5 @@
 
+import axios from 'axios';
 import { hostStore } from '../store/host.store';
 import myAxios from '../utils/axios.util';
 
@@ -27,6 +28,16 @@ export class ApiService {
             throw error
         }
     }
+
+    async postWithAxios(url, body) {
+        try {
+            const result = await axios.post(hostStore.url + url, body, { headers })
+            return result.data
+        } catch (error) {
+            throw error
+        }
+    }
+
     async get(url, params) {
         try {
             const result = await myAxios.get(url, {

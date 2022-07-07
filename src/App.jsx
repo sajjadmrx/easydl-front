@@ -26,6 +26,7 @@ function App() {
     token,
     setToken
   }
+
   return (
     <AuthContext.Provider value={AuthContextValues}>
 

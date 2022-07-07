@@ -10,6 +10,7 @@ import { Table, Avatar, Badge } from "react-daisyui";
 import moment from "moment";
 import { userService } from "../service/index.service";
 import { HistoryTable } from "../components/profile/history-table.component";
+import { CookieUtil } from "../utils/cookie.util";
 export function ProfilePage() {
   const loadingContext = useContext(LoadingContext);
   const [downloads, setDownloads] = useState([]);
@@ -26,7 +27,7 @@ export function ProfilePage() {
     getDownloads();
   }, []);
   const authContext = useContext(AuthContext);
-  if (!authContext.isAuthenticated) {
+  if (!authContext.isAuthenticated || !CookieUtil.has('token')) {
     return <Redirect to="/" />;
   }
 
