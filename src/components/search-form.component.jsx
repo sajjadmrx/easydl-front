@@ -69,6 +69,7 @@ async function submitHandler(e, setSongs, setErrorState, setButtonText, setinput
                 }
             })
             button.classList.remove('loading');
+            return;
         }
         if (targetUrl == 'rj-podcast') {
             button.classList.add('loading');
@@ -80,6 +81,8 @@ async function submitHandler(e, setSongs, setErrorState, setButtonText, setinput
                 }
             })
             button.classList.remove('loading');
+            return;
+
         }
         else if (targetUrl == 'soundcloud') {
             button.classList.add('loading');
