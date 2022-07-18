@@ -1,5 +1,6 @@
 
 import axios from 'axios';
+import { axiosError } from '../handlers/error.handler';
 import { hostStore } from '../store/host.store';
 import myAxios from '../utils/axios.util';
 
@@ -69,17 +70,41 @@ export class ApiService {
             const url = window.URL.createObjectURL(blob);
             const link = document.createElement('a');
             link.href = url;
-            const filename = result.headers['filename'];
+            const filename = getFileName(result.headers['content-disposition']) || String(new Date.now()) + '.mp3'
+            console.log(filename)
             link.setAttribute('download', filename);
             link.setAttribute('target', '_blank');
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
         } catch (error) {
+            axiosError(error, (res) => { alert(res) })
             throw error
         }
     }
 
 
 
+}
+
+function getFileName(disposition) {
+    const utf8FilenameRegex = /filename\*=UTF-8''([\w%\-\.]+)(?:; ?|$)/i;
+    const asciiFilenameRegex = /^filename=(["']?)(.*?[^\\])\1(?:; ?|$)/i;
+
+    let fileName = null;
+    if (utf8FilenameRegex.test(disposition)) {
+        fileName = decodeURIComponent(utf8FilenameRegex.exec(disposition)[1]);
+    } else {
+        // prevent ReDos attacks by anchoring the ascii regex to string start and
+        //  slicing off everything before 'filename='
+        const filenameStart = disposition.toLowerCase().indexOf('filename=');
+        if (filenameStart >= 0) {
+            const partialDisposition = disposition.slice(filenameStart);
+            const matches = asciiFilenameRegex.exec(partialDisposition);
+            if (matches != null && matches[2]) {
+                fileName = matches[2];
+            }
+        }
+    }
+    return fileName;
 }

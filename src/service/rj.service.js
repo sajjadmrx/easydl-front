@@ -4,15 +4,23 @@ export class RadioJavanService {
         this.apiService = apiService;
     }
 
-    downloadMp3(url, cbProgress) {
-        return this.apiService.download('download/rj/mp3', {
-            url: url
-        }, cbProgress)
+    async downloadMp3(url, cbProgress) {
+        try {
+            await this.apiService.download('download/rj/mp3', {
+                url: url
+            }, cbProgress)
+        } catch (error) {
+            throw error
+        }
     }
 
-    downloadPodCast(url, cbProgress) {
-        return this.apiService.download('download/rj/podcast', {
-            url: url
-        }, cbProgress)
+    async downloadPodCast(url, cbProgress) {
+        try {
+            await this.apiService.download('download/rj/podcast', {
+                url: url
+            }, cbProgress)
+        } catch (error) {
+            throw error
+        }
     }
 }

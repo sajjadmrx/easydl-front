@@ -1,5 +1,4 @@
 import Cookies from 'js-cookie';
-import ms from 'ms'
 export class CookieUtil {
     static has(name) {
         const cookie = Cookies.get(name);

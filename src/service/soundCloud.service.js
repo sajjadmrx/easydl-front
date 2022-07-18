@@ -4,9 +4,13 @@ export class SoundCloudService {
         this.apiService = apiService;
     }
 
-    download(url, cbProgress) {
-        return this.apiService.download(`download/soundcloud`, {
-            url: url
-        }, cbProgress)
+    async download(url, cbProgress) {
+        try {
+            await this.apiService.download(`download/soundcloud`, {
+                url: url
+            }, cbProgress)
+        } catch (error) {
+            throw error
+        }
     }
 }

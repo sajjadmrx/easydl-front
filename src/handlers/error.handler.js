@@ -1,7 +1,7 @@
 import { ResponseMessages } from "../constants/messages.contant";
 
 
-export function axiosError(error, setStateError) {
+export function axiosError(error, cb) {
     if (error.response && error.response.status > 0) {
 
         let item = error.response.data;
@@ -14,11 +14,10 @@ export function axiosError(error, setStateError) {
         else if (item.message) {
             text = item.message
         }
-
-        setStateError(ResponseMessages[text] || "خطایی رخ داده است");
+        cb(ResponseMessages[text] || "خطایی رخ داده است");
     } else if (error.request) {
 
-        setStateError("خطایی در ارتباط با سرور رخ داده است");
+        cb("خطایی در ارتباط با سرور رخ داده است");
     } else {
     }
 }
