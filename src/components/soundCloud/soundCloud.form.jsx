@@ -5,17 +5,20 @@ import { useState } from "react";
 import { FormContext } from "../../contexts/form.context";
 import { soundcloudService } from "../../service/index.service";
 import { isLink } from "../../utils/regex.util";
+import axios, {AxiosError} from "axios";
 
 export function SoundCloudFormComponent(props) {
     const [buttonText, setButtonText] = useState('دانلود')
     const [waiting, setWaiting] = useState(false)
     const formContext = useContext(FormContext)
     useEffect(() => {
-        if (buttonText == null)
+        if (!buttonText) {
             setButtonText('دانلود')
+            formContext.setLoading(false)
+        }
     }, [buttonText])
     return (
-        <form className="flex flex-col items-center" onSubmit={(e) => downloadHandler(e, setWaiting, setButtonText, formContext)}>
+        <form className="flex flex-col items-center" onSubmit={(e) => downloadHandler(e, setWaiting, setButtonText, formContext)} id={"soundCloudForm"}>
             <input type="text" placeholder="لینک سینگل موزیک خود را وارد کنید..." className="input input-bordered input-warning  w-full max-w-xs mb-2" />
             <button className={`btn btn-wide ${waiting && "loading"}`}>
                 {!waiting && <FontAwesomeIcon icon={['fas', 'download']} className='mr-2' />}
@@ -30,7 +33,7 @@ function downloadHandler(e, setWaiting, setButtonText, formContext) {
         e.preventDefault();
         if (formContext.loading) return alert('لطفا تا پایان دانلود صبر کنید...')
         let value = e.target.querySelector('input').value;
-        if (!value || !isLink(value)) return;
+        if (!value || !isLink(value)) return alert('یک لینک معتبر وارد کنید')
         setWaiting(true)
         setButtonText("لطفا صبر کنید...")
         formContext.setLoading(true)
@@ -38,13 +41,12 @@ function downloadHandler(e, setWaiting, setButtonText, formContext) {
             if (prog == 100) {
                 setWaiting(false)
                 setButtonText(null)
-                formContext.setLoading(false)
             }
         })
     } catch (error) {
         setWaiting(false)
         setButtonText(null)
-        formContext.setLoading(false)
+        AxiosError(error,(er)=>alert(er))
 
     }
     finally {

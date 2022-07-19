@@ -9,13 +9,15 @@ import { isLink, isRjLinkMp3, isRjLinkPodCast } from "../../utils/regex.util";
 export function RadioJavanFormComponent(props) {
     const [buttonText, setButtonText] = useState('دانلود')
     const [waiting, setWaiting] = useState(false)
-    const fromContext = useContext(FormContext)
+    const formContext = useContext(FormContext)
     useEffect(() => {
-        if (buttonText == null)
+        if (!buttonText) {
             setButtonText('دانلود')
+            formContext.setLoading(false)
+        }
     }, [buttonText])
     return (
-        <form className="flex flex-col items-center" onSubmit={(e) => downloadHandler(e, setWaiting, setButtonText, fromContext)}>
+        <form className="flex flex-col items-center" onSubmit={(e) => downloadHandler(e, setWaiting, setButtonText, formContext)}>
             <input type="text" placeholder="لینک موزیک یا پادکست را وارد کنید..." className="input input-bordered input-error   w-full max-w-xs mb-2" />
             <button className={`btn btn-wide ${waiting && "loading"}`}>
                 {!waiting && <FontAwesomeIcon icon={['fas', 'download']} className='mr-2' />}
@@ -25,11 +27,11 @@ export function RadioJavanFormComponent(props) {
     )
 }
 
-async function downloadHandler(e, setWaiting, setButtonText, fromContext) {
+async function downloadHandler(e, setWaiting, setButtonText, formContext) {
     try {
 
         e.preventDefault();
-        if (fromContext.loading) return alert('لطفا تا پایان دانلود صبر کنید')
+        if (formContext.loading) return alert('لطفا تا پایان دانلود صبر کنید')
         let value = e.target.querySelector('input').value;
         if (!value || !isLink(value)) return;
 
@@ -47,7 +49,7 @@ async function downloadHandler(e, setWaiting, setButtonText, fromContext) {
         }
 
         setWaiting(true)
-        fromContext.setLoading(true)
+        formContext.setLoading(true)
         setButtonText("لطفا صبر کنید...")
         if (targetUrl == 'rj') {
 
@@ -74,7 +76,7 @@ async function downloadHandler(e, setWaiting, setButtonText, fromContext) {
         setButtonText(null)
     }
     finally {
-        fromContext.setLoading(false)
+
     }
 }
 

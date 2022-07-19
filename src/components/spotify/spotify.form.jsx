@@ -15,6 +15,8 @@ export function SpotifyFormComponent(props) {
     useEffect(() => {
         if (!buttonText) {
             setButtonText('دانلود');
+            fromContext.setLoading(false)
+            setWaiting(false)
         }
     }, [buttonText])
     useEffect(() => {
@@ -57,36 +59,42 @@ async function submitHandler(e, setSongs, setErrorState, setButtonText, setWaiti
         if (targetUrl == 'spotify') {
             setWaiting(true)
             fromContext.setLoading(true)
-            button.classList.add('loading');
+
             const indexOf = value.indexOf("&")
             if (indexOf > 0) {
                 value = value.substring(0, indexOf)
             }
-
+            button.classList.add('loading');
+            setButtonText('لطفا صبر کنید...')
             const data = await spotifyService.search(value)
 
             if (data.length > 0) {
                 await spotifyService.download({ id: data[0].id, spotifyUrl: value }, (prog) => {
                     if (prog == 100) {
                         setButtonText(null)
-                    } else
+                        button.classList.remove('loading');
+                    } else {
                         setButtonText(`${prog} در حال دانلود...`)
+                    }
                 })
             }
-            button.classList.remove('loading');
-
+            else {
+                setButtonText(null)
+                button.classList.remove('loading');
+            }
         }
         else {
             setWaiting(false)
             alert('لطفا یک لینک معتبر وارد کنید')
         }
     } catch (error) {
-        axiosError(error, setErrorState)
+        console.log(error)
+        axiosError(error, (err)=>alert(err))
     } finally {
-        button.classList.remove('loading');
-        setButtonText('')
+     /*   button.classList.remove('loading');*/
+  /*      setButtonText('')
         setWaiting(false)
-        fromContext.setLoading(false)
+        fromContext.setLoading(false)*/
     }
 }
 
