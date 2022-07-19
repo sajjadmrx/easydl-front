@@ -1,18 +1,21 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect } from "react";
+import { useContext } from "react";
 import { useState } from "react";
+import { FormContext } from "../../contexts/form.context";
 import { radioJavanService, soundcloudService } from "../../service/index.service";
 import { isLink, isRjLinkMp3, isRjLinkPodCast } from "../../utils/regex.util";
 
 export function RadioJavanFormComponent(props) {
     const [buttonText, setButtonText] = useState('دانلود')
     const [waiting, setWaiting] = useState(false)
+    const fromContext = useContext(FormContext)
     useEffect(() => {
         if (buttonText == null)
             setButtonText('دانلود')
     }, [buttonText])
     return (
-        <form className="flex flex-col items-center" onSubmit={(e) => downloadHandler(e, setWaiting, setButtonText)}>
+        <form className="flex flex-col items-center" onSubmit={(e) => downloadHandler(e, setWaiting, setButtonText, fromContext)}>
             <input type="text" placeholder="لینک موزیک یا پادکست را وارد کنید..." className="input input-bordered input-error   w-full max-w-xs mb-2" />
             <button className={`btn btn-wide ${waiting && "loading"}`}>
                 {!waiting && <FontAwesomeIcon icon={['fas', 'download']} className='mr-2' />}
@@ -22,10 +25,11 @@ export function RadioJavanFormComponent(props) {
     )
 }
 
-async function downloadHandler(e, setWaiting, setButtonText) {
+async function downloadHandler(e, setWaiting, setButtonText, fromContext) {
     try {
 
         e.preventDefault();
+        if (fromContext.loading) return alert('لطفا تا پایان دانلود صبر کنید')
         let value = e.target.querySelector('input').value;
         if (!value || !isLink(value)) return;
 
@@ -43,6 +47,7 @@ async function downloadHandler(e, setWaiting, setButtonText) {
         }
 
         setWaiting(true)
+        fromContext.setLoading(true)
         setButtonText("لطفا صبر کنید...")
         if (targetUrl == 'rj') {
 
@@ -67,6 +72,9 @@ async function downloadHandler(e, setWaiting, setButtonText) {
     } catch (error) {
         setWaiting(false)
         setButtonText(null)
+    }
+    finally {
+        fromContext.setLoading(false)
     }
 }
 

@@ -30,7 +30,7 @@ export function HomePage() {
         <PageWrapper>
             <div className=" shadow-md rounded-3xl lg:flex-row dark:bg-zinc-900/95">
 
-                <main className="p-6 lg:py-8 lg:px-10 rounded-3xl dark:bg-zinc-900/95">
+                <main className=" rounded-3xl dark:bg-zinc-900/95">
                     <FormContext.Provider value={{ inputValue, setinputValue, setLoading, loading }}>
 
                         <div className="hero min-h-screen ">
@@ -41,11 +41,12 @@ export function HomePage() {
                                         با ایزی دانلود به صورت رایگان با بهترین کیفیت دانلود کنیـد
                                     </p>
                                     <PlatformsTab />
-
                                 </div>
+
                                 {showState && <DiscordModal show={showState} setShow={setShowState} timeout={ms('3s')} />}
                             </div>
                         </div>
+
                     </FormContext.Provider>
                     <UpdatesModalComponent />
                 </main>

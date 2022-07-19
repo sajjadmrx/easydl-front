@@ -13,6 +13,9 @@ import { faMusic } from '@fortawesome/fontawesome-free-solid';
 import { SpotifyFormComponent } from './spotify/spotify.form';
 import { SoundCloudFormComponent } from './soundCloud/soundCloud.form';
 import { RadioJavanFormComponent } from './radioJavan/radioJavan.form';
+import { SpotifyComponent } from './spotify/spotify.component';
+import { SoundCloudComponent } from './soundCloud/soundCloud.component';
+import { RadioJavanComponent } from './radioJavan/radioJavan.component';
 
 export function PlatformsTab(props) {
     return (
@@ -26,20 +29,20 @@ export function PlatformsTab(props) {
                 icon={() => <FontAwesomeIcon icon={faSpotify} className="mr-2" />}
                 active={true}
             >
-                <SpotifyFormComponent></SpotifyFormComponent>
+                <SpotifyComponent />
             </Tabs.Item>
             <Tabs.Item
                 title="سوند کلاود"
                 icon={() => <FontAwesomeIcon icon={faSoundcloud} className="mr-2" />}
             >
-                <SoundCloudFormComponent />
+                <SoundCloudComponent />
             </Tabs.Item>
             <Tabs.Item
                 active={true}
                 title="رادیو جوان"
                 icon={() => <FontAwesomeIcon icon={faMusic} className="mr-2" />}
             >
-                <RadioJavanFormComponent />
+                <RadioJavanComponent />
             </Tabs.Item>
 
 

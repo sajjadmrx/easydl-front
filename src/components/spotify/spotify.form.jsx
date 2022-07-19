@@ -5,13 +5,16 @@ import { spotifyService } from '../../service/index.service';
 import { axiosError } from '../../handlers/error.handler';
 import { isLink, isSpotifyLink } from '../../utils/regex.util';
 import { useEffect } from 'react';
+import { FormContext } from '../../contexts/form.context';
 export function SpotifyFormComponent(props) {
     const setSongs = props.setSongs;
     const [errorState, setErrorState] = React.useState(false);
     const [buttonText, setButtonText] = React.useState('');
+    const [waiting, setWaiting] = React.useState(false)
+    const fromContext = React.useContext(FormContext)
     useEffect(() => {
         if (!buttonText) {
-            setButtonText('جستجو و دانلود');
+            setButtonText('دانلود');
         }
     }, [buttonText])
     useEffect(() => {
@@ -20,19 +23,20 @@ export function SpotifyFormComponent(props) {
         }
     }, [errorState])
     return (
-        <form className="flex flex-col items-center" onSubmit={(e) => submitHandler(e, setSongs, setErrorState, setButtonText)} >
+        <form className="flex flex-col items-center" onSubmit={(e) => submitHandler(e, setSongs, setErrorState, setButtonText, setWaiting, fromContext)} >
             <input type="text" placeholder="لینک سینگل موزیک خود را وارد کنید..." className="input input-bordered input-success w-full max-w-xs mb-2" />
             <button className="btn btn-wide ">
-                <FontAwesomeIcon icon={['fas', 'search']} className='mr-2' />
+                {!waiting && <FontAwesomeIcon icon={['fas', 'download']} className='mr-2' />}
                 {buttonText}
             </button>
         </form >
     )
 }
-async function submitHandler(e, setSongs, setErrorState, setButtonText) {
+async function submitHandler(e, setSongs, setErrorState, setButtonText, setWaiting, fromContext) {
     e.preventDefault();
     setSongs([]);
     setErrorState(false);
+    if (fromContext.loading) return alert('تا پایان دانلود صبر کنید...');
     let value = e.target.querySelector('input').value;
     const button = e.target.querySelector('button');
     if (!value || !isLink(value)) {
@@ -51,18 +55,29 @@ async function submitHandler(e, setSongs, setErrorState, setButtonText) {
     }
     try {
         if (targetUrl == 'spotify') {
+            setWaiting(true)
+            fromContext.setLoading(true)
             button.classList.add('loading');
             const indexOf = value.indexOf("&")
             if (indexOf > 0) {
                 value = value.substring(0, indexOf)
             }
+
             const data = await spotifyService.search(value)
-            setSongs(data);
+
+            if (data.length > 0) {
+                await spotifyService.download({ id: data[0].id, spotifyUrl: value }, (prog) => {
+                    if (prog == 100) {
+                        setButtonText(null)
+                    } else
+                        setButtonText(`${prog} در حال دانلود...`)
+                })
+            }
             button.classList.remove('loading');
-            //    setinputSearchValue(value);
-            return;
+
         }
         else {
+            setWaiting(false)
             alert('لطفا یک لینک معتبر وارد کنید')
         }
     } catch (error) {
@@ -70,6 +85,8 @@ async function submitHandler(e, setSongs, setErrorState, setButtonText) {
     } finally {
         button.classList.remove('loading');
         setButtonText('')
+        setWaiting(false)
+        fromContext.setLoading(false)
     }
 }
 

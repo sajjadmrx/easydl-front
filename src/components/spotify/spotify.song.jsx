@@ -1,12 +1,12 @@
 import React, { useEffect, useId, useState } from "react"
-import { ProgressDownload } from "./progressDownload.component";
+import { ProgressDownload } from "../progressDownload.component";
 
 
 
 
 
 
-export function MusicComponent(props) {
+export function SpotifySongComponent(props) {
     const song = props.song;
     const photo = song.photo;
     const [witing, setWiting] = useState(false);
