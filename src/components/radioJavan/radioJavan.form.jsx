@@ -18,7 +18,7 @@ export function RadioJavanFormComponent(props) {
     }, [buttonText])
     return (
         <form className="flex flex-col items-center" onSubmit={(e) => downloadHandler(e, setWaiting, setButtonText, formContext)}>
-            <input type="text" placeholder="لینک موزیک یا پادکست را وارد کنید..." className="input input-bordered input-error   w-full max-w-xs mb-2" />
+            <input type="text" placeholder="لینک موزیک یا پادکست را وارد کنید..." className="input input-bordered  w-full max-w-xs mb-2" />
             <button className={`btn btn-wide ${waiting && "loading"}`}>
                 {!waiting && <FontAwesomeIcon icon={['fas', 'download']} className='mr-2' />}
                 {buttonText}

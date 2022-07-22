@@ -24,9 +24,7 @@ export function NavbarComponent() {
                     </ul>
                 </div>
             </div>
-            <div className="navbar-center">
-                <a className="btn btn-ghost normal-case text-xl">{infoStore.brandName.fa}</a>
-            </div>
+
             <div className="navbar-end">
                 <ThemeSelectorComponent />
                 {isAuthenticated ? <ProfileDropDownComponent /> :
