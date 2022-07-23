@@ -2,7 +2,7 @@ import { createContext } from "react";
 
 export const FormContext = createContext({
     inputValue: "",
-    setinputSValue: () => { },
+    setinputValue: () => { },
     loading: false,
     setLoading: () => { }
 })

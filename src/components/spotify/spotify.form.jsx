@@ -1,17 +1,17 @@
 import React from 'react'
-import { TextInput, Alert } from 'flowbite-react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { spotifyService } from '../../service/index.service';
 import { axiosError } from '../../handlers/error.handler';
 import { isLink, isSpotifyLink } from '../../utils/regex.util';
 import { useEffect } from 'react';
 import { FormContext } from '../../contexts/form.context';
-export function SpotifyFormComponent(props) {
-    const setSongs = props.setSongs;
+import {SpotifyResultContext} from "../../contexts/spotifyResult.context";
+export function SpotifyFormComponent() {
     const [errorState, setErrorState] = React.useState(false);
     const [buttonText, setButtonText] = React.useState('');
     const [waiting, setWaiting] = React.useState(false)
     const fromContext = React.useContext(FormContext)
+    const spotifyResultContext= React.useContext(SpotifyResultContext)
     useEffect(() => {
         if (!buttonText) {
             setButtonText('دانلود');
@@ -25,7 +25,7 @@ export function SpotifyFormComponent(props) {
         }
     }, [errorState])
     return (
-        <form className="flex flex-col items-center" onSubmit={(e) => submitHandler(e, setSongs, setErrorState, setButtonText, setWaiting, fromContext)} >
+        <form className="flex flex-col items-center" onSubmit={(e) => submitHandler(e, spotifyResultContext.setSongs, setErrorState, setButtonText, setWaiting, fromContext)} >
             <input type="text" placeholder="لینک موزیک خود را وارد کنید..." className="input input-bordered  w-full max-w-xs mb-2" />
             <button className="btn btn-wide ">
                 {!waiting && <FontAwesomeIcon icon={['fas', 'download']} className='mr-2' />}
@@ -69,18 +69,11 @@ async function submitHandler(e, setSongs, setErrorState, setButtonText, setWaiti
             const data = await spotifyService.search(value)
 
             if (data.length > 0) {
-                await spotifyService.download({ id: data[0].id, spotifyUrl: value }, (prog) => {
-                    if (prog == 100) {
-                        setButtonText(null)
-                        button.classList.remove('loading');
-                    } else {
-                        setButtonText(`${prog} در حال دانلود...`)
-                    }
-                })
+                setSongs(data)
+                fromContext.setinputValue(value)
             }
             else {
-                setButtonText(null)
-                button.classList.remove('loading');
+                alert('چیزی یافت نشد')
             }
         }
         else {
@@ -91,10 +84,10 @@ async function submitHandler(e, setSongs, setErrorState, setButtonText, setWaiti
         console.log(error)
         axiosError(error, (err)=>alert(err))
     } finally {
-     /*   button.classList.remove('loading');*/
-  /*      setButtonText('')
+        button.classList.remove('loading');
+        setButtonText(null)
         setWaiting(false)
-        fromContext.setLoading(false)*/
+        fromContext.setLoading(false)
     }
 }
 

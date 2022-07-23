@@ -10,7 +10,8 @@ import { PageWrapper } from "../Wrappers/pages.wrapper";
 import { FormContext } from "../contexts/form.context";
 import { UpdatesModalComponent } from "../components/modals/updates.modal";
 import AuthContext from "../contexts/auth.context";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {SpotifySongsComponent} from "../components/spotify/spotify.songs";
+import {SpotifyResultContext} from "../contexts/spotifyResult.context";
 
 export function HomePage() {
     const loadingContext = useContext(LoadingContext);
@@ -18,22 +19,25 @@ export function HomePage() {
     const [showState, setShowState] = useState(false);
     const [inputValue, setinputValue] = useState('');
     const [loading, setLoading] = useState(false)
+    const [spotifySongs,setSpotifySongs] = useState([])
     useEffect(() => {
         document.title = infoStore.brandName.fa
         loadingContext.done()
     }, [])
 
+
     useEffect(() => {
-
-    })
-
+        loadingContext.done()
+        if (spotifySongs.length > 0)
+            window.scrollTo(0, 650);
+    }, [spotifySongs]);
     return (
         <PageWrapper>
             <div className=" lg:flex-row dark:bg-zinc-900/95">
 
                 <main className=" rounded-3xl dark:bg-zinc-900/95">
                     <FormContext.Provider value={{ inputValue, setinputValue, setLoading, loading }}>
-
+                        <SpotifyResultContext.Provider value={{songs:spotifySongs,setSongs:setSpotifySongs}}>
                         <div className="hero min-h-screen">
                             <div className="hero-content text-center border-[4px] border-gray-600 rounded-[18px] max-w-[350px] md:max-w-[450px] md:min-w-[720px] mt-10   shadow-lg">
                                 <div className="max-w-md pt-[100px] pb-[100px] pr-[30px] pl-[30px]">
@@ -51,7 +55,21 @@ export function HomePage() {
                                 {showState && <DiscordModal show={showState} setShow={setShowState} timeout={ms('3s')} />}
                             </div>
                         </div>
-
+                        <div className="mb-4" hidden={spotifySongs.length > 0 ? false : true}>
+                            <div className="flex items-center  mb-4 dark:text-gray-300 pl-3 ">
+                                <svg className="icon dark:text-gray-200" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                     viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"
+                                     strokeLinejoin="round">
+                                    <rect x="2" y="7" width="20" height="14" rx="2" ry="2" />
+                                    <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16" />
+                                </svg>
+                                <h2 className="mx-2 text-2xl font-semibold dark:text-gray-300 ">
+                                    نتیجه جستجو
+                                </h2>
+                            </div>
+                            <SpotifySongsComponent/>
+                        </div>
+                        </SpotifyResultContext.Provider>
                     </FormContext.Provider>
                     <UpdatesModalComponent />
                 </main>

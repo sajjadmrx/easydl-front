@@ -7,7 +7,7 @@ export function UpdatesModalComponent(props) {
     const [isOpen, setIsOpen] = useState(false);
     const [isRead, setIsRead] = useState(false);
     const [isReadV, setIsReadV] = useState(false);
-    let version = '1.0'
+    let version = '1.1'
 
     useEffect(() => {
         const hasVs = localStorage.getItem(`isReadV_${version}`)
@@ -28,7 +28,12 @@ export function UpdatesModalComponent(props) {
 
 
     const update = {
-        'new': [
+        'new':[
+            'اضافه شدن توضیحات و کاور به موزیک های ساندکلود',
+            'اضافه شدن توضیحات و کاور به موزیک های اسپاتیفای',
+            'تغییـرات ظاهری'
+        ],
+        '1.0': [
             '👤 اضافه شدن پنل کاربری',
             '🎺 اضافه شدن دانلود پادکست های رادیوجوان'
         ]
@@ -36,53 +41,63 @@ export function UpdatesModalComponent(props) {
 
     const newHtml = update.new.map(item => {
         return (
-            <div className="d-flex align-items-center">
-                <i className="fa fa-circle m-r-10 text-success"></i>
-                <span>{item}</span>
+            <div className="d-flex align-items-center mb-2">
+                <FontAwesomeIcon icon={['fas','circle']} className={"m-l-10 text-success text-sm"}/>
+                <span className={"ml-3 text-sm"}>{item}</span>
             </div>
         )
-    })//.join('\n')
+    })
 
-    // const allWioutNew = Object.keys(update).filter(item => {
-    //     return item !== 'new'
-    // })
-    // const updateDetails = allWioutNew.map(item => {
-    //     let parent = (<div className="list-group list-group-flush m-t-10">
-    //         <hr />
-    //         <span className="text-muted">نسخه ${item}</span>
-    //         {data}
-    //     </div>);
+    const keysOldVs = Object.keys(update).filter(item => {
+        return item !== 'new'
+    }).sort((a,b)=>{
+        return a-b
+    })
 
+    const updateDetails = keysOldVs.map(item => {
+        const a = update[item].map(detail => {
+            return (
+                <div className="d-flex align-items-center mb-2 ">
+                    <FontAwesomeIcon icon={['fas','circle']} className={"m-l-10 text-gray-900 text-sm"}/>
+                    <span className={"ml-3 text-sm "}>{detail}</span>
+                </div>
+            )
+        })
 
-    //     const a = update[item].map(detail => {
-    //         return (<div className="list-group-item p-t-b-10 p-l-r-0 d-flex align-items-center justify-content-between">
-    //             <div className="d-flex align-items-center">
-    //                 <i className="fa fa-circle m-r-10 text-dark"></i>
-    //                 <span>${detail}</span>
-    //             </div>
-    //         </div>)
-    //     })
+        let parent = (
+            <div className=" m-t-10 py-3 mb-2 mt-2  divide-y divide-y-reverse divide-gray-500">
+            <span className="text-muted mt-3">نسخه {item}</span>
+            {a.map(w=>w)}
+        </div>
+        );
 
-    //     parent = parent.replace('{data}', a.join('\n'))
-    //     return parent
-    // })
+        return parent
+    })
     return (
         <MainModalComponent isOpen={isOpen} setIsOpen={setIsOpen}>
-            <h1 className="text-center">
+               <h5 className="modal-title">
+                   <div className="avatar placeholder mr-3">
+                       <div className="bg-emerald-300 text-gray-900 rounded-full w-8">
+                           <FontAwesomeIcon icon={['fas','fa-bell']}/>
+                       </div>
+                   </div>
+                   اطلاعیه بروزرسانی
+               </h5>
 
-                🎉 نسخه جدید منتشـر شد.
+           <div className={"modal-body overflow-y-auto h-[350px] w-[auto]"}>
+
+            <h1 className="text-center mb-2 py-3">
+
 
             </h1>
-            <span className="text-muted">تغییرات جدید</span>
-            <div className="m-t-10">
-
-                {/* row card */}
+            <span className="text-gray-400">تغییرات جدید</span>
+            <div className="mt-[-19px] mb-2">
                 <div className="row">
                     <div className="col-12">
                         <div className="card">
                             <div className="card-body">
                                 <div className="flex flex-col-reverse divide-y divide-y-reverse divide-gray-500">
-                                    {newHtml}
+                                    {newHtml.map(n=>n)}
                                 </div>
                             </div>
                         </div>
@@ -90,18 +105,28 @@ export function UpdatesModalComponent(props) {
                 </div>
 
             </div>
+            <div className="mt-[-13px]">
+                <span className="text-gray-400">نسخه های قدیمی</span>
+                <div className="row mt-[-40px]">
+                    <div className="col-12">
+                        <div className="card">
+                            <div className="card-body">
+                                <div className="flex flex-col-reverse mt-3">
+                                    {updateDetails.map(u=>u)}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
 
-            {/* {updateDetails.join('')} */}
-
+           </div>
 
             <div className="modal-footer">
-
-
-                {/* flex vs text and btn close */}
-
-                <div className="d-flex align-items-center">
-                    <span className="text-muted">نسخه {version}</span>
+                <div className="d-flex align-items-center mt-3">
+                    <FontAwesomeIcon icon={["fas","notifica"]} className={'mr-2'}/>
+                    <span className="text-muted">نسخه جدید:  {version}</span>
                 </div>
                 <div className="text-center">
                     <button className="btn btn-ghost" onClick={() => setIsOpen(false)}>

@@ -1,16 +1,19 @@
-import React, { useState, useEffect, } from "react";
+import React, {useState, useEffect, useContext,} from "react";
 import { WarningAlertComponent } from "../alerts.component";
 import { SpotifySongComponent } from "./spotify.song";
 import { toast } from "react-toastify";
 import { axiosError } from "../../handlers/error.handler";
+import {SpotifyResultContext} from "../../contexts/spotifyResult.context";
+import {spotifyService} from "../../service/index.service";
+import {FormContext} from "../../contexts/form.context";
 
 
 export function SpotifySongsComponent(props) {
-    const songs = props.songs;
+
     const [isDownloading, setIsDownloading] = useState(false);
     const [errorState, setErrorState] = useState(false);
-    // const { inputSearchValue, setinputSearchValue } = React.useContext(InputSearchValueContext)
-
+    const spotifyResultContext = useContext(SpotifyResultContext)
+    const formContext = useContext(FormContext)
     useEffect(() => {
         if (errorState && errorState != '') {
             alert(errorState)
@@ -18,12 +21,14 @@ export function SpotifySongsComponent(props) {
     }, [errorState])
     return (
         <div className={props.className}>
-            {songs.length > 0 ? <span className="mb-4">نتیجه جستوجو : {songs.length} مورد یافت شد.</span> : <span></span>}
-            <div className={`grid grid-flow-row-dense grid-cols-1 grid-rows-1 md:grid-cols-2`}>
-                {songs.map((song, index) => {
+            <div className={'text-center'}>
+            {spotifyResultContext.songs.length > 0 ? <span className="mb-4">نتیجه جستوجو : {spotifyResultContext.songs.length} مورد یافت شد.</span> : <span></span>}
+            </div>
+            <div className={`grid grid-flow-row-dense grid-cols-1 grid-rows-1 md:grid-cols-3`}>
+                {spotifyResultContext.songs.map((song, index) => {
 
                     return <SpotifySongComponent song={song} key={index + 1} downloadHandler={(setValueProgress, setWiting) => {
-                        downloadHandler(song.id, song.platforms, isDownloading, setIsDownloading, setValueProgress, setWiting, setErrorState)
+                        downloadHandler(song.id, song.platforms, setValueProgress, setWiting,formContext)
                     }} />
                 })}
             </div>
@@ -33,29 +38,30 @@ export function SpotifySongsComponent(props) {
 
     )
 }
-async function downloadHandler(id, platform, isDownloading, setIsDownloading, setValueProgress, setWiting, setErrorState, inputSearchValue) {
+async function downloadHandler(id, platform,  setValueProgress, setWiting,formContext) {
     try {
-        if (isDownloading) {
+        if (formContext.loading) {
             return toast.info("لطفا تا پایان دانلود صبر کنید")
         }
         setWiting(true);
 
-        setIsDownloading(true)
-        // await spotifyService.download({ id, spotifyUrl: inputSearchValue }, (res) => {
-        //     if (res == 100) {
-        //         setValueProgress(0)
-        //         setIsDownloading(false)
-        //     }
-        //     if (res > 0) {
-        //         setValueProgress(res)
-        //     }
-        //     if (res == 1)
-        //         setWiting(false)
-        // })
+         await spotifyService.download({ id, spotifyUrl: formContext.inputValue }, (res) => {
+            if (res == 100) {
+                setValueProgress(0)
+                formContext.setLoading(false)
+            }
+            if (res > 0) {
+                setValueProgress(res)
+            }
+            if (res == 1) {
+                setWiting(false)
+            }
+        })
     } catch (error) {
-        setIsDownloading(false)
         setValueProgress(0)
         setWiting(false)
-        axiosError(error, setErrorState)
+        axiosError(error, (err)=>alert(err))
+        formContext.setLoading(false)
+
     }
 }

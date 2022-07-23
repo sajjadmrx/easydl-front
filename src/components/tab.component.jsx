@@ -50,7 +50,6 @@ export function Tabs({ children }) {
 }
 
 export function Tab({ children, activeTab, currentTab, setActiveTab }) {
-    console.log(children)
     return (
         <>
             <div
