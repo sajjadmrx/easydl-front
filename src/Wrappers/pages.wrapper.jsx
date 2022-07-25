@@ -1,22 +1,22 @@
-import { useContext, useEffect, useState } from "react";
-import { ToastContainer } from "react-toastify";
-import { FooterComponent } from "../components/footer.component";
-import { NavbarComponent } from "../components/navbar.component";
+import {useContext, useEffect, useState} from "react";
+import {ToastContainer} from "react-toastify";
+import {FooterComponent} from "../components/footer.component";
+import {NavbarComponent} from "../components/navbar.component";
 import AuthContext from "../contexts/auth.context";
-import axios from 'axios'
-import { CookieUtil } from "../utils/cookie.util";
-import { AuthModalComponent } from "../components/modals/auth.modal";
-import { AuthModalContext } from "../contexts/authModal.context";
-import { userService } from "../service/index.service";
+import {CookieUtil} from "../utils/cookie.util";
+import {AuthModalComponent} from "../components/modals/auth.modal";
+import {AuthModalContext} from "../contexts/authModal.context";
+import {userService} from "../service/index.service";
+
 export function PageWrapper(props) {
-    const { setIsAuthenticated, isAuthenticated, setStatusLoading, setUser, token, setToken } = useContext(AuthContext)
+    const {setIsAuthenticated, isAuthenticated, setStatusLoading, setUser, token, setToken} = useContext(AuthContext)
     const [showModal, setShowModal] = useState(false);
     const AuthModalContextValues = {
         showModal,
         setShowModal
     }
     useEffect(() => {
-        async function getUsetWithToken() {
+        async function getUserByToken() {
             try {
                 setStatusLoading(true)
                 const profile = await userService.getProfile()
@@ -29,8 +29,10 @@ export function PageWrapper(props) {
                 }
             }
         }
+
         if (isAuthenticated && CookieUtil.get('token'))
-            getUsetWithToken();
+            getUserByToken().then(r => {
+            });
         else {
             setUser({})
         }
@@ -45,11 +47,11 @@ export function PageWrapper(props) {
     return (
         <div>
             <AuthModalContext.Provider value={AuthModalContextValues}>
-                <NavbarComponent />
+                <NavbarComponent/>
                 {props.children}
-                <FooterComponent />
-                <ToastContainer theme='dark' />
-                <AuthModalComponent show={showModal} />
+                <FooterComponent/>
+                <ToastContainer theme='dark'/>
+                <AuthModalComponent show={showModal}/>
             </AuthModalContext.Provider>
         </div>
     )

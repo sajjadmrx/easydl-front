@@ -1,17 +1,18 @@
 import React from "react";
-import { PlatformsTab, SearchForm } from "../components/PlatformsTab.component";
-import react, { useEffect, useState, useContext } from 'react'
+import {PlatformsTab, SearchForm} from "../components/PlatformsTab.component";
+import react, {useEffect, useState, useContext} from 'react'
 
-import { LoadingContext } from "react-router-loading";
-import { DiscordModal } from "../components/modals/discord.modal";
+import {LoadingContext} from "react-router-loading";
+import {DiscordModal} from "../components/modals/discord.modal";
 import ms from 'ms'
-import { infoStore } from "../store/info.store";
-import { PageWrapper } from "../Wrappers/pages.wrapper";
-import { FormContext } from "../contexts/form.context";
-import { UpdatesModalComponent } from "../components/modals/updates.modal";
+import {infoStore} from "../store/info.store";
+import {PageWrapper} from "../Wrappers/pages.wrapper";
+import {FormContext} from "../contexts/form.context";
+import {UpdatesModalComponent} from "../components/modals/updates.modal";
 import AuthContext from "../contexts/auth.context";
 import {SpotifySongsComponent} from "../components/spotify/spotify.songs";
 import {SpotifyResultContext} from "../contexts/spotifyResult.context";
+import {DarkAlertComponent, WarningAlertComponent} from "../components/alerts.component";
 
 export function HomePage() {
     const loadingContext = useContext(LoadingContext);
@@ -19,7 +20,7 @@ export function HomePage() {
     const [showState, setShowState] = useState(false);
     const [inputValue, setinputValue] = useState('');
     const [loading, setLoading] = useState(false)
-    const [spotifySongs,setSpotifySongs] = useState([])
+    const [spotifySongs, setSpotifySongs] = useState([])
     useEffect(() => {
         document.title = infoStore.brandName.fa
         loadingContext.done()
@@ -36,42 +37,50 @@ export function HomePage() {
             <div className=" lg:flex-row dark:bg-zinc-900/95">
 
                 <main className=" rounded-3xl dark:bg-zinc-900/95">
-                    <FormContext.Provider value={{ inputValue, setinputValue, setLoading, loading }}>
-                        <SpotifyResultContext.Provider value={{songs:spotifySongs,setSongs:setSpotifySongs}}>
-                        <div className="hero min-h-screen">
-                            <div className="hero-content text-center border-[4px] border-gray-600 rounded-[18px] max-w-[350px] md:max-w-[450px] md:min-w-[720px] mt-10   shadow-lg">
-                                <div className="max-w-md pt-[100px] pb-[100px] pr-[30px] pl-[30px]">
-                                    <div className={'flex justify-center mb-5'}>
+                    <FormContext.Provider value={{inputValue, setinputValue, setLoading, loading}}>
+                        <SpotifyResultContext.Provider value={{songs: spotifySongs, setSongs: setSpotifySongs}}>
+                            <div className="hero min-h-screen">
+                                <div
+                                    className="hero-content text-center border-[4px] border-gray-600 rounded-[18px] max-w-[350px] md:max-w-[450px] md:min-w-[720px] mt-10   shadow-lg mb-1">
+                                    <div className="max-w-md pt-[100px] pb-[100px] pr-[30px] pl-[30px]">
+                                        <div className={'flex justify-center mb-5'}>
 
-                                    <h1 className="text-5xl font-bold">ایزی دانلود</h1>
+                                            <h1 className="text-5xl font-bold">ایزی دانلود</h1>
+                                        </div>
+
+                                        <p className="py-6">
+                                            با ایزی دانلود به صورت رایگان با بهترین کیفیت دانلود کنیـد.
+                                        </p>
+                                        <PlatformsTab/>
+                                        <DarkAlertComponent text={'لطفا جهت حمایت از ارتیست یک بار در پلتفرم گوش دهید.'}
+                                                            id={'supportArtist'}
+                                                            className={'text-lg mt-3 mb-1'}
+                                        />
                                     </div>
 
-                                    <p className="py-6">
-                                        با ایزی دانلود به صورت رایگان با بهترین کیفیت دانلود کنیـد.
-                                    </p>
-                                    <PlatformsTab />
+                                    {showState &&
+                                        <DiscordModal show={showState} setShow={setShowState} timeout={ms('3s')}/>}
                                 </div>
-
-                                {showState && <DiscordModal show={showState} setShow={setShowState} timeout={ms('3s')} />}
                             </div>
-                        </div>
-                        <div className="mb-4" hidden={spotifySongs.length > 0 ? false : true}>
-                            <div className="flex items-center  mb-4 dark:text-gray-300 pl-3 ">
-                                <svg className="icon dark:text-gray-200" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                     viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"
-                                     strokeLinejoin="round">
-                                    <rect x="2" y="7" width="20" height="14" rx="2" ry="2" />
-                                    <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16" />
-                                </svg>
-                                <h2 className="mx-2 text-2xl font-semibold dark:text-gray-300 ">
-                                    نتیجه جستجو
-                                </h2>
+                            <div className="mb-4 mt-2 md:mt-0" hidden={spotifySongs.length > 0 ? false : true}>
+                                <div className="flex items-center  mb-4 dark:text-gray-300 pl-3 ">
+                                    <svg className="icon dark:text-gray-200" xmlns="http://www.w3.org/2000/svg"
+                                         width="24" height="24"
+                                         viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"
+                                         strokeLinecap="round"
+                                         strokeLinejoin="round">
+                                        <rect x="2" y="7" width="20" height="14" rx="2" ry="2"/>
+                                        <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/>
+                                    </svg>
+                                    <h2 className="mx-2 text-2xl font-semibold dark:text-gray-300 ">
+                                        نتیجه جستجو ({spotifySongs.length} مورد یافت شد.)
+                                    </h2>
+                                </div>
+                                <SpotifySongsComponent/>
                             </div>
-                            <SpotifySongsComponent/>
-                        </div>
                         </SpotifyResultContext.Provider>
                     </FormContext.Provider>
-                    <UpdatesModalComponent />
+                    <UpdatesModalComponent/>
                 </main>
 
 
