@@ -1,36 +1,35 @@
-import React,{useState} from 'react';
+import React, {useState} from 'react';
 import 'react-toastify/dist/ReactToastify.css';
-import {Tabs,Tab} from "./tab.component";
-import {SpotifyFormComponent} from "./spotify/spotify.form";
-import {RadioJavanFormComponent} from "./radioJavan/radioJavan.form";
-import {SoundCloudFormComponent} from "./soundCloud/soundCloud.form";
+import {Tabs, Tab} from "./tab.component";
+import {SpotifyComponent} from "./spotify/spotify.component";
+import {RadioJavanComponent} from "./radioJavan/radioJavan.component";
+import {SoundCloudComponent} from "./soundCloud/soundCloud.component";
 
 
-
- export const PlatformsTab= ()=> {
+export const PlatformsTab = () => {
     return (
         <Tabs>
-            <Tab component={<SpotifyFormComponent/>} active>
+            <Tab component={<SpotifyComponent/>} active>
                 <div className="avatar">
                     <div className="w-10 rounded-full">
-                        <img src={"/brands/spotify.png"} className={'w-auto text-center'}/>
+                        <img src={"/brands/spotify.png"} className={'w-auto text-center'} alt={"لوگو اسپاتیفای"}/>
                     </div>
                 </div>
                 اسپاتیفای
             </Tab>
-            <Tab component={<RadioJavanFormComponent/>} >
+            <Tab component={<RadioJavanComponent/>}>
                 <div className="avatar">
                     <div className="w-10 rounded-full">
-                        <img src={"/brands/rj.png"} className={'w-auto text-center'}/>
+                        <img src={"/brands/rj.png"} className={'w-auto text-center'} alt={"لوگو رادیوجوان"}/>
                     </div>
                 </div>
                 رادیوجوان
 
             </Tab>
-            <Tab component={<SoundCloudFormComponent/>} >
+            <Tab component={<SoundCloudComponent/>}>
                 <div className="avatar">
                     <div className="w-10 rounded-full">
-                        <img src={"/brands/soundcloud.png"} className={'w-auto text-center'}/>
+                        <img src={"/brands/soundcloud.png"} className={'w-auto text-center'} alt={"لوگو ساندکلود"}/>
                     </div>
                 </div>
                 ساندکلود

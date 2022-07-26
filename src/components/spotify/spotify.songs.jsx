@@ -61,7 +61,7 @@ async function downloadHandler(id, platform, setValueProgress, setWiting, formCo
     } catch (error) {
         setValueProgress(0)
         setWiting(false)
-        axiosError(error, (err) => alert(err))
+        axiosError(error, (err) => toast.error(err))
         formContext.setLoading(false)
 
     }

@@ -13,6 +13,8 @@ import AuthContext from "../contexts/auth.context";
 import {SpotifySongsComponent} from "../components/spotify/spotify.songs";
 import {SpotifyResultContext} from "../contexts/spotifyResult.context";
 import {DarkAlertComponent, WarningAlertComponent} from "../components/alerts.component";
+import CookieConsent, {Cookies} from "react-cookie-consent";
+
 
 export function HomePage() {
     const loadingContext = useContext(LoadingContext);
@@ -52,10 +54,19 @@ export function HomePage() {
                                             با ایزی دانلود به صورت رایگان با بهترین کیفیت دانلود کنیـد.
                                         </p>
                                         <PlatformsTab/>
-                                        <DarkAlertComponent text={'لطفا جهت حمایت از ارتیست یک بار در پلتفرم گوش دهید.'}
-                                                            id={'supportArtist'}
-                                                            className={'text-lg mt-3 mb-1'}
-                                        />
+                                        <CookieConsent
+                                            location="bottom"
+                                            buttonText="باشه"
+                                            cookieName="supportArtist"
+                                            style={{background: "#2B373B"}}
+                                            buttonStyle={{color: "#4e503b", fontSize: "13px"}}
+                                            expires={1}
+                                        >
+                                            لطفا جهت حمایت از ارتیست و یا پلتفرم یک بار موزیک/ویدیو رو در پلتفرم گوش
+                                            کنید.
+
+                                        </CookieConsent>
+                                     
                                     </div>
 
                                     {showState &&

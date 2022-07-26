@@ -1,10 +1,12 @@
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useEffect } from "react";
-import { useContext } from "react";
-import { useState } from "react";
-import { FormContext } from "../../contexts/form.context";
-import { radioJavanService, soundcloudService } from "../../service/index.service";
-import { isLink, isRjLinkMp3, isRjLinkPodCast } from "../../utils/regex.util";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {useEffect} from "react";
+import {useContext} from "react";
+import {useState} from "react";
+import {FormContext} from "../../contexts/form.context";
+import {radioJavanService, soundcloudService} from "../../service/index.service";
+import {isLink, isRjLinkMp3, isRjLinkPodCast} from "../../utils/regex.util";
+import {toast} from "react-toastify";
+import {axiosError} from "../../handlers/error.handler";
 
 export function RadioJavanFormComponent(props) {
     const [buttonText, setButtonText] = useState('دانلود')
@@ -17,13 +19,15 @@ export function RadioJavanFormComponent(props) {
         }
     }, [buttonText])
     return (
-        <form className="flex flex-col items-center" onSubmit={(e) => downloadHandler(e, setWaiting, setButtonText, formContext)}>
-            <input type="text" placeholder="لینک موزیک یا پادکست را وارد کنید..." className="input input-bordered  w-full max-w-xs mb-2" />
+        <form className="flex flex-col items-center"
+              onSubmit={(e) => downloadHandler(e, setWaiting, setButtonText, formContext)}>
+            <input type="text" placeholder="لینک موزیک یا پادکست را وارد کنید..."
+                   className="input input-bordered  w-full max-w-xs mb-2"/>
             <button className={`btn btn-wide ${waiting && "loading"}`}>
-                {!waiting && <FontAwesomeIcon icon={['fas', 'download']} className='mr-2' />}
+                {!waiting && <FontAwesomeIcon icon={['fas', 'download']} className='mr-2'/>}
                 {buttonText}
             </button>
-        </form >
+        </form>
     )
 }
 
@@ -31,20 +35,26 @@ async function downloadHandler(e, setWaiting, setButtonText, formContext) {
     try {
 
         e.preventDefault();
-        if (formContext.loading) return alert('لطفا تا پایان دانلود صبر کنید')
+        if (formContext.loading) return toast.warning('لطفا تا پایان دانلود صبر کنید')
         let value = e.target.querySelector('input').value;
-        if (!value || !isLink(value)) return;
+        if (!value || !isLink(value)) return toast.error('لطفا یک لینک معتبر وارد کنید');
 
         let targetUrl = 'unknown'
         switch (true) {
-            case isRjLinkMp3(value): targetUrl = 'rj'; break;
-            case isRjLinkPodCast(value): targetUrl = 'rj-podcast'; break;
+            case isRjLinkMp3(value):
+                targetUrl = 'rj';
+                break;
+            case isRjLinkPodCast(value):
+                targetUrl = 'rj-podcast';
+                break;
 
-            default: targetUrl = 'unknown'; break;
+            default:
+                targetUrl = 'unknown';
+                break;
         }
 
         if (targetUrl == 'unknown') {
-            alert('لطفا یک لینک معتبر وارد کنید')
+            toast.error('لطفا یک لینک معتبر وارد کنید')
             return;
         }
 
@@ -74,8 +84,8 @@ async function downloadHandler(e, setWaiting, setButtonText, formContext) {
     } catch (error) {
         setWaiting(false)
         setButtonText(null)
-    }
-    finally {
+        axiosError(error, (er) => toast.error(er))
+    } finally {
 
     }
 }

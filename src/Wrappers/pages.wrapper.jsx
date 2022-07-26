@@ -50,7 +50,7 @@ export function PageWrapper(props) {
                 <NavbarComponent/>
                 {props.children}
                 <FooterComponent/>
-                <ToastContainer theme='dark'/>
+                <ToastContainer theme='dark' rtl/>
                 <AuthModalComponent show={showModal}/>
             </AuthModalContext.Provider>
         </div>

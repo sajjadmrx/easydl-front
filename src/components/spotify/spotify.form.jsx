@@ -1,17 +1,19 @@
 import React from 'react'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { spotifyService } from '../../service/index.service';
-import { axiosError } from '../../handlers/error.handler';
-import { isLink, isSpotifyLink } from '../../utils/regex.util';
-import { useEffect } from 'react';
-import { FormContext } from '../../contexts/form.context';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
+import {spotifyService} from '../../service/index.service';
+import {axiosError} from '../../handlers/error.handler';
+import {isLink, isSpotifyLink} from '../../utils/regex.util';
+import {useEffect} from 'react';
+import {FormContext} from '../../contexts/form.context';
 import {SpotifyResultContext} from "../../contexts/spotifyResult.context";
+import {toast} from "react-toastify";
+
 export function SpotifyFormComponent() {
     const [errorState, setErrorState] = React.useState(false);
     const [buttonText, setButtonText] = React.useState('');
     const [waiting, setWaiting] = React.useState(false)
     const fromContext = React.useContext(FormContext)
-    const spotifyResultContext= React.useContext(SpotifyResultContext)
+    const spotifyResultContext = React.useContext(SpotifyResultContext)
     useEffect(() => {
         if (!buttonText) {
             setButtonText('دانلود');
@@ -21,19 +23,22 @@ export function SpotifyFormComponent() {
     }, [buttonText])
     useEffect(() => {
         if (errorState && errorState != '') {
-            alert(errorState)
+            toast.error(errorState)
         }
     }, [errorState])
     return (
-        <form className="flex flex-col items-center" onSubmit={(e) => submitHandler(e, spotifyResultContext.setSongs, setErrorState, setButtonText, setWaiting, fromContext)} >
-            <input type="text" placeholder="لینک موزیک خود را وارد کنید..." className="input input-bordered  w-full max-w-xs mb-2" />
+        <form className="flex flex-col items-center"
+              onSubmit={(e) => submitHandler(e, spotifyResultContext.setSongs, setErrorState, setButtonText, setWaiting, fromContext)}>
+            <input type="text" placeholder="لینک موزیک خود را وارد کنید..."
+                   className="input input-bordered  w-full max-w-xs mb-2"/>
             <button className="btn btn-wide ">
-                {!waiting && <FontAwesomeIcon icon={['fas', 'download']} className='mr-2' />}
+                {!waiting && <FontAwesomeIcon icon={['fas', 'download']} className='mr-2'/>}
                 {buttonText}
             </button>
-        </form >
+        </form>
     )
 }
+
 async function submitHandler(e, setSongs, setErrorState, setButtonText, setWaiting, fromContext) {
     e.preventDefault();
     setSongs([]);
@@ -42,17 +47,20 @@ async function submitHandler(e, setSongs, setErrorState, setButtonText, setWaiti
     let value = e.target.querySelector('input').value;
     const button = e.target.querySelector('button');
     if (!value || !isLink(value)) {
-        alert('لطفا یک لینک معتبر وارد کنید')
+        toast.error('لطفا یک لینک معتبر وارد کنید')
         return;
     }
     let targetUrl = ''
     switch (true) {
-        case isSpotifyLink(value): targetUrl = 'spotify'; break;
-        default: targetUrl = 'unknown';
+        case isSpotifyLink(value):
+            targetUrl = 'spotify';
+            break;
+        default:
+            targetUrl = 'unknown';
     }
 
     if (targetUrl == 'unknown') {
-        alert('لطفا یک لینک معتبر وارد کنید')
+        toast.warning('لطفا یک لینک معتبر وارد کنید')
         return;
     }
     try {
@@ -71,18 +79,15 @@ async function submitHandler(e, setSongs, setErrorState, setButtonText, setWaiti
             if (data.length > 0) {
                 setSongs(data)
                 fromContext.setinputValue(value)
+            } else {
+                toast.error('چیزی یافت نشد')
             }
-            else {
-                alert('چیزی یافت نشد')
-            }
-        }
-        else {
+        } else {
             setWaiting(false)
-            alert('لطفا یک لینک معتبر وارد کنید')
+            toast.error('لطفا یک لینک معتبر وارد کنید')
         }
     } catch (error) {
-        console.log(error)
-        axiosError(error, (err)=>alert(err))
+        axiosError(error, (err) => toast.error(err))
     } finally {
         button.classList.remove('loading');
         setButtonText(null)

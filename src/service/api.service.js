@@ -1,8 +1,8 @@
-
 import axios from 'axios';
-import { axiosError } from '../handlers/error.handler';
-import { hostStore } from '../store/host.store';
+import {axiosError} from '../handlers/error.handler';
+import {hostStore} from '../store/host.store';
 import myAxios from '../utils/axios.util';
+import {toast} from "react-toastify";
 
 
 const headers = {
@@ -23,7 +23,7 @@ export class ApiService {
 
     async post(url, body) {
         try {
-            const result = await myAxios.post(url, body, { headers })
+            const result = await myAxios.post(url, body, {headers})
             return result.data
         } catch (error) {
             throw error
@@ -32,7 +32,7 @@ export class ApiService {
 
     async postWithAxios(url, body) {
         try {
-            const result = await axios.post(hostStore.url + url, body, { headers })
+            const result = await axios.post(hostStore.url + url, body, {headers})
             return result.data
         } catch (error) {
             throw error
@@ -66,7 +66,7 @@ export class ApiService {
                 },
                 headers: headers
             });
-            const blob = new Blob([result.data], { type: 'audio/mp3' });
+            const blob = new Blob([result.data], {type: 'audio/mp3'});
             const url = window.URL.createObjectURL(blob);
             const link = document.createElement('a');
             link.href = url;
@@ -78,11 +78,12 @@ export class ApiService {
             link.click();
             document.body.removeChild(link);
         } catch (error) {
-            axiosError(error, (res) => { alert(res) })
+            axiosError(error, (res) => {
+                toast.error(res)
+            })
             throw error
         }
     }
-
 
 
 }
