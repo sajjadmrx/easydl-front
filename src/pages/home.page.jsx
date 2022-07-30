@@ -45,7 +45,7 @@ export function HomePage() {
               value={{ songs: spotifySongs, setSongs: setSpotifySongs }}
             >
               <div className="hero min-h-screen">
-                <div className="hero-content text-center min-w-[full] border-gray-600 mt-10 shadow-2xl mb-1 border-y-4 xl:min-w-[650px] xl:rounded-[18px] xl:border-[4px]">
+                <div className="hero-content text-center min-w-[250px] border-gray-600 mt-10 shadow-2xl mb-1 border-y-4 xl:mb-[20px] xl:min-w-[650px] xl:rounded-[18px] xl:border-[4px]">
                   <div className="max-w-md pt-[100px] pb-[100px] pr-[30px] pl-[30px]">
                     <div className={"flex justify-center mb-5"}>
                       <h1 className="text-5xl font-bold">ایزی دانلود</h1>
