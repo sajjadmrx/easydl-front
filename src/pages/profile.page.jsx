@@ -27,7 +27,7 @@ export function ProfilePage() {
     getDownloads();
   }, []);
   const authContext = useContext(AuthContext);
-  if (!authContext.isAuthenticated || !CookieUtil.has('token')) {
+  if (!authContext.isAuthenticated || !CookieUtil.has("token")) {
     return <Redirect to="/" />;
   }
 
@@ -43,7 +43,9 @@ export function ProfilePage() {
                     <div className="stat">
                       <div className="stat-title">پروفایل</div>
 
-                      <div className="stat-title">{authContext.user.username}</div>
+                      <div className="stat-title">
+                        {authContext.user.username}
+                      </div>
                       <div className="stat-desc ">{authContext.user.email}</div>
 
                       <div className="stat-figure ">
@@ -57,7 +59,10 @@ export function ProfilePage() {
 
                     <div className="stat">
                       <div className="stat-figure ">
-                        <FontAwesomeIcon icon={["fas", "star"]} size={"2x"}></FontAwesomeIcon>
+                        <FontAwesomeIcon
+                          icon={["fas", "star"]}
+                          size={"2x"}
+                        ></FontAwesomeIcon>
                       </div>
                       <div className="stat-title">وضعیت اشتراک</div>
                       <div className="stat-value ">ندارید</div>
@@ -65,18 +70,26 @@ export function ProfilePage() {
 
                     <div className="stat">
                       <div className="stat-figure ">
-                        <FontAwesomeIcon icon={["fas", "download"]} size={"2x"}></FontAwesomeIcon>
+                        <FontAwesomeIcon
+                          icon={["fas", "download"]}
+                          size={"2x"}
+                        ></FontAwesomeIcon>
                       </div>
                       <div className="stat-title">تعداد دانلود</div>
                       <div className="stat-value ">{downloads.length}</div>
                     </div>
                     <div className="stat">
                       <div className="stat-figure ">
-                        <FontAwesomeIcon icon={faSpotify} size={"2x"}></FontAwesomeIcon>
+                        <FontAwesomeIcon
+                          icon={faSpotify}
+                          size={"2x"}
+                        ></FontAwesomeIcon>
                       </div>
                       <div className="stat-title">وضعیت اکانت اسپاتیفای</div>
                       <div className="stat-desc ">
-                        <span className="bg-red-400 text-gray-50 rounded-md px-5 h-5">غیرفعـال</span>
+                        <span className="bg-red-400 text-gray-50 rounded-md px-5 h-5">
+                          غیرفعـال
+                        </span>
                       </div>
                     </div>
                   </div>
