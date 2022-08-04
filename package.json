@@ -38,7 +38,7 @@
   },
   "scripts": {
     "start:react": "react-scripts start",
-    "start": "npm run build && node server.js",
+    "start": "npm run winBuild && node server.js",
     "start:dev": "node server.js",
     "start:dev:react": "react-scripts start",
     "build": "GENERATE_SOURCEMAP=false react-scripts build",

@@ -5,7 +5,8 @@ import reportWebVitals from './reportWebVitals';
 import './App.css';
 import { BrowserRouter } from 'react-router-dom'
 import 'animate.css';
-import * as serviceWorker from './serviceWorker'
+import * as serviceWorker from "./serviceWorker";
+
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
 root.render(
@@ -16,4 +17,4 @@ root.render(
 
 
 reportWebVitals();
-// serviceWorker.register()
+serviceWorker.register()

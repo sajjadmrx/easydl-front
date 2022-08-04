@@ -1,3 +1,14 @@
+// This optional code is used to register a service worker.
+// register() is not called by default.
+
+// This lets the app load faster on subsequent visits in production, and gives
+// it offline capabilities. However, it also means that developers (and users)
+// will only see deployed updates on subsequent visits to a page, after all the
+// existing tabs open on the page have been closed, since previously cached
+// resources are updated in the background.
+
+// To learn more about the benefits of this model and instructions on how to
+// opt-in, read https://bit.ly/CRA-PWA
 
 const isLocalhost = Boolean(
     window.location.hostname === 'localhost' ||
@@ -10,8 +21,8 @@ const isLocalhost = Boolean(
 );
 
 export function register(config) {
-    if ('serviceWorker' in navigator) {
-        const publicUrl = new URL(process.env.REACT_APP_PUBLIC_URL, window.location.href);
+    if (process.env.NODE_ENV === 'development' && 'serviceWorker' in navigator) {
+        const publicUrl = new URL(process.env.PUBLIC_URL, window.location.href);
         if (publicUrl.origin !== window.location.origin) {
 
             return;
@@ -32,7 +43,6 @@ export function register(config) {
             } else {
                 registerValidSW(swUrl, config);
             }
-
         });
 
 
@@ -48,8 +58,27 @@ function registerValidSW(swUrl, config) {
                 if (installingWorker == null) {
                     return;
                 }
+                installingWorker.onstatechange = () => {
+                    if (installingWorker.state === 'installed') {
+                        if (navigator.serviceWorker.controller) {
 
+                            // Execute callback
+                            if (config && config.onUpdate) {
+                                config.onUpdate(registration);
+                            }
+                        } else {
+                            // At this point, everything has been precached.
+                            // It's the perfect time to display a
+                            // "Content is cached for offline use." message.
+                            console.log('Content is cached for offline use.');
 
+                            // Execute callback
+                            if (config && config.onSuccess) {
+                                config.onSuccess(registration);
+                            }
+                        }
+                    }
+                };
             };
         })
         .catch(error => {
@@ -60,12 +89,7 @@ function registerValidSW(swUrl, config) {
 function checkValidServiceWorker(swUrl, config) {
     // Check if the service worker can be found. If it can't reload the page.
     fetch(swUrl, {
-        headers: {
-            'Service-Worker': 'script',
-            'Access-Control-Allow-Origin': '*',
-            'Access-Control-Allow-Methods': 'GET,HEAD,PUT,PATCH,POST,DELETE',
-            'Access-Control-Allow-Headers': 'Origin, Content-Type, Authorization,Accept',
-        },
+        headers: { 'service-worker': 'script' },
     })
         .then(response => {
             // Ensure service worker exists, and that we really are getting a JS file.
@@ -85,7 +109,7 @@ function checkValidServiceWorker(swUrl, config) {
                 registerValidSW(swUrl, config);
             }
         })
-        .catch(() => {
+        .catch((e) => {
             console.log(
                 'No internet connection found. App is running in offline mode.'
             );
