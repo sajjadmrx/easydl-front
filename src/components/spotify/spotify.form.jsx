@@ -29,8 +29,14 @@ export function SpotifyFormComponent() {
     return (
         <form className="flex flex-col items-center"
               onSubmit={(e) => submitHandler(e, spotifyResultContext.setSongs, setErrorState, setButtonText, setWaiting, fromContext)}>
-            <input type="text" placeholder="لینک موزیک خود را وارد کنید..."
+            
+            <div className='relative w-full max-w-xs'>
+                <input type="text" placeholder="لینک موزیک خود را وارد کنید..."
                    className="input input-bordered  w-full max-w-xs mb-2"/>
+                <FontAwesomeIcon icon={['fas', 'broom']} className='absolute -top-2 bottom-0 m-auto left-3 cursor-pointer'/>
+            </div>
+            
+
             <button className="btn btn-wide ">
                 {!waiting && <FontAwesomeIcon icon={['fas', 'download']} className='mr-2'/>}
                 {buttonText}
