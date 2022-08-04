@@ -7,6 +7,7 @@ import {useEffect} from 'react';
 import {FormContext} from '../../contexts/form.context';
 import {SpotifyResultContext} from "../../contexts/spotifyResult.context";
 import {toast} from "react-toastify";
+import {ClearButtonComponent} from "../clearInput.component";
 
 export function SpotifyFormComponent() {
     const [errorState, setErrorState] = React.useState(false);
@@ -14,6 +15,7 @@ export function SpotifyFormComponent() {
     const [waiting, setWaiting] = React.useState(false)
     const fromContext = React.useContext(FormContext)
     const spotifyResultContext = React.useContext(SpotifyResultContext)
+    const [localInput,setLocalInput] = React.useState('')
     useEffect(() => {
         if (!buttonText) {
             setButtonText('دانلود');
@@ -26,11 +28,19 @@ export function SpotifyFormComponent() {
             toast.error(errorState)
         }
     }, [errorState])
+
+
     return (
         <form className="flex flex-col items-center"
               onSubmit={(e) => submitHandler(e, spotifyResultContext.setSongs, setErrorState, setButtonText, setWaiting, fromContext)}>
-            <input type="text" placeholder="لینک موزیک خود را وارد کنید..."
-                   className="input input-bordered  w-full max-w-xs mb-2"/>
+
+            <div className='relative w-full max-w-xs'>
+                <input type="text" placeholder="لینک موزیک خود را وارد کنید..." id={'spotfiy'} value={localInput}
+                   className="input input-bordered  w-full max-w-xs mb-2" onChange={(e)=>setLocalInput(e.target.value)}/>
+                {localInput != '' ?<ClearButtonComponent setLocalInput={setLocalInput}/>:"" }
+            </div>
+
+
             <button className="btn btn-wide ">
                 {!waiting && <FontAwesomeIcon icon={['fas', 'download']} className='mr-2'/>}
                 {buttonText}
@@ -38,6 +48,8 @@ export function SpotifyFormComponent() {
         </form>
     )
 }
+
+
 
 async function submitHandler(e, setSongs, setErrorState, setButtonText, setWaiting, fromContext) {
     e.preventDefault();
@@ -95,6 +107,5 @@ async function submitHandler(e, setSongs, setErrorState, setButtonText, setWaiti
         fromContext.setLoading(false)
     }
 }
-
 
 
