@@ -43,7 +43,7 @@ export function HomePage() {
                         <SpotifyResultContext.Provider value={{songs: spotifySongs, setSongs: setSpotifySongs}}>
                             <div className="hero min-h-screen">
                                 <div
-                                    className="hero-content text-center border-[4px] border-gray-600 rounded-[18px] max-w-[350px] md:max-w-[450px] md:min-w-[720px] mt-10   shadow-lg mb-1">
+                                    className="p-0 sm:p-4 hero-content text-center border-[4px] border-gray-600 rounded-[18px] max-w-[350px] md:max-w-[450px] md:min-w-[720px] mt-10   shadow-lg mb-1 ">
                                     <div className="max-w-full sm:pt-[100px] sm:pb-[100px] sm:pr-[30px] sm:pl-[30px] p-1">
                                         <div className={'flex justify-center mb-5'}>
 
