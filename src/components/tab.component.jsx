@@ -47,7 +47,7 @@ export function Tab({ children, activeTab, currentTab, setActiveTab }) {
     <>
       <div
         className={`px-5 py-3 rounded cursor-pointer
-      ${activeTab === currentTab ? "bg-blue-500 text-white" : "bg-gray-700 text-white"} min-w`}
+      ${activeTab === currentTab ? "bg-blue-500 text-white" : "bg-gray-700 text-white"} min-w flex flex-col items-center gap-2`}
         onClick={() => setActiveTab(currentTab)}
       >
         {children}
