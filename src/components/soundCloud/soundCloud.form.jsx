@@ -7,11 +7,13 @@ import {soundcloudService} from "../../service/index.service";
 import {isLink} from "../../utils/regex.util";
 import axios, {AxiosError} from "axios";
 import {toast} from "react-toastify";
+import {ClearButtonComponent} from "../clearInput.component";
 
 export function SoundCloudFormComponent(props) {
     const [buttonText, setButtonText] = useState('دانلود')
     const [waiting, setWaiting] = useState(false)
     const formContext = useContext(FormContext)
+    const [localInput,setLocalInput] = useState('')
     useEffect(() => {
         if (!buttonText) {
             setButtonText('دانلود')
@@ -21,8 +23,11 @@ export function SoundCloudFormComponent(props) {
     return (
         <form className="flex flex-col items-center"
               onSubmit={(e) => downloadHandler(e, setWaiting, setButtonText, formContext)} id={"soundCloudForm"}>
-            <input type="text" placeholder="لینک سینگل موزیک خود را وارد کنید..."
-                   className="input input-bordered   w-full max-w-xs mb-2"/>
+            <div className='relative w-full max-w-xs'>
+                <input type="text" placeholder="لینک موزیک خود را وارد کنید..." value={localInput}
+                       className="input input-bordered  w-full max-w-xs mb-2" onChange={(e)=>setLocalInput(e.target.value)}/>
+                {localInput != '' ?<ClearButtonComponent setLocalInput={setLocalInput}/>:"" }
+            </div>
             <button className={`btn btn-wide ${waiting && "loading"}`}>
                 {!waiting && <FontAwesomeIcon icon={['fas', 'download']} className='mr-2'/>}
                 {buttonText}

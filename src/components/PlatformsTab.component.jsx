@@ -33,9 +33,7 @@ export const PlatformsTab = () => {
                     </div>
                 </div>
                 ساندکلود
-
             </Tab>
-    
         </Tabs>
     )
 }
