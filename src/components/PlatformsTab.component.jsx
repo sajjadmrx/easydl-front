@@ -17,6 +17,14 @@ export const PlatformsTab = () => {
                 </div>
                 اسپاتیفای
             </Tab>
+            <Tab component={<SpotifyComponent/>} active>
+                <div className="avatar">
+                    <div className="w-10 rounded-full">
+                        <img src={"/brands/spotify.png"} className={'w-auto text-center'} alt={"لوگو اسپاتیفای"}/>
+                    </div>
+                </div>
+                اسپاتیفای
+            </Tab>
             <Tab component={<RadioJavanComponent/>}>
                 <div className="avatar">
                     <div className="w-10 rounded-full">
@@ -35,7 +43,7 @@ export const PlatformsTab = () => {
                 ساندکلود
 
             </Tab>
-
+    
         </Tabs>
     )
 }

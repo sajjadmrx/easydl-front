@@ -44,7 +44,7 @@ export function HomePage() {
                             <div className="hero min-h-screen">
                                 <div
                                     className="hero-content text-center border-[4px] border-gray-600 rounded-[18px] max-w-[350px] md:max-w-[450px] md:min-w-[720px] mt-10   shadow-lg mb-1">
-                                    <div className="max-w-md pt-[100px] pb-[100px] pr-[30px] pl-[30px]">
+                                    <div className="max-w-full sm:pt-[100px] sm:pb-[100px] sm:pr-[30px] sm:pl-[30px] p-1">
                                         <div className={'flex justify-center mb-5'}>
 
                                             <h1 className="text-5xl font-bold">ایزی دانلود</h1>
