@@ -33,16 +33,10 @@
       "sizes": "512x512"
     }
   ],
-  "start_url": ".",
+    "start_url": "/",
+    "scope": "."
   "display": "standalone",
   "theme_color": "#34eb5b",
   "background_color": "#1a1a1a",
-  "share_target": {
-    "action": "/target",
-    "method": "POST",
-    "params": {
-      "url": "url"
-    }
-  },
   "description": "ایزی دانلود به شما این امکان را می دهد تا به سرعت به دانلود آهنگ های خود دسترسی داشته باشید"
 }
