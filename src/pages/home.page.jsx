@@ -14,6 +14,8 @@ import {SpotifySongsComponent} from "../components/spotify/spotify.songs";
 import {SpotifyResultContext} from "../contexts/spotifyResult.context";
 import {DarkAlertComponent, WarningAlertComponent} from "../components/alerts.component";
 import CookieConsent, {Cookies} from "react-cookie-consent";
+import {Badge} from "react-daisyui";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
 
 export function HomePage() {
@@ -52,7 +54,13 @@ export function HomePage() {
 
                                         <p className="py-6">
                                             با ایزی دانلود به صورت رایگان با بهترین کیفیت دانلود کنیـد.
+
                                         </p>
+                                        <div className="py-2  badge badge-lg badge-success" id={'internet'}>
+                                            <FontAwesomeIcon icon={['fas','times']} className={'mr-2 cursor-pointer'} onClick={(e)=> removeElmentById('internet')}/>
+                                            بـا اینترنت نیم بها!
+                                        </div>
+
                                         <PlatformsTab/>
                                         <CookieConsent
                                             location="bottom"
@@ -66,7 +74,6 @@ export function HomePage() {
                                             کنید.
 
                                         </CookieConsent>
-                                     
                                     </div>
 
                                     {showState &&
@@ -99,4 +106,10 @@ export function HomePage() {
 
         </PageWrapper>
     )
+}
+
+function removeElmentById(id){
+    document
+        .getElementById(id)
+        .remove()
 }

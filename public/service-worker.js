@@ -1,6 +1,6 @@
 const cacheName = "cache-V1.2";
 const staticAssets = [
-    './manifest.webmanifest'
+    './manifest.json'
 ]
 
 self.addEventListener('install', async event => {
