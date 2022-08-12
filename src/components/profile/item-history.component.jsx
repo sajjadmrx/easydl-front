@@ -11,7 +11,7 @@ const platforms = [{
 {
     name: 'soundcloud',
     icon: faSoundcloud,
-    faName: 'سوند کلود'
+    faName: 'ساوندکلاود'
 },
 {
     name: 'radiojavan',
@@ -34,15 +34,12 @@ export function HistoryItem(props) {
                 <Input type="text" value={item.filename} readOnly />
 
             </td>
-            <td className="p-3">
-                {item.ip}
-            </td>
             <td className="p-3 font-bold">
                 <FontAwesomeIcon icon={platform.icon} />
                 <span className="ml-2">{platform.faName}</span>
             </td>
             <td className="p-3">
-                <Input type="text" value={item.subUrl} readOnly />
+                <Input type="text" value={item.url} readOnly />
             </td>
             <td className="p-3">
                 <span className="bg-green-400 text-gray-50 rounded-md px-2">

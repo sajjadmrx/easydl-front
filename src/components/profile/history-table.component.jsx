@@ -7,7 +7,6 @@ export function HistoryTable(props) {
         <tr>
           <th className="p-3">#</th>
           <th className="p-3 text-left">نام فایل</th>
-          <th className="p-3">آیپی</th>
           <th className="p-3 text-left">پلتفرم</th>
           <th className="p-3 text-left">لینک دریافتی</th>
           <th className="p-3 text-left">موفقیت آمیز؟</th>
