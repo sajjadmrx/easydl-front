@@ -42,7 +42,7 @@ export function UpdatesModalComponent(props) {
         return (
             <div className="d-flex align-items-center mb-2" itemID={index + 1}>
                 <FontAwesomeIcon icon={['fas', 'circle']} className={"m-l-10 text-success text-[10px]"}/>
-                <span className={"ml-3 text-sm"}>{item}</span>
+                <span className={"ml-3 text-sm text-gray-400"}>{item}</span>
             </div>
         )
     }).sort((a, b) => {
@@ -60,14 +60,14 @@ export function UpdatesModalComponent(props) {
             return (
                 <div className="d-flex align-items-center mb-2 " itemID={index + 1}>
                     <FontAwesomeIcon icon={['fas', 'circle']} className={"m-l-10 text-gray-900 text-[10px]"}/>
-                    <span className={"ml-3 text-sm "}>{detail}</span>
+                    <span className={"ml-3 text-sm text-gray-400"}>{detail}</span>
                 </div>
             )
         })
 
         let parent = (
             <div className=" m-t-10 py-3 mb-2 mt-2  divide-y divide-y-reverse divide-gray-500">
-                <span className="text-muted mt-3">نسخه {item}</span>
+                <span className="text-white mt-3">نسخه {item}</span>
                 {a.map(w => w)}
             </div>
         );
@@ -76,7 +76,7 @@ export function UpdatesModalComponent(props) {
     })
     return (
         <MainModalComponent isOpen={isOpen} setIsOpen={setIsOpen}>
-            <h5 className="modal-title">
+            <h5 className="modal-title text-white">
                 <div className="avatar placeholder mr-3">
                     <div className="bg-emerald-300 text-gray-900 rounded-full w-8">
                         <FontAwesomeIcon icon={['fas', 'fa-bell']}/>
@@ -91,7 +91,7 @@ export function UpdatesModalComponent(props) {
 
 
                 </h1>
-                <span className="text-gray-400">تغییرات جدید</span>
+                <span className="text-gray-200">تغییرات جدید</span>
                 <div className="mt-[-19px] mb-2">
                     <div className="row">
                         <div className="col-12">
@@ -127,7 +127,7 @@ export function UpdatesModalComponent(props) {
             <div className="modal-footer">
                 <div className="d-flex align-items-center mt-3">
                     <FontAwesomeIcon icon={["fas", "notifica"]} className={'mr-2'}/>
-                    <span className="text-muted">نسخه جدید: {version}</span>
+                    <span className="text-gray-200">نسخه جدید: {version}</span>
                 </div>
                 <div className="text-center">
                     <button className="btn btn-ghost" onClick={() => setIsOpen(false)}>
