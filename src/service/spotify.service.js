@@ -1,15 +1,17 @@
-import { hostStore } from "../store/host.store";
+import {hostStore} from "../store/host.store";
+import axios from "axios";
 
 export class SpotifyService {
     constructor(apiService) {
         this.apiService = apiService;
     }
+
     async search(url) {
         try {
-            const data = await this.apiService.post(`search/spotify`, {
+            const data = await this.apiService.post(`spotify`, {
                 url
             })
-            const items = await Promise.all(data.map(async (item) => {
+            const items = await Promise.all(data.map((item) => {
                 return {
                     name: item.title,
                     description: item.description,
@@ -25,8 +27,9 @@ export class SpotifyService {
             throw error;
         }
     }
-    download({ id, spotifyUrl }, cbProgress) {
-        return this.apiService.download('download/spotify', {
+
+    download({id, spotifyUrl}, cbProgress) {
+        return this.apiService.download('spotify/download', {
             id,
             spotifyUrl
         }, cbProgress)
