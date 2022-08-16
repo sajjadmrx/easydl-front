@@ -71,7 +71,7 @@ export class ApiService {
             const link = document.createElement('a');
             link.href = url;
             const filename = getFileName(result.headers['content-disposition']) || String(new Date.now()) + '.mp3'
-            console.log(filename)
+      
             link.setAttribute('download', filename);
             link.setAttribute('target', '_blank');
             document.body.appendChild(link);
