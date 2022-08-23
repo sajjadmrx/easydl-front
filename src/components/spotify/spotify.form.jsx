@@ -54,7 +54,7 @@ export function SpotifyFormComponent() {
       <div className="relative w-full max-w-xs">
         <input
           type="text"
-          placeholder="لینک موزیک خود را وارد کنید..."
+          placeholder="لینک موزیک یا آلبوم خود را وارد کنید..."
           id={"spotfiy"}
           value={localInput}
           className="input input-bordered  w-full max-w-xs mb-2"
