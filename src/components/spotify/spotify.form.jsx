@@ -7,15 +7,21 @@ import {
   isLink,
   isSpotifyAlbumLink,
   isSpotifyLink,
+  isSpotifyPlaylistLink,
 } from "../../utils/regex.util";
 import { useEffect } from "react";
 import { FormContext } from "../../contexts/form.context";
 import { SpotifyResultContext } from "../../contexts/spotifyResult.context";
 import { toast } from "react-toastify";
 import { ClearButtonComponent } from "../clearInput.component";
-import FileSaver from "file-saver";
 import AuthContext from "../../contexts/auth.context";
 import { Badge } from "react-daisyui";
+
+import Swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
+
+const MySwal = withReactContent(Swal);
+
 export function SpotifyFormComponent() {
   const [errorState, setErrorState] = React.useState(false);
   const [buttonText, setButtonText] = React.useState("");
@@ -101,6 +107,7 @@ async function submitHandler(
   authContext
 ) {
   e.preventDefault();
+
   setSongs([]);
   setErrorState(false);
   if (fromContext.loading) return alert("تا پایان دانلود صبر کنید...");
@@ -117,6 +124,9 @@ async function submitHandler(
       break;
     case isSpotifyAlbumLink(value):
       targetUrl = "album";
+      break;
+    case isSpotifyPlaylistLink(value):
+      targetUrl = "playlist";
       break;
     default:
       targetUrl = "unknown";
@@ -149,17 +159,35 @@ async function submitHandler(
       if (!authContext.isAuthenticated) {
         return toast.error("برای این کار لازم است وارد حساب کاربری بشید.");
       }
+
       setButtonText("لطفا صبر کنید");
       setWaiting(true);
       fromContext.setLoading(true);
       const result = await spotifyService.album(value);
+      const album_name = result.data.album_name;
       if (result.status == 201) {
-        toast.success(
-          "دانلود البوم به صف پردازش اضافه شد و بعد از اتمام پردازش برای شما ایمیل ارسال خواهد شد"
+        okyRequest(
+          album_name,
+          "دانلود البوم به صف پردازش اضافه شد و بعد از اتمام پردازش برای شما ایمیل خواهد شد"
         );
       } else if (result.status == 200) {
-        toast.success("لینک دانلود برای  شما ایمیل شد");
+        okyRequest(album_name, "لینک دانلود برای  شما ایمیل شد", 3000);
       }
+    } else if (targetUrl == "playlist") {
+      if (!authContext.isAuthenticated) {
+        return toast.error("برای این کار لازم است وارد حساب کاربری بشید.");
+      }
+
+      setButtonText("لطفا صبر کنید");
+      setWaiting(true);
+      fromContext.setLoading(true);
+      const result = await spotifyService.playlist(value);
+      const data = result.data;
+      const playlist_name = data.playlist_name;
+      okyRequest(
+        playlist_name,
+        "پلی لیست به صف پردازش اضافه شد, بعد از اتمام پردازش برای شما ایمیل خواهد شد."
+      );
     } else {
       setWaiting(false);
       toast.error("لطفا یک لینک معتبر وارد کنید");
@@ -175,3 +203,16 @@ async function submitHandler(
 }
 
 function downloadAlbumHandler() {}
+
+function okyRequest(title, text, timer = 0) {
+  MySwal.fire({
+    icon: "success",
+    title: title || null,
+    text: text,
+    confirmButtonText: "باشه",
+    confirmButtonColor: "#4ade80",
+    showConfirmButton: timer == 0 ? true : false,
+    timerProgressBar: timer > 0 ? true : false,
+    timer: timer,
+  });
+}

@@ -46,4 +46,7 @@ export class SpotifyService {
     return myAxios.post("/spotify/album", { url: albumUrl });
     //    return this.apiService.post("/spotify/album", { url: albumUrl });
   }
+  playlist(playlist) {
+    return myAxios.post("/spotify/playlist", { url: playlist });
+  }
 }
