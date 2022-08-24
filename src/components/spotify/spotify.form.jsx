@@ -15,6 +15,7 @@ import { toast } from "react-toastify";
 import { ClearButtonComponent } from "../clearInput.component";
 import FileSaver from "file-saver";
 import AuthContext from "../../contexts/auth.context";
+import { Badge } from "react-daisyui";
 export function SpotifyFormComponent() {
   const [errorState, setErrorState] = React.useState(false);
   const [buttonText, setButtonText] = React.useState("");
@@ -52,21 +53,34 @@ export function SpotifyFormComponent() {
       }
     >
       <div className="relative w-full max-w-xs">
-        <input
-          type="text"
-          placeholder="لینک موزیک یا آلبوم خود را وارد کنید..."
-          id={"spotfiy"}
-          value={localInput}
-          className="input input-bordered  w-full max-w-xs mb-2"
-          onChange={(e) => setLocalInput(e.target.value)}
-        />
-        {localInput != "" ? (
-          <ClearButtonComponent setLocalInput={setLocalInput} />
-        ) : (
-          ""
-        )}
+        <div className={""}>
+          <input
+            type="text"
+            placeholder="لینک مورد نظر خود را وارد کنید..."
+            id={"spotfiy"}
+            value={localInput}
+            className="input input-bordered  w-full max-w-xs mb-2"
+            onChange={(e) => setLocalInput(e.target.value)}
+          />
+          {localInput != "" ? (
+            <ClearButtonComponent setLocalInput={setLocalInput} />
+          ) : (
+            ""
+          )}
+        </div>
       </div>
-
+      <div className={"mb-2"}>
+        <span>پشتیبانی از</span>
+        <Badge color={"ghost"} responsive={true}>
+          موزیک
+        </Badge>
+        <Badge color={"ghost"} responsive={true}>
+          پلی لیست
+        </Badge>
+        <Badge color={"ghost"} responsive={true}>
+          آلبوم
+        </Badge>
+      </div>
       <button className="btn btn-wide ">
         {!waiting && (
           <FontAwesomeIcon icon={["fas", "download"]} className="mr-2" />
