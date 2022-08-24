@@ -83,7 +83,7 @@ export function SpotifyFormComponent() {
       </div>
       <button className="btn btn-wide ">
         {!waiting && (
-          <FontAwesomeIcon icon={["fas", "download"]} className="mr-2" />
+          <FontAwesomeIcon icon={["fas", "download"]} className={"ml-2.5"} />
         )}
         {buttonText}
       </button>

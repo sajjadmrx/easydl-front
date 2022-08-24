@@ -68,5 +68,5 @@ module.exports = {
     ],
   },
 
-  plugins: [require("daisyui"), require("tailwindcss-flip")],
+  plugins: [require("daisyui")],
 };

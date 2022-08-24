@@ -56,7 +56,7 @@ export function RadioJavanFormComponent(props) {
       </div>
       <button className={`btn btn-wide ${waiting && "loading"}`}>
         {!waiting && (
-          <FontAwesomeIcon icon={["fas", "download"]} className="mr-2" />
+          <FontAwesomeIcon icon={["fas", "download"]} className={"ml-2.5"} />
         )}
         {buttonText}
       </button>
