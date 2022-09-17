@@ -14,7 +14,7 @@ export const PlatformsTab = () => {
             <img
               src={"/brands/spotify.png"}
               className={"w-auto text-center"}
-              alt={"لوگو اسپاتیفای"}
+              alt={" ایزی دنلود,لوگو اسپاتیفای"}
             />
           </div>
         </div>
@@ -26,7 +26,7 @@ export const PlatformsTab = () => {
             <img
               src={"/brands/rj.png"}
               className={"w-auto text-center"}
-              alt={"لوگو رادیوجوان"}
+              alt={"ایزی دنلود,لوگو رادیوجوان"}
             />
           </div>
         </div>

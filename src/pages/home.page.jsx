@@ -21,6 +21,7 @@ import { Badge } from "react-daisyui";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 export function HomePage() {
+  const answer = `فعلا نمیشه به صورت مستقیم از اسپاتیفای دانلود کرد. واسه همین ما لینک شما رو در یوتیوب سرچ میکنیم و بر اساس انتخاب شما (اولین نتیجه پیشنهاد میشه) دانلود میکنیم`;
   const loadingContext = useContext(LoadingContext);
   const authContext = useContext(AuthContext);
   const [showState, setShowState] = useState(false);
