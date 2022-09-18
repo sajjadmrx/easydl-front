@@ -33,7 +33,7 @@ export class SpotifyService {
 
   download({ id, spotifyUrl }, cbProgress) {
     return this.apiService.download(
-      "spotify/download",
+      "spotify/track",
       {
         id,
         spotifyUrl,
