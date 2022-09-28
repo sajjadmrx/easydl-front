@@ -10,6 +10,13 @@ export function isRjLinkPodCast(value) {
   const links = ["https://rj.app/p/", "https://www.radiojavan.com/podcasts/"];
   return links.some((link) => value.startsWith(link));
 }
+export function isRjLinkMusicVideo(value) {
+  const links = [
+    "https://rj.app/v/",
+    "https://www.radiojavan.com/videos/video",
+  ];
+  return links.some((link) => value.startsWith(link));
+}
 export function isSpotifyLink(value) {
   const regex = /^(http|https):\/\/open\.spotify\.com\/track\/[^ "]+$/;
   return regex.test(value);

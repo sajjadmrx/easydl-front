@@ -7,11 +7,18 @@ import {
   radioJavanService,
   soundcloudService,
 } from "../../service/index.service";
-import { isLink, isRjLinkMp3, isRjLinkPodCast } from "../../utils/regex.util";
+import {
+  isLink,
+  isRjLinkMp3,
+  isRjLinkMusicVideo,
+  isRjLinkPodCast,
+} from "../../utils/regex.util";
 import { toast } from "react-toastify";
 import { axiosError } from "../../handlers/error.handler";
 import { ClearButtonComponent } from "../clearInput.component";
 import { Badge } from "react-daisyui";
+
+const supports = ["موزیک", "موزیک ویدیو", "پادکست"];
 
 export function RadioJavanFormComponent(props) {
   const [buttonText, setButtonText] = useState("دانلود");
@@ -47,12 +54,13 @@ export function RadioJavanFormComponent(props) {
       </div>
       <div className={"mb-2"}>
         <span>پشتیبانی از</span>
-        <Badge color={"ghost"} responsive={true}>
-          موزیک
-        </Badge>
-        <Badge color={"ghost"} responsive={true}>
-          پادکست
-        </Badge>
+        {supports.map((sup, index) => {
+          return (
+            <Badge color={"ghost"} responsive={true} id={index + 1}>
+              {sup}
+            </Badge>
+          );
+        })}
       </div>
       <button className={`btn btn-wide ${waiting && "loading"}`}>
         {!waiting && (
@@ -81,6 +89,9 @@ async function downloadHandler(e, setWaiting, setButtonText, formContext) {
       case isRjLinkPodCast(value):
         targetUrl = "rj-podcast";
         break;
+      case isRjLinkMusicVideo(value):
+        targetUrl = "music-video";
+        break;
 
       default:
         targetUrl = "unknown";
@@ -106,6 +117,15 @@ async function downloadHandler(e, setWaiting, setButtonText, formContext) {
     }
     if (targetUrl == "rj-podcast") {
       await radioJavanService.downloadPodCast(value, (progress) => {
+        setButtonText(`${progress}% در حال دانلود ...`);
+        if (progress == 100) {
+          setButtonText(null);
+          setWaiting(false);
+        }
+      });
+    }
+    if (targetUrl == "music-video") {
+      await radioJavanService.downloadMusicVideo(value, (progress) => {
         setButtonText(`${progress}% در حال دانلود ...`);
         if (progress == 100) {
           setButtonText(null);
