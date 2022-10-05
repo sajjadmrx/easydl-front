@@ -17,6 +17,8 @@ import { ClearButtonComponent } from "../clearInput.component";
 import AuthContext from "../../contexts/auth.context";
 import { Badge } from "react-daisyui";
 
+import GetAudioId from "get-audio-id";
+
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 
@@ -140,14 +142,14 @@ async function submitHandler(
     if (targetUrl == "track") {
       setWaiting(true);
       fromContext.setLoading(true);
-
+      let trackId = getId(value);
       const indexOf = value.indexOf("&");
       if (indexOf > 0) {
         value = value.substring(0, indexOf);
       }
       button.classList.add("loading");
       setButtonText("لطفا صبر کنید...");
-      const data = await spotifyService.search(value);
+      const data = await spotifyService.searchTrack(trackId);
 
       if (data.length > 0) {
         setSongs(data);
@@ -163,6 +165,7 @@ async function submitHandler(
       setButtonText("لطفا صبر کنید");
       setWaiting(true);
       fromContext.setLoading(true);
+
       const result = await spotifyService.album(value);
       const album_name = result.data.album_name;
       if (result.status == 201) {
@@ -215,4 +218,8 @@ function okyRequest(title, text, timer = 0) {
     timerProgressBar: timer > 0 ? true : false,
     timer: timer,
   });
+}
+
+function getId(value) {
+  return new GetAudioId(value).getId().id;
 }

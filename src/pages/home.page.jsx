@@ -52,7 +52,6 @@ export function HomePage() {
                   <div className="max-w-full sm:pt-[100px] sm:pb-[100px] sm:pr-[30px] sm:pl-[30px] p-1">
                     <div className={"flex justify-center mb-5"}>
                       <h1 className="text-5xl font-bold">ایزی دانلود</h1>
-                      <span>#مهسا_امینی</span>
                     </div>
 
                     <p className="py-6">
