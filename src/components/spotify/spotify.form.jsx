@@ -79,15 +79,17 @@ export function SpotifyFormComponent() {
       </div>
       <div className={"mb-2"}>
         <span>پشتیبانی از</span>
-        <Badge color={"ghost"} responsive={true}>
-          موزیک
-        </Badge>
-        <Badge color={"ghost"} responsive={true}>
-          پلی لیست
-        </Badge>
-        <Badge color={"ghost"} responsive={true}>
-          آلبوم
-        </Badge>
+        <div className={"flex mt-2"}>
+          <Badge color={"ghost"} className={"mr-2"} responsive={true}>
+            موزیک
+          </Badge>
+          <Badge color={"ghost"} className={"mr-2"} responsive={true}>
+            پلی لیست
+          </Badge>
+          <Badge color={"ghost"} className={"mr-2"} responsive={true}>
+            آلبوم
+          </Badge>
+        </div>
       </div>
       <button className="btn btn-wide ">
         {!waiting && (
@@ -149,7 +151,7 @@ async function submitHandler(
       }
       button.classList.add("loading");
       setButtonText("لطفا صبر کنید...");
-      const data = await spotifyService.searchTrack(trackId);
+      const data = await spotifyService.searchTrack(value);
 
       if (data.length > 0) {
         setSongs(data);

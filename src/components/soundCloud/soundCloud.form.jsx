@@ -46,9 +46,11 @@ export function SoundCloudFormComponent(props) {
       </div>
       <div className={"mb-2"}>
         <span>پشتیبانی از</span>
-        <Badge color={"ghost"} responsive={true}>
-          موزیک
-        </Badge>
+        <div className={"flex mt-2"}>
+          <Badge color={"ghost"} responsive={true}>
+            موزیک
+          </Badge>
+        </div>
       </div>
       <button className={`btn btn-wide ${waiting && "loading"}`}>
         {!waiting && (

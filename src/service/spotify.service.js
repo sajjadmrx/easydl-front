@@ -9,7 +9,9 @@ export class SpotifyService {
 
   async searchTrack(id) {
     try {
-      const data = await this.apiService.get(`spotify/tracks/${id}`);
+      const data = await this.apiService.post(`spotify`, {
+        url: id,
+      });
       const items = await Promise.all(
         data.map((item) => {
           return {
@@ -31,7 +33,7 @@ export class SpotifyService {
 
   download({ id, spotifyUrl }, cbProgress) {
     return this.apiService.download(
-      "spotify/tracks",
+      "spotify/track",
       {
         id,
         spotifyUrl,

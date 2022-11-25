@@ -54,13 +54,20 @@ export function RadioJavanFormComponent(props) {
       </div>
       <div className={"mb-2"}>
         <span>پشتیبانی از</span>
-        {supports.map((sup, index) => {
-          return (
-            <Badge color={"ghost"} responsive={true} id={index + 1}>
-              {sup}
-            </Badge>
-          );
-        })}
+        <div className={"flex mt-2"}>
+          {supports.map((sup, index) => {
+            return (
+              <Badge
+                color={"ghost"}
+                className={"mr-2"}
+                responsive={true}
+                id={index + 1}
+              >
+                {sup}
+              </Badge>
+            );
+          })}
+        </div>
       </div>
       <button className={`btn btn-wide ${waiting && "loading"}`}>
         {!waiting && (
