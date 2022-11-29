@@ -6,7 +6,7 @@ export class RadioJavanService {
   async downloadMp3(url, cbProgress) {
     try {
       await this.apiService.download(
-        "rj/track",
+        "rj/tracks",
         {
           url: url,
         },
@@ -20,7 +20,7 @@ export class RadioJavanService {
   async downloadPodCast(url, cbProgress) {
     try {
       await this.apiService.download(
-        "rj/podcast",
+        "rj/podcasts",
         {
           url: url,
         },
@@ -33,7 +33,7 @@ export class RadioJavanService {
   async downloadMusicVideo(url, cbProgress) {
     try {
       await this.apiService.download(
-        "rj/music-video",
+        "rj/music-videos",
         {
           url: url,
         },

@@ -151,7 +151,7 @@ async function submitHandler(
       }
       button.classList.add("loading");
       setButtonText("لطفا صبر کنید...");
-      const data = await spotifyService.searchTrack(value);
+      const data = await spotifyService.searchTrack(trackId);
 
       if (data.length > 0) {
         setSongs(data);

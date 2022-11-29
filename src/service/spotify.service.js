@@ -1,17 +1,13 @@
 import { hostStore } from "../store/host.store";
-import axios from "axios";
 import myAxios from "../utils/axios.util";
-
 export class SpotifyService {
   constructor(apiService) {
     this.apiService = apiService;
   }
 
-  async searchTrack(id) {
+  async searchTrack(trackId) {
     try {
-      const data = await this.apiService.post(`spotify`, {
-        url: id,
-      });
+      const data = await this.apiService.get(`spotify/tracks/${trackId}`);
       const items = await Promise.all(
         data.map((item) => {
           return {
@@ -33,7 +29,7 @@ export class SpotifyService {
 
   download({ id, spotifyUrl }, cbProgress) {
     return this.apiService.download(
-      "spotify/track",
+      "spotify/tracks",
       {
         id,
         spotifyUrl,
@@ -43,10 +39,9 @@ export class SpotifyService {
   }
 
   album(albumUrl) {
-    return myAxios.post("/spotify/album", { url: albumUrl });
-    //    return this.apiService.post("/spotify/album", { url: albumUrl });
+    return myAxios.post("/spotify/albums", { url: albumUrl });
   }
   playlist(playlist) {
-    return myAxios.post("/spotify/playlist", { url: playlist });
+    return myAxios.post("/spotify/playlists", { url: playlist });
   }
 }
