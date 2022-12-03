@@ -25,17 +25,18 @@ import withReactContent from "sweetalert2-react-content";
 import { AuthContext } from "../../shared/interfaces/authContext.interface";
 import { SpotifySearchItem } from "../../shared/interfaces/spotify.interface";
 import { FormContext } from "../../shared/interfaces/FormContext.interface";
+import { SupportMediaComponent } from "../support-media.component";
 
 const MySwal = withReactContent(Swal);
 interface Props {}
 export function SpotifyFormComponent(props: Props) {
   const [errorState, setErrorState] = React.useState<boolean>(false);
   const [buttonText, setButtonText] = React.useState<string | undefined>("");
+  const [localInput, setLocalInput] = React.useState<string>("");
   const [waiting, setWaiting] = React.useState<boolean>(false);
   const fromContext = React.useContext(formContext);
   const authContextData: AuthContext = React.useContext(authContext);
   const spotifyResultContextData = React.useContext(spotifyResultContext);
-  const [localInput, setLocalInput] = React.useState<string>("");
   useEffect(() => {
     if (!buttonText) {
       setButtonText("دانلود");
@@ -68,11 +69,12 @@ export function SpotifyFormComponent(props: Props) {
         <div className={""}>
           <input
             type="text"
-            placeholder="لینک مورد نظر خود را وارد کنید..."
+            placeholder="https://open.spotify.com/...."
             id={"spotfiy"}
             value={localInput}
             className="input input-bordered  w-full max-w-xs mb-2"
             onChange={(e) => setLocalInput(e.target.value)}
+            dir={"auto"}
           />
           {localInput != "" ? (
             <ClearButtonComponent setInput={setLocalInput} />
@@ -81,20 +83,7 @@ export function SpotifyFormComponent(props: Props) {
           )}
         </div>
       </div>
-      <div className={"mb-2"}>
-        <span>پشتیبانی از</span>
-        <div className={"flex mt-2"}>
-          <Badge color={"ghost"} className={"mr-2"} responsive={true}>
-            موزیک
-          </Badge>
-          <Badge color={"ghost"} className={"mr-2"} responsive={true}>
-            پلی لیست
-          </Badge>
-          <Badge color={"ghost"} className={"mr-2"} responsive={true}>
-            آلبوم
-          </Badge>
-        </div>
-      </div>
+      <SupportMediaComponent media={["music", "playlist", "album"]} />
       <button className="btn btn-wide ">
         {!waiting && (
           <FontAwesomeIcon icon={["fas", "download"]} className={"ml-2.5"} />

@@ -1,7 +1,5 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React from "react";
-import { useEffect, useState } from "react";
-import { Badge } from "react-daisyui";
+import React, { useEffect, useState } from "react";
 import { MainModalComponent } from "./main.modal";
 
 export function UpdatesModalComponent(props: any) {
@@ -85,14 +83,12 @@ export function UpdatesModalComponent(props: any) {
         );
       });
 
-      let parent = (
+      return (
         <div className=" m-t-10 py-3 mb-2 mt-2  divide-y divide-y-reverse divide-gray-500">
           <span className="text-white mt-3">نسخه {item}</span>
           {a.map((w: any) => w)}
         </div>
       );
-
-      return parent;
     }
   });
 

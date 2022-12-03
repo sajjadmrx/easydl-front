@@ -12,6 +12,7 @@ import { ClearButtonComponent } from "../clearInput.component";
 import { Badge } from "react-daisyui";
 import React from "react";
 import { axiosError } from "../../handlers/error.handler";
+import { SupportMediaComponent } from "../support-media.component";
 
 export function SoundCloudFormComponent(props: any) {
   const [buttonText, setButtonText] = useState("دانلود");
@@ -35,10 +36,11 @@ export function SoundCloudFormComponent(props: any) {
       <div className="relative w-full max-w-xs">
         <input
           type="text"
-          placeholder="لینک مورد نظر خود را وارد کنید..."
+          placeholder="https://soundcloud.com/...."
           value={localInput}
           className="input input-bordered  w-full max-w-xs mb-2"
           onChange={(e) => setLocalInput(e.target.value)}
+          dir={"auto"}
         />
         {localInput != "" ? (
           <ClearButtonComponent setInput={setLocalInput} />
@@ -46,14 +48,8 @@ export function SoundCloudFormComponent(props: any) {
           ""
         )}
       </div>
-      <div className={"mb-2"}>
-        <span>پشتیبانی از</span>
-        <div className={"flex mt-2"}>
-          <Badge color={"ghost"} responsive={true}>
-            موزیک
-          </Badge>
-        </div>
-      </div>
+      <SupportMediaComponent media={["music"]} />
+
       <button className={`btn btn-wide ${waiting && "loading"}`}>
         {!waiting && (
           <FontAwesomeIcon icon={["fas", "download"]} className={"ml-2.5"} />

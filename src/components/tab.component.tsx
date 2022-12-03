@@ -55,7 +55,7 @@ export function Tab({ children, activeTab, currentTab, setActiveTab }: any) {
   return (
     <>
       <div
-        className={`px-5 py-3 rounded cursor-pointer
+        className={`px-5 py-3 rounded cursor-pointer w-[100px] h-[90px]
       ${
         activeTab === currentTab
           ? "bg-blue-500 text-white"

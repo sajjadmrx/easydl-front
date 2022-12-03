@@ -4,6 +4,7 @@ import { Tabs, Tab } from "./tab.component";
 import { SpotifyComponent } from "./spotify/spotify.component";
 import { RadioJavanComponent } from "./radioJavan/radioJavan.component";
 import { SoundCloudComponent } from "./soundCloud/soundCloud.component";
+import { YoutubeComponent } from "./youtube/youtube.component";
 
 export const PlatformsTab = () => {
   return (
@@ -38,11 +39,23 @@ export const PlatformsTab = () => {
             <img
               src={"/brands/soundcloud.png"}
               className={"w-auto text-center"}
-              alt={"لوگو ساندکلود"}
+              alt={"دانلود از ساندکلود"}
             />
           </div>
         </div>
         ساندکلود
+      </Tab>
+      <Tab component={<YoutubeComponent />}>
+        <div className="avatar">
+          <div className="w-10 rounded-full">
+            <img
+              src={"/brands/youtube.png"}
+              className={"w-auto text-center"}
+              alt={"دانلود از یوتیوب"}
+            />
+          </div>
+        </div>
+        یوتیوب
       </Tab>
     </Tabs>
   );
