@@ -8,8 +8,13 @@ import { AuthModalComponent } from "../components/modals/auth.modal";
 import { authModalContext } from "../contexts/authModalContext";
 import { userService } from "../service/index.service";
 import React from "react";
+import { AuthContext } from "../shared/interfaces/authContext.interface";
 
-export const PageWrapper = (props: any) => {
+interface Props {
+  children: JSX.Element;
+}
+
+export const PageWrapper = (props: Props) => {
   const {
     setIsAuthenticated,
     isAuthenticated,
@@ -17,14 +22,14 @@ export const PageWrapper = (props: any) => {
     setUser,
     token,
     setToken,
-  } = useContext(authContext);
-  const [showModal, setShowModal] = useState(false);
+  }: AuthContext = useContext(authContext);
+  const [showModal, setShowModal] = useState<boolean>(false);
   const AuthModalContextValues = {
     showModal,
     setShowModal,
   };
   useEffect(() => {
-    async function getUserByToken() {
+    async function getUserByToken(): Promise<void> {
       try {
         setStatusLoading(true);
         const profile = await userService.getProfile();

@@ -48,7 +48,7 @@ export function RadioJavanFormComponent(props: any) {
           onChange={(e) => setLocalInput(e.target.value)}
         />
         {localInput != "" ? (
-          <ClearButtonComponent setLocalInput={setLocalInput} />
+          <ClearButtonComponent setInput={setLocalInput} />
         ) : (
           ""
         )}

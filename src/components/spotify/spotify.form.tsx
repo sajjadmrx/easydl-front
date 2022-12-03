@@ -23,17 +23,19 @@ import GetAudioId from "get-audio-id";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 import { AuthContext } from "../../shared/interfaces/authContext.interface";
+import { SpotifySearchItem } from "../../shared/interfaces/spotify.interface";
+import { FormContext } from "../../shared/interfaces/FormContext.interface";
 
 const MySwal = withReactContent(Swal);
-
-export function SpotifyFormComponent(props: any) {
-  const [errorState, setErrorState] = React.useState(false);
-  const [buttonText, setButtonText] = React.useState("");
-  const [waiting, setWaiting] = React.useState(false);
+interface Props {}
+export function SpotifyFormComponent(props: Props) {
+  const [errorState, setErrorState] = React.useState<boolean>(false);
+  const [buttonText, setButtonText] = React.useState<string | undefined>("");
+  const [waiting, setWaiting] = React.useState<boolean>(false);
   const fromContext = React.useContext(formContext);
   const authContextData: AuthContext = React.useContext(authContext);
   const spotifyResultContextData = React.useContext(spotifyResultContext);
-  const [localInput, setLocalInput] = React.useState("");
+  const [localInput, setLocalInput] = React.useState<string>("");
   useEffect(() => {
     if (!buttonText) {
       setButtonText("دانلود");
@@ -42,8 +44,7 @@ export function SpotifyFormComponent(props: any) {
     }
   }, [buttonText]);
   useEffect(() => {
-    // @ts-ignore
-    if (errorState && errorState != "") {
+    if (errorState) {
       toast.error(errorState);
     }
   }, [errorState]);
@@ -74,7 +75,7 @@ export function SpotifyFormComponent(props: any) {
             onChange={(e) => setLocalInput(e.target.value)}
           />
           {localInput != "" ? (
-            <ClearButtonComponent setLocalInput={setLocalInput} />
+            <ClearButtonComponent setInput={setLocalInput} />
           ) : (
             ""
           )}
@@ -103,21 +104,20 @@ export function SpotifyFormComponent(props: any) {
     </form>
   );
 }
-
 async function submitHandler(
   e: any,
   setSongs: any,
   setErrorState: any,
   setButtonText: any,
   setWaiting: any,
-  fromContext: any,
-  authContext: any
+  formContext: FormContext,
+  authContext: AuthContext
 ) {
   e.preventDefault();
 
   setSongs([]);
   setErrorState(false);
-  if (fromContext.loading) return alert("تا پایان دانلود صبر کنید...");
+  if (formContext.loading) return alert("تا پایان دانلود صبر کنید...");
   let value = e.target.querySelector("input").value;
   const button = e.target.querySelector("button");
   if (!value || !isLink(value)) {
@@ -146,7 +146,7 @@ async function submitHandler(
   try {
     if (targetUrl == "track") {
       setWaiting(true);
-      fromContext.setLoading(true);
+      formContext.setLoading(true);
       let trackId = getId(value);
       const indexOf = value.indexOf("&");
       if (indexOf > 0) {
@@ -154,11 +154,13 @@ async function submitHandler(
       }
       button.classList.add("loading");
       setButtonText("لطفا صبر کنید...");
-      const data = await spotifyService.searchTrack(trackId);
+      const data: Array<SpotifySearchItem> = await spotifyService.searchTrack(
+        trackId
+      );
 
       if (data.length > 0) {
         setSongs(data);
-        fromContext.setinputValue(value);
+        formContext.setInputValue(value);
       } else {
         toast.error("چیزی یافت نشد");
       }
@@ -169,16 +171,16 @@ async function submitHandler(
 
       setButtonText("لطفا صبر کنید");
       setWaiting(true);
-      fromContext.setLoading(true);
+      formContext.setLoading(true);
 
       const result = await spotifyService.album(value);
       const album_name = result.data.album_name;
-      if (result.status == 201) {
+      if (result.statusCode == 201) {
         okyRequest(
           album_name,
           "دانلود البوم به صف پردازش اضافه شد و بعد از اتمام پردازش برای شما ایمیل خواهد شد"
         );
-      } else if (result.status == 200) {
+      } else if (result.statusCode == 200) {
         okyRequest(album_name, "لینک دانلود برای  شما ایمیل شد", 3000);
       }
     } else if (targetUrl == "playlist") {
@@ -188,10 +190,10 @@ async function submitHandler(
 
       setButtonText("لطفا صبر کنید");
       setWaiting(true);
-      fromContext.setLoading(true);
+      formContext.setLoading(true);
       const result = await spotifyService.playlist(value);
-      const data = result.data;
-      const playlist_name = data.playlist_name;
+      const response = result.data;
+      const playlist_name = response.playlist_name;
       okyRequest(
         playlist_name,
         "پلی لیست به صف پردازش اضافه شد, بعد از اتمام پردازش برای شما ایمیل خواهد شد."
@@ -206,11 +208,9 @@ async function submitHandler(
     button.classList.remove("loading");
     setButtonText(null);
     setWaiting(false);
-    fromContext.setLoading(false);
+    formContext.setLoading(false);
   }
 }
-
-function downloadAlbumHandler() {}
 
 function okyRequest(title: any, text: any, timer = 0) {
   MySwal.fire({

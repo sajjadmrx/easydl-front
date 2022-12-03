@@ -1,15 +1,14 @@
 import React, { useContext, useEffect } from "react";
 import { authContext } from "../contexts/authContext";
-import { infoStore } from "../store/info.store";
 import { PageLinkComponent } from "./pageLinkComponent";
 import { ProfileDropDownComponent } from "./profileDropDown.component";
 import { ThemeSelectorComponent } from "./themeSelector.component";
 import {} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Link } from "react-router-dom";
 import { authModalContext } from "../contexts/authModalContext";
+import { pageLinks } from "../shared/constants/pages.constant";
 
-export function NavbarComponent() {
+export function NavbarComponent(): JSX.Element {
   const { isAuthenticated } = useContext(authContext);
   const { setShowModal } = useContext(authModalContext);
   return (
@@ -37,7 +36,7 @@ export function NavbarComponent() {
             className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52"
           >
             <li>
-              {[].map((value: any, index: number) => {
+              {pageLinks.map((value: any, index: number) => {
                 return (
                   <PageLinkComponent
                     name={value.name}

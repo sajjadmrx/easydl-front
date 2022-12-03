@@ -1,17 +1,14 @@
 import { CookieUtil } from "../utils/cookie.util";
 import { ApiService } from "./api.service";
+import { User } from "../shared/interfaces/user.interface";
+import { Response } from "../shared/interfaces/response.interface";
 
 export class UserService {
   constructor(private apiService: ApiService) {}
 
-  async getProfile() {
+  async getProfile(): Promise<Response<User>> {
     const token = CookieUtil.get("token");
     this.apiService.setToken(token);
     return this.apiService.get("users/@me/profile", {});
-  }
-  async getDownloads() {
-    this.apiService.setToken(CookieUtil.get("token"));
-    const result = await this.apiService.get("users/@me/downloads", {});
-    return result.data;
   }
 }

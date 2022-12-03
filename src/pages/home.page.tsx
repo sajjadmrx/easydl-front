@@ -4,7 +4,6 @@ import react, { useEffect, useState, useContext } from "react";
 
 import { LoadingContext } from "react-router-loading";
 
-import ms from "ms";
 import { infoStore } from "../store/info.store";
 import { PageWrapper } from "../Wrappers/pages.wrapper";
 import { formContext } from "../contexts/formContext";
@@ -16,7 +15,6 @@ import { spotifyResultContext } from "../contexts/spotifyResultContext";
 import CookieConsent, { Cookies } from "react-cookie-consent";
 
 export function HomePage() {
-  const answer = `فعلا نمیشه به صورت مستقیم از اسپاتیفای دانلود کرد. واسه همین ما لینک شما رو در یوتیوب سرچ میکنیم و بر اساس انتخاب شما (اولین نتیجه پیشنهاد میشه) دانلود میکنیم`;
   const loadingContext = useContext(LoadingContext);
   const authContextData = useContext(authContext);
   const [showState, setShowState] = useState(false);
@@ -98,7 +96,7 @@ export function HomePage() {
                     نتیجه جستجو ({spotifySongs.length} مورد یافت شد.)
                   </h2>
                 </div>
-                <SpotifySongsComponent />
+                <SpotifySongsComponent className={""} />
               </div>
             </spotifyResultContext.Provider>
           </formContext.Provider>

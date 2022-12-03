@@ -1,10 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { PageLink } from "../shared/interfaces/pages.interface";
 
-interface Props {
-  name: string;
-  to: string;
-}
+interface Props extends PageLink {}
 
 export function PageLinkComponent(props: Props) {
   return (

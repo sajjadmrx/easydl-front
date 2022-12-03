@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useId, useState } from "react";
 
 export function Tabs({ children }: any) {
   function findActiveTab(a: any) {
@@ -12,7 +12,7 @@ export function Tabs({ children }: any) {
   }
 
   function tabValidator(tab: any) {
-    return tab.type.displayName === "Tab" ? true : false;
+    return tab.type.displayName === "Tab";
   }
 
   const [activeTab, setActiveTab] = useState(findActiveTab(children));
@@ -20,12 +20,12 @@ export function Tabs({ children }: any) {
     <div>
       <div className="flex justify-center">
         <div className="flex gap-2  p-2 overflow-x-auto">
-          {children.map((item: any, i: any) => {
+          {children.map((item: any, i: number) => {
             return (
               <>
                 {tabValidator(item) && (
                   <Tab
-                    key={`tab-{i}`}
+                    key={`tab-${i}}`}
                     currentTab={i}
                     activeTab={activeTab}
                     setActiveTab={setActiveTab}

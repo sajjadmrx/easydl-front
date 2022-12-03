@@ -1,5 +1,7 @@
+import { User } from "./user.interface";
+
 export interface AuthContext {
-  user: any;
+  user: User | null;
   setUser: any;
   isAuthenticated: boolean;
   setIsAuthenticated: any;

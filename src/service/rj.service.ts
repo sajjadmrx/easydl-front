@@ -3,7 +3,7 @@ import { ApiService } from "./api.service";
 export class RadioJavanService {
   constructor(private apiService: ApiService) {}
 
-  async downloadMp3(url: string, cbProgress: any) {
+  async downloadMp3(url: string, cbProgress: any): Promise<void> {
     try {
       await this.apiService.download(
         "rj/tracks",
@@ -17,7 +17,7 @@ export class RadioJavanService {
     }
   }
 
-  async downloadPodCast(url: string, cbProgress: any) {
+  async downloadPodCast(url: string, cbProgress: any): Promise<void> {
     try {
       await this.apiService.download(
         "rj/podcasts",
@@ -30,7 +30,7 @@ export class RadioJavanService {
       throw error;
     }
   }
-  async downloadMusicVideo(url: string, cbProgress: any) {
+  async downloadMusicVideo(url: string, cbProgress: any): Promise<void> {
     try {
       await this.apiService.download(
         "rj/music-videos",

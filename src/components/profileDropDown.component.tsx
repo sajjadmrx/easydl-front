@@ -4,9 +4,10 @@ import { Link } from "react-router-dom";
 import { authContext } from "../contexts/authContext";
 import { CookieUtil } from "../utils/cookie.util";
 import { AuthContext } from "../shared/interfaces/authContext.interface";
+import { User } from "../shared/interfaces/user.interface";
 
-export function ProfileDropDownComponent() {
-  const user = useContext(authContext).user;
+export function ProfileDropDownComponent(): JSX.Element {
+  const user: User = useContext(authContext).user as User;
   const authContextData = useContext(authContext);
   const statusLoading = useContext(authContext).statusLoading;
   if (statusLoading) {
@@ -20,7 +21,7 @@ export function ProfileDropDownComponent() {
       <div className="dropdown dropdown-end">
         <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
           <div className="w-10 rounded-full">
-            <img src={user.avatar} />
+            <img src={user.avatar} alt={`${user.username} avatar`} />
           </div>
         </label>
         <ul

@@ -1,46 +1,72 @@
 import { hostStore } from "../store/host.store";
 import myAxios from "../utils/axios.util";
 import { ApiService } from "./api.service";
+import {
+  SpotifyAlbum,
+  SpotifySearchItem,
+  SpotifyPlaylist,
+} from "../shared/interfaces/spotify.interface";
+import { Response } from "../shared/interfaces/response.interface";
+import { AxiosResponse } from "axios";
+
 export class SpotifyService {
   constructor(private apiService: ApiService) {}
 
-  async searchTrack(trackId: string) {
+  async searchTrack(trackId: string): Promise<SpotifySearchItem[]> {
     try {
       const data = await this.apiService.get(`spotify/tracks/${trackId}`, {});
-      const items = await Promise.all(
-        data.map((item: any) => {
-          return {
-            name: item.title,
-            description: item.description,
-            title: item.title,
-            id: item.videoId,
-            photo: `${hostStore.url}/download/photo?url=${item.thumbnail}`,
-            artist: item.author.name,
-            platforms: ["spotify", "youtube"],
-          };
-        })
-      );
-      return items;
+      return data.map((item: any) => {
+        return {
+          name: item.title,
+          description: item.description,
+          title: item.title,
+          id: item.videoId,
+          photo: `${hostStore.url}/download/photo?url=${item.thumbnail}`,
+          artist: item.author.name,
+          platforms: ["spotify", "youtube"],
+        };
+      });
     } catch (error) {
       throw error;
     }
   }
 
-  download({ id, spotifyUrl }: any, cbProgress: any) {
-    return this.apiService.download(
-      "spotify/tracks",
-      {
-        id,
-        spotifyUrl,
-      },
-      cbProgress
-    );
+  async download(
+    { id, spotifyUrl }: { id: string; spotifyUrl: string },
+    cbProgress: any
+  ): Promise<void> {
+    try {
+      await this.apiService.download(
+        "spotify/tracks",
+        {
+          id,
+          spotifyUrl,
+        },
+        cbProgress
+      );
+    } catch (e) {
+      throw e;
+    }
   }
 
-  album(albumUrl: string) {
-    return myAxios.post("/spotify/albums", { url: albumUrl });
+  async album(albumUrl: string): Promise<Response<SpotifyAlbum>> {
+    try {
+      const result: AxiosResponse<Response<SpotifyAlbum>> = await myAxios.post(
+        "/spotify/albums",
+        { url: albumUrl }
+      );
+      return result.data;
+    } catch (e) {
+      throw e;
+    }
   }
-  playlist(playlist: string) {
-    return myAxios.post("/spotify/playlists", { url: playlist });
+  async playlist(playlist: string): Promise<Response<SpotifyPlaylist>> {
+    try {
+      const result: AxiosResponse<Response<SpotifyPlaylist>> =
+        await myAxios.post("/spotify/playlists", { url: playlist });
+      return result.data;
+    } catch (e) {
+      throw e;
+    }
   }
 }

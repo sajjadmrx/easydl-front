@@ -23,7 +23,7 @@ export function UpdatesModalComponent(props: any) {
     if (isReadV) saveHanlder(version);
   }, [isReadV]);
 
-  const update = {
+  const update: any = {
     new: [
       "اضافه شدن دانلود آلبوم از پلتفرم اسپاتیفای ",
       "اضافه شدن دانلود پلی لیست از پلتفرم اسپاتیفای",
@@ -40,7 +40,7 @@ export function UpdatesModalComponent(props: any) {
   };
 
   let newHtml = update.new
-    .map((item, index) => {
+    .map((item: any, index: any) => {
       return (
         <div
           className="d-flex align-items-center mb-2"
@@ -54,40 +54,46 @@ export function UpdatesModalComponent(props: any) {
         </div>
       );
     })
-    .sort((a, b) => {
+    .sort((a: any, b: any) => {
       return b.props.itemID - a.props.itemID;
     });
 
-  const keysOldVs = Object.keys(update)
+  const keysOldVs: string[] = Object.keys(update)
     .filter((item) => {
       return item !== "new";
     })
     .sort((a: any, b: any) => {
       return a - b;
     });
-
+  //
   const updateDetails = keysOldVs.map((item) => {
-    // @ts-ignore
-    const a = update[item]?.map((detail: any, index: any) => {
-      return (
-        <div className="d-flex align-items-center mb-2 " itemID={index + 1}>
-          <FontAwesomeIcon
-            icon={["fas", "circle"]}
-            className={"m-l-10 text-gray-900 text-[10px]"}
-          />
-          <span className={"ml-3 text-sm text-gray-400"}>{detail}</span>
+    const myUpdate = update[item];
+    if (myUpdate) {
+      const a = myUpdate.map((detail: any, index: any) => {
+        return (
+          <div
+            className="d-flex align-items-center mb-2 "
+            itemID={index + 1}
+            key={index + 1}
+          >
+            <FontAwesomeIcon
+              icon={["fas", "circle"]}
+              className={"m-l-10 text-gray-900 text-[10px]"}
+            />
+            <span className={"ml-3 text-sm text-gray-400"}>{detail}</span>
+          </div>
+        );
+      });
+
+      let parent = (
+        <div className=" m-t-10 py-3 mb-2 mt-2  divide-y divide-y-reverse divide-gray-500">
+          <span className="text-white mt-3">نسخه {item}</span>
+          {a.map((w: any) => w)}
         </div>
       );
-    });
 
-    let parent = (
-      <div className=" m-t-10 py-3 mb-2 mt-2  divide-y divide-y-reverse divide-gray-500">
-        <span className="text-white mt-3">نسخه {item}</span>
-        {a.map((w: any) => w)}
-      </div>
-    );
-
-    return parent;
+      return parent;
+    }
   });
 
   return (
@@ -110,7 +116,7 @@ export function UpdatesModalComponent(props: any) {
               <div className="card">
                 <div className="card-body">
                   <div className="flex flex-col-reverse divide-y divide-y-reverse divide-gray-500">
-                    {newHtml.map((n) => n)}
+                    {newHtml.map((n: any) => n)}
                   </div>
                 </div>
               </div>
@@ -136,7 +142,7 @@ export function UpdatesModalComponent(props: any) {
       <div className="modal-footer">
         <div className="d-flex align-items-center mt-3">
           <FontAwesomeIcon icon={["fas", "notebook"]} className={"mr-2"} />
-          <span className="text-gray-200">نسخه جدید: {version}</span>
+          <span className="text-gray-200"> نسخه جدید: {version}</span>
         </div>
         <div className="text-center">
           <button className="btn btn-ghost" onClick={() => setIsOpen(false)}>

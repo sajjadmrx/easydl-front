@@ -4,8 +4,7 @@ import App from "./App";
 import "./App.css";
 import { BrowserRouter } from "react-router-dom";
 import "animate.css";
-// @ts-ignore
-import * as serviceWorker from "./serviceWorker";
+import { register } from "./serviceWorker";
 
 const root = ReactDOM.createRoot(document.getElementById("root") as any);
 
@@ -16,4 +15,4 @@ root.render(
 );
 
 //reportWebVitals();
-serviceWorker.register();
+register({});

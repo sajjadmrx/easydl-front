@@ -2,7 +2,10 @@ import { useEffect, useState } from "react";
 import {} from "js-cookie";
 import themeList, { Theme } from "../constants/themes.constant";
 import React from "react";
-export function ThemeSelectorComponent(props: any) {
+interface Props {
+  className?: string;
+}
+export function ThemeSelectorComponent(props: Props) {
   const className = props.className || "";
   const [currentTheme, setCurrentTheme] = useState(
     localStorage.getItem("theme") || "system"

@@ -1,30 +1,23 @@
 import React, { useState, useEffect, useContext } from "react";
-import { WarningAlertComponent } from "../alerts.component";
 import { SpotifySongComponent } from "./spotify.song";
 import { toast } from "react-toastify";
 import { axiosError } from "../../handlers/error.handler";
 import { spotifyResultContext } from "../../contexts/spotifyResultContext";
 import { spotifyService } from "../../service/index.service";
 import { formContext } from "../../contexts/formContext";
-import { SpotifyResultContext } from "../../shared/interfaces/spotifyResultContext.interface";
+import { SpotifyResultContext } from "../../shared/interfaces/spotify.interface";
+import { FormContext } from "../../shared/interfaces/FormContext.interface";
 
-export function SpotifySongsComponent(props: any) {
-  const [isDownloading, setIsDownloading] = useState(false);
-  const [errorState, setErrorState] = useState(false);
+interface Props {
+  className?: string;
+}
+
+export function SpotifySongsComponent(props: Props): JSX.Element {
   const spotifyResultContextData: SpotifyResultContext =
     useContext(spotifyResultContext);
-  const formContextData = useContext(formContext);
-  useEffect(() => {
-    // @ts-ignore
-    if (errorState && errorState != "") {
-      alert(errorState);
-    }
-  }, [errorState]);
+  const formContextData = useContext<FormContext>(formContext);
   return (
     <div className={props.className}>
-      {/*<div className={'text-center'}>*/}
-      {/*{spotifyResultContext.songs.length > 0 ? <span className="mb-4">نتیجه جستوجو : {spotifyResultContext.songs.length} مورد یافت شد.</span> : <span></span>}*/}
-      {/*</div>*/}
       <div
         className={`grid grid-flow-row-dense grid-cols-1 grid-rows-1 md:grid-cols-3`}
       >
@@ -40,7 +33,7 @@ export function SpotifySongsComponent(props: any) {
                   song.platforms,
                   setValueProgress,
                   setWaiting,
-                  formContext
+                  formContextData
                 );
               }}
             />
@@ -52,11 +45,11 @@ export function SpotifySongsComponent(props: any) {
 }
 
 async function downloadHandler(
-  id: any,
-  platform: any,
+  id: string,
+  platforms: string[],
   setValueProgress: any,
   setWaiting: any,
-  formContext: any
+  formContext: FormContext
 ) {
   try {
     if (formContext.loading) {

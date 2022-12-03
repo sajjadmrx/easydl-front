@@ -13,7 +13,7 @@ function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(
     CookieUtil.has("token")
   );
-  const [user, setUser] = useState({});
+  const [user, setUser] = useState(null);
   const [statusLoading, setStatusLoading] = useState(true);
   const [token, setToken] = useState(CookieUtil.get("token"));
   const AuthContextValues = {

@@ -1,14 +1,19 @@
 import React, { useEffect, useId, useState } from "react";
 import { ProgressDownload } from "../progressDownload.component";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-
-export function SpotifySongComponent(props: any) {
+import { SpotifySearchItem } from "../../shared/interfaces/spotify.interface";
+interface props {
+  song: SpotifySearchItem;
+  index: number;
+  downloadHandler: (setValueProgress: any, setWaiting: any) => any;
+}
+export function SpotifySongComponent(props: props) {
   const song = props.song;
   const photo = song.photo;
   const index = props.index;
 
-  const [waiting, setWaiting] = useState(false);
-  const [valueProgress, setValueProgress] = useState(0);
+  const [waiting, setWaiting] = useState<boolean>(false);
+  const [valueProgress, setValueProgress] = useState<number>(0);
   const { downloadHandler } = props;
   return (
     <div

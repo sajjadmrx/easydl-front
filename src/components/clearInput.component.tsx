@@ -1,8 +1,11 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
-
-export function ClearButtonComponent(props: any) {
-  const setLocalInput = props.setLocalInput;
+interface Props {
+  setInput: (input: any) => any;
+  className?: string;
+}
+export function ClearButtonComponent(props: Props) {
+  const setLocalInput = props.setInput;
   const className =
     props.className || "absolute -top-4 -bottom-2 m-auto left-0";
   return (

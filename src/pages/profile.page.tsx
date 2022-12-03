@@ -8,6 +8,8 @@ import { infoStore } from "../store/info.store";
 import { PageWrapper } from "../Wrappers/pages.wrapper";
 import { CookieUtil } from "../utils/cookie.util";
 import React from "react";
+import { AuthContext } from "../shared/interfaces/authContext.interface";
+import { IconProp } from "@fortawesome/fontawesome-svg-core";
 export function ProfilePage() {
   const loadingContext = useContext(LoadingContext);
   const [downloads, setDownloads] = useState([]);
@@ -15,11 +17,11 @@ export function ProfilePage() {
     document.title = `${infoStore.brandName.fa} - پروفایل`;
     loadingContext.done();
   }, []);
-  const authContextData = useContext(authContext);
+  const authContextData: AuthContext = useContext(authContext);
   if (
     !authContextData.isAuthenticated ||
     !CookieUtil.has("token") ||
-    !authContextData.user.username
+    !authContextData.user
   ) {
     return <Redirect to="/" />;
   }
@@ -67,10 +69,10 @@ export function ProfilePage() {
                     </div>
                     <div className="stat">
                       <div className="stat-figure ">
-                        {/*  <FontAwesomeIcon*/}
-                        {/*//    icon={faSpotify}*/}
-                        {/*    size={"2x"}*/}
-                        {/*  ></FontAwesomeIcon>*/}
+                        <FontAwesomeIcon
+                          icon={faSpotify as IconProp}
+                          size={"2x"}
+                        ></FontAwesomeIcon>
                       </div>
                       <div className="stat-title">وضعیت اکانت اسپاتیفای</div>
                       <div className="stat-desc ">

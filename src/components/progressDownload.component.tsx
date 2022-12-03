@@ -1,6 +1,8 @@
 import React from "react";
-
-export function ProgressDownload(props: any) {
+interface Props {
+  valueProgress: number;
+}
+export function ProgressDownload(props: Props) {
   const valueState = props.valueProgress;
 
   return (

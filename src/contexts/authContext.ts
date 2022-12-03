@@ -1,7 +1,8 @@
-import { createContext } from "react";
+import { createContext, Dispatch, SetStateAction } from "react";
 import { AuthContext } from "../shared/interfaces/authContext.interface";
+
 export const authContext = createContext<AuthContext>({
-  user: {},
+  user: null,
   setUser: () => {},
   isAuthenticated: false,
   setIsAuthenticated: () => {},

@@ -28,10 +28,10 @@ export class ApiService {
     }
   }
 
-  async postWithAxios(url: string, body: any) {
+  async postWithAxios<T>(url: string, body: any): Promise<T> {
     try {
       const result = await axios.post(hostStore.url + url, body, { headers });
-      return result.data;
+      return result.data as T;
     } catch (error) {
       throw error;
     }

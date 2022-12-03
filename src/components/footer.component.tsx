@@ -1,9 +1,7 @@
-import { useContext } from "react";
-import { infoStore } from "../store/info.store";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 
-export function FooterComponent() {
+export function FooterComponent(): JSX.Element {
   return (
     <footer className="footer footer-center p-10 bg-base-200 text-base-content rounded">
       <div>
