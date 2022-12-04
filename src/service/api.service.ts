@@ -4,13 +4,13 @@ import { hostStore } from "../store/host.store";
 import myAxios from "../utils/axios.util";
 import { toast } from "react-toastify";
 import { Response } from "../shared/interfaces/response.interface";
+import { getFileName } from "../utils/regex.util";
 const headers = {
   "Access-Control-Allow-Origin": "*",
   "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, PATCH, OPTIONS",
   "Access-Control-Allow-Headers":
     "X-Requested-With, content-type, Authorization",
 };
-
 export class ApiService {
   constructor() {}
 
@@ -63,13 +63,13 @@ export class ApiService {
         },
         headers: headers,
       });
-      const blob = new Blob([result.data], { type: "audio/mp3" });
+      const blob = new Blob([result.data], {
+        type: result.headers["content-type"],
+      });
       const url = window.URL.createObjectURL(blob);
       const link = document.createElement("a");
       link.href = url;
-      const filename =
-        getFileName(result.headers["content-disposition"]) ||
-        String(Date.now()) + ".mp3";
+      const filename = getFileName(result.headers["content-disposition"]);
 
       link.setAttribute("download", filename);
       link.setAttribute("target", "_blank");
@@ -77,33 +77,7 @@ export class ApiService {
       link.click();
       document.body.removeChild(link);
     } catch (error) {
-      axiosError(error, (res: any) => {
-        toast.error(res);
-      });
       throw error;
     }
   }
-}
-
-function getFileName(disposition: any) {
-  const utf8FilenameRegex = /filename\*=UTF-8''([\w%\-\.]+)(?:; ?|$)/i;
-  const asciiFilenameRegex = /^filename=(["']?)(.*?[^\\])\1(?:; ?|$)/i;
-
-  let fileName = null;
-  if (utf8FilenameRegex.test(disposition)) {
-    // @ts-ignore
-    fileName = decodeURIComponent(utf8FilenameRegex.exec(disposition)[1]);
-  } else {
-    // prevent ReDos attacks by anchoring the ascii regex to string start and
-    //  slicing off everything before 'filename='
-    const filenameStart = disposition.toLowerCase().indexOf("filename=");
-    if (filenameStart >= 0) {
-      const partialDisposition = disposition.slice(filenameStart);
-      const matches = asciiFilenameRegex.exec(partialDisposition);
-      if (matches != null && matches[2]) {
-        fileName = matches[2];
-      }
-    }
-  }
-  return fileName;
 }

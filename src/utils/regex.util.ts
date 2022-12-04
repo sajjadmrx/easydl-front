@@ -41,7 +41,7 @@ export function removeScript(value: string) {
   );
 }
 
-export function getFileName(disposition: any) {
+export function getFileName(disposition: any): string {
   const utf8FilenameRegex = /filename\*=UTF-8''([\w%\-\.]+)(?:; ?|$)/i;
   const asciiFilenameRegex = /^filename=(["']?)(.*?[^\\])\1(?:; ?|$)/i;
 
@@ -61,5 +61,5 @@ export function getFileName(disposition: any) {
       }
     }
   }
-  return fileName;
+  return fileName || "file";
 }
