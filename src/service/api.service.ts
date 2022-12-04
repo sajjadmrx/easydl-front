@@ -1,9 +1,9 @@
-import axios from "axios";
+import axios, { AxiosResponse } from "axios";
 import { axiosError } from "../handlers/error.handler";
 import { hostStore } from "../store/host.store";
 import myAxios from "../utils/axios.util";
 import { toast } from "react-toastify";
-
+import { Response } from "../shared/interfaces/response.interface";
 const headers = {
   "Access-Control-Allow-Origin": "*",
   "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, PATCH, OPTIONS",
@@ -37,9 +37,9 @@ export class ApiService {
     }
   }
 
-  async get(url: string, params: any) {
+  async get<T extends object>(url: string, params: any): Promise<Response<T>> {
     try {
-      const result = await myAxios.get(url, {
+      const result: AxiosResponse<Response<T>> = await myAxios.get(url, {
         params: params,
         headers,
       });

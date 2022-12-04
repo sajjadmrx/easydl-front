@@ -28,6 +28,7 @@ const mediaSupport = {
 interface Props {
   media: Array<keyof typeof mediaSupport>;
   classname?: string;
+  children?: JSX.Element;
 }
 
 export function SupportMediaComponent(props: Props) {
@@ -53,6 +54,7 @@ export function SupportMediaComponent(props: Props) {
             </div>
           );
         })}
+        {props.children}
       </div>
     </div>
   );

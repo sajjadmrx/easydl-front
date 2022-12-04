@@ -55,7 +55,7 @@ export const PlatformsTab = () => {
             />
           </div>
         </div>
-        یوتیوب
+        <span>یوتیوب </span>
       </Tab>
     </Tabs>
   );

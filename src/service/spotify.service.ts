@@ -14,8 +14,11 @@ export class SpotifyService {
 
   async searchTrack(trackId: string): Promise<SpotifySearchItem[]> {
     try {
-      const data = await this.apiService.get(`spotify/tracks/${trackId}`, {});
-      return data.map((item: any) => {
+      const data = await this.apiService.get<any>(
+        `spotify/tracks/${trackId}`,
+        {}
+      );
+      return data.data.map((item: any) => {
         return {
           name: item.title,
           description: item.description,
