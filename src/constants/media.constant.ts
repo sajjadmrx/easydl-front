@@ -1,12 +1,12 @@
 export const mediaTypeConstant: any = {
   VIDEO_AUDIO: {
     label: "video",
-    icon: "video",
+    icon: "file-video",
     isSupported: true,
   },
   AUDIO_ONLY: {
     label: "audio only",
-    icon: "music",
+    icon: "file-audio",
     isSupported: false,
   },
 };

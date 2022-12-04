@@ -24,6 +24,10 @@ const mediaSupport = {
     name: "ویدیو",
     icon: "video",
   },
+  short_video: {
+    name: "ویدیو کوتاه",
+    icon: "camera",
+  },
 };
 interface Props {
   media: Array<keyof typeof mediaSupport>;

@@ -51,7 +51,7 @@ export function YoutubeForm() {
             )}
           </div>
         </div>
-        <SupportMediaComponent media={["video"]}>
+        <SupportMediaComponent media={["video", "short_video"]}>
           <Badge color={"warning"} variant={"outline"} className={"h-[20px]"}>
             آزمایشی
           </Badge>
@@ -83,8 +83,8 @@ async function submitHandle(
   setDetails: (details: YoutubeVideoDetails) => any
 ) {
   e.preventDefault();
-  const value = getQueryString("v", input);
-  if (!value) return;
+  const value = getQueryString(String(input));
+  if (!value) return toast.error("یک لینک معتبر وارد کنید");
   setWaiting(true);
   try {
     const details: YoutubeVideoDetails = await youtubeService.getDetails(value);
@@ -97,9 +97,10 @@ async function submitHandle(
   }
 }
 
-function getQueryString(field: string, url: string) {
-  let href = url ? url : window.location.href;
-  let reg = new RegExp("[?&]" + field + "=([^&#]*)", "i");
-  let string = reg.exec(href);
-  return string ? string[1] : null;
+function getQueryString(url: string) {
+  let rx =
+    /^.*(?:(?:youtu\.be\/|v\/|vi\/|u\/\w\/|embed\/|shorts\/)|(?:(?:watch)?\?v(?:i)?=|\&v(?:i)?=))([^#\&\?]*).*/;
+  const result: any = url.match(rx);
+  if (!result) return null;
+  return result[1];
 }
