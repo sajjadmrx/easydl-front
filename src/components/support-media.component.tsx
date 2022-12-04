@@ -28,6 +28,10 @@ const mediaSupport = {
     name: "ویدیو کوتاه",
     icon: "camera",
   },
+  podcast: {
+    name: "پادکست",
+    icon: "podcast",
+  },
 };
 interface Props {
   media: Array<keyof typeof mediaSupport>;

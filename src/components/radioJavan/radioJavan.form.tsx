@@ -55,7 +55,7 @@ export function RadioJavanFormComponent(props: any) {
           ""
         )}
       </div>
-      <SupportMediaComponent media={["music", "music_video"]} />
+      <SupportMediaComponent media={["music", "music_video", "podcast"]} />
       <button className={`btn btn-wide ${waiting && "loading"}`}>
         {!waiting && (
           <FontAwesomeIcon icon={["fas", "download"]} className={"ml-2.5"} />
