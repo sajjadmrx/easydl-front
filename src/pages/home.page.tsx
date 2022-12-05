@@ -13,12 +13,13 @@ import { SpotifySongsComponent } from "../components/spotify/spotify.songs";
 import { spotifyResultContext } from "../contexts/spotifyResultContext";
 
 import CookieConsent, { Cookies } from "react-cookie-consent";
+import { Alert } from "react-daisyui";
 
 export function HomePage() {
   const loadingContext = useContext(LoadingContext);
   const authContextData = useContext(authContext);
   const [showState, setShowState] = useState(false);
-  const [inputValue, setinputValue] = useState("");
+  const [inputValue, setInputValue] = useState("");
   const [loading, setLoading] = useState(false);
   const [spotifySongs, setSpotifySongs] = useState([]);
   useEffect(() => {
@@ -37,7 +38,7 @@ export function HomePage() {
           <formContext.Provider
             value={{
               inputValue,
-              setInputValue: setinputValue,
+              setInputValue: setInputValue,
               setLoading,
               loading,
             }}
@@ -49,15 +50,15 @@ export function HomePage() {
                 <div className="px-0 sm:p-4 hero-content text-center border-[4px] border-gray-600 rounded-[18px] max-w-[350px] md:max-w-[450px] md:min-w-[720px] mt-10   shadow-lg mb-1 ">
                   <div className="max-w-full sm:pt-[100px] sm:pb-[100px] sm:pr-[30px] sm:pl-[30px] p-1">
                     <div className={"flex justify-center mb-5"}>
-                      <h1 className="text-5xl font-bold">ایزی دانلود</h1>
+                      <h1 className="text-5xl font-bold">ایــزی دانلود</h1>
                     </div>
 
                     <p className="py-6">
                       با ایزی دانلود به صورت رایگان با بهترین کیفیت دانلود
                       کنیـد.
                     </p>
-
                     <PlatformsTab />
+
                     <CookieConsent
                       location="bottom"
                       buttonText="باشه"
@@ -72,6 +73,7 @@ export function HomePage() {
                   </div>
                 </div>
               </div>
+
               <div
                 className="mb-4 mt-2 md:mt-0"
                 hidden={spotifySongs.length <= 0}

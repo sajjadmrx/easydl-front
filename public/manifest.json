@@ -1,6 +1,6 @@
 {
   "short_name": "EasyDL",
-  "name": "ایزی دانلود - دانلود به آسانی",
+  "name": "easyDL",
   "icons": [
     {
       "src": "logo16.png",
@@ -38,5 +38,5 @@
   "display": "standalone",
   "theme_color": "#34eb5b",
   "background_color": "#1a1a1a",
-  "description": "ایزی دانلود به شما این امکان را می دهد تا به سرعت به دانلود آهنگ های خود دسترسی داشته باشید"
+  "description": "ایزی دانلود به شما این امکان را می دهد تا به سرعت از پلتفرم های مختلف دانلود کنید"
 }

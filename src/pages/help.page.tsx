@@ -4,6 +4,7 @@ import { LoadingContext } from "react-router-loading";
 import { VideoPlayerComponent } from "../components/videoPlayer.component";
 import { infoStore } from "../store/info.store";
 import { PageWrapper } from "../Wrappers/pages.wrapper";
+import { Alert } from "react-daisyui";
 export function HelpPage() {
   const loadingContext = useContext(LoadingContext);
 
@@ -40,6 +41,10 @@ export function HelpPage() {
                   </div>
                 </div>
               </div>
+              <Alert status={"warning"}>
+                برای مشاهده آموزش های بیشتر وارد چنل تلگرامی یا دیسکوردی ما
+                بشیـد.
+              </Alert>
             </div>
           </div>
         </main>
