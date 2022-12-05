@@ -6,57 +6,58 @@ import { RadioJavanComponent } from "./radioJavan/radioJavan.component";
 import { SoundCloudComponent } from "./soundCloud/soundCloud.component";
 import { YoutubeComponent } from "./youtube/youtube.component";
 
+interface Platform {
+  name: string;
+  component: JSX.Element;
+  imgSrc: string;
+  imgAlt: string;
+}
+const platforms: Platform[] = [
+  {
+    name: "اسپاتیفای",
+    component: <SpotifyComponent />,
+    imgSrc: "/brands/spotify.png",
+    imgAlt: " ایزی دنلود,لوگو اسپاتیفای",
+  },
+  {
+    name: "رادیوجوان",
+    component: <RadioJavanComponent />,
+    imgSrc: "/brands/rj.png",
+    imgAlt: "ایزی دنلود,لوگو رادیوجوان",
+  },
+  {
+    name: "ساندکلود",
+    component: <SoundCloudComponent />,
+    imgSrc: "/brands/soundcloud.png",
+    imgAlt: "دانلود از ساندکلود",
+  },
+  {
+    name: "یوتیوب",
+    component: <YoutubeComponent />,
+    imgSrc: "/brands/youtube.png",
+    imgAlt: "دانلود از یوتیوب",
+  },
+];
+
 export const PlatformsTab = () => {
   return (
     <Tabs>
-      <Tab component={<SpotifyComponent />} active>
-        <div className="avatar">
-          <div className="w-10 rounded-full">
-            <img
-              src={"/brands/spotify.png"}
-              className={"w-auto text-center"}
-              alt={" ایزی دنلود,لوگو اسپاتیفای"}
-            />
-          </div>
-        </div>
-        اسپاتیفای
-      </Tab>
-      <Tab component={<RadioJavanComponent />}>
-        <div className="avatar">
-          <div className="w-10 rounded-full">
-            <img
-              src={"/brands/rj.png"}
-              className={"w-auto text-center"}
-              alt={"ایزی دنلود,لوگو رادیوجوان"}
-            />
-          </div>
-        </div>
-        رادیوجوان
-      </Tab>
-      <Tab component={<SoundCloudComponent />}>
-        <div className="avatar">
-          <div className="w-10 rounded-full">
-            <img
-              src={"/brands/soundcloud.png"}
-              className={"w-auto text-center"}
-              alt={"دانلود از ساندکلود"}
-            />
-          </div>
-        </div>
-        ساندکلود
-      </Tab>
-      <Tab component={<YoutubeComponent />}>
-        <div className="avatar">
-          <div className="w-10 rounded-full">
-            <img
-              src={"/brands/youtube.png"}
-              className={"w-auto text-center"}
-              alt={"دانلود از یوتیوب"}
-            />
-          </div>
-        </div>
-        <span>یوتیوب </span>
-      </Tab>
+      {platforms.map((platform: Platform) => {
+        return (
+          <Tab component={platform.component}>
+            <div className="avatar">
+              <div className="w-10 rounded-full">
+                <img
+                  src={platform.imgSrc}
+                  className={"w-auto text-center"}
+                  alt={platform.imgAlt}
+                />
+              </div>
+            </div>
+            {platform.name}
+          </Tab>
+        );
+      })}
     </Tabs>
   );
 };

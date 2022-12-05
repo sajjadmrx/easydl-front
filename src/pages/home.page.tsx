@@ -57,8 +57,8 @@ export function HomePage() {
                       با ایزی دانلود به صورت رایگان با بهترین کیفیت دانلود
                       کنیـد.
                     </p>
-                    <PlatformsTab />
 
+                    <PlatformsTab />
                     <CookieConsent
                       location="bottom"
                       buttonText="باشه"
