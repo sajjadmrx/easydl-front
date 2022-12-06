@@ -2,6 +2,7 @@ import axios, { AxiosResponse } from "axios";
 import { axiosError } from "../handlers/error.handler";
 import { hostStore } from "../store/host.store";
 import myAxios from "../utils/axios.util";
+import fileDownload from "js-file-download";
 import { toast } from "react-toastify";
 import { Response } from "../shared/interfaces/response.interface";
 import { getFileName } from "../utils/regex.util";
@@ -63,19 +64,20 @@ export class ApiService {
         },
         headers: headers,
       });
-      const blob = new Blob([result.data], {
-        type: result.headers["content-type"],
-      });
-      const url = window.URL.createObjectURL(blob);
-      const link = document.createElement("a");
-      link.href = url;
       const filename = getFileName(result.headers["content-disposition"]);
-
-      link.setAttribute("download", filename);
-      link.setAttribute("target", "_blank");
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
+      // const blob = new Blob([result.data], {
+      //   type: result.headers["content-type"],
+      // });
+      // const url = window.URL.createObjectURL(blob);
+      // const link = document.createElement("a");
+      // link.href = url;
+      //
+      // link.setAttribute("download", filename);
+      // link.setAttribute("target", "_blank");
+      // document.body.appendChild(link);
+      // link.click();
+      // document.body.removeChild(link);
+      fileDownload(result.data, filename, result.headers["content-type"]);
     } catch (error) {
       throw error;
     }
