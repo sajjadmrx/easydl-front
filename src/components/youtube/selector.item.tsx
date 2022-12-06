@@ -42,7 +42,7 @@ export function YtSelectorItemComponent(props: Props) {
   }, [buttonIcon]);
   return (
     <div hidden={!mediaType.isSupported}>
-      <div className="grid gap-x-6 gap-y-3 grid-cols-3 py-2">
+      <div className="grid gap-x-6 gap-y-3 grid-cols-1 md:grid-cols-3 py-2">
         <div>
           <Tooltip message={message}>
             <Badge color={"ghost"} className={"py-4 mt-2"}>

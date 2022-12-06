@@ -39,8 +39,8 @@ export function YoutubeSelectorComponent(props: Props) {
               نوع و کیفیت مورد نظر خود را انتخاب کنید:
             </span>
           </div>
-          <div className={"card "}>
-            <div className={"card-body overflow-x-auto"} dir={"auto"}>
+          <div className={"card items-center"}>
+            <div className={"overflow-x-auto card-body"} dir={"auto"}>
               <div className={"grid h-[300px] w-[350px] "}>
                 {selectors.map(
                   (selector: YoutubeDlSelectorWithId, index: number) => {
