@@ -20,7 +20,6 @@ import { FormContext } from "../../shared/interfaces/FormContext.interface";
 import react from "react";
 import { formContext } from "../../contexts/formContext";
 import { toast } from "react-toastify";
-import { ProgressDownload } from "../progressDownload.component";
 import { youtubeService } from "../../service/index.service";
 import { axiosError } from "../../handlers/error.handler";
 interface Props {
@@ -29,17 +28,24 @@ interface Props {
 }
 export function YtSelectorItemComponent(props: Props) {
   const selector = props.selector;
+
   const mediaType = mediaTypeConstant[selector.mediaType];
+
   const q = selector.qualityLabel;
   const quality = mediaQualityContent[q] || selector.qualityLabel;
+
   const message = mediaType.label == "video" ? "ویدیو و صدا" : "فقط صدا";
+
   const formContextData: FormContext =
     react.useContext<FormContext>(formContext);
+
   const [progressValue, setProgressValue] = React.useState<number>(0);
   const [buttonIcon, setButtonIcon] = react.useState<any>("");
+
   useEffect(() => {
-    if (!buttonIcon) setButtonIcon("cloud-download-alt");
+    if (!buttonIcon) setButtonIcon("download");
   }, [buttonIcon]);
+
   return (
     <div hidden={!mediaType.isSupported}>
       <div className="grid gap-x-6 gap-y-3 grid-cols-1 md:grid-cols-3 py-2">
@@ -62,6 +68,7 @@ export function YtSelectorItemComponent(props: Props) {
           {progressValue == 0 ? (
             <Button
               color={"ghost"}
+              className={"border-gray-700 shadow-2xl"}
               onClick={() =>
                 DownloadHandle(
                   props.details,
@@ -90,7 +97,11 @@ export function YtSelectorItemComponent(props: Props) {
           )}
         </div>
       </div>
-      <hr />
+      <hr
+        className={
+          "my-4 mx-auto w-48 h-0.5 bg-gray-600 rounded border-0 md:my-10 dark:bg-gray-700"
+        }
+      />
     </div>
   );
 }
