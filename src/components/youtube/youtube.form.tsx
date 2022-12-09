@@ -51,11 +51,7 @@ export function YoutubeForm() {
             )}
           </div>
         </div>
-        <SupportMediaComponent media={["video", "short_video"]}>
-          <Badge color={"warning"} variant={"outline"} className={"h-[20px]"}>
-            آزمایشی
-          </Badge>
-        </SupportMediaComponent>
+        <SupportMediaComponent media={["video", "short_video"]} />
         <button
           className={`btn btn-wide ${waiting && "loading"}`}
           disabled={details.details && true}

@@ -1,12 +1,13 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useEffect, useState } from "react";
 import { MainModalComponent } from "./main.modal";
+import { Alert, Badge } from "react-daisyui";
 
 export function UpdatesModalComponent(props: any) {
   const [isOpen, setIsOpen] = useState(false);
   const [isRead, setIsRead] = useState(false);
   const [isReadV, setIsReadV] = useState(false);
-  let version = "1.2";
+  let version = "1.3";
 
   useEffect(() => {
     const hasVs = localStorage.getItem(`isReadV_${version}`);
@@ -23,10 +24,15 @@ export function UpdatesModalComponent(props: any) {
 
   const update: any = {
     new: [
+      "📥 اضافه شدن دانلود از پلتفرم یوتیوب",
+      "👷 تغییر ظاهری دانلود از پلتفرم اسپاتیفای",
+      "⚒️ رفع چند باگ جزئی",
+    ],
+    "1.2": [
       "اضافه شدن دانلود آلبوم از پلتفرم اسپاتیفای ",
       "اضافه شدن دانلود پلی لیست از پلتفرم اسپاتیفای",
     ],
-    1.1: [
+    "1.1": [
       "🖼️ اضافه شدن توضیحات و کاور به موزیک های اسپاتیفای و ساندکلود",
       "🎙️ بهبود کیفیت موزیک های اسپاتیفای",
       "🧩 تغییرات ظاهری",
@@ -48,7 +54,7 @@ export function UpdatesModalComponent(props: any) {
             icon={["fas", "circle"]}
             className={"m-l-10 text-success text-[10px]"}
           />
-          <span className={"ml-3 text-sm text-gray-400"}>{item}</span>
+          <span className={"ml-3 text-sm "}>{item}</span>
         </div>
       );
     })
@@ -78,14 +84,14 @@ export function UpdatesModalComponent(props: any) {
               icon={["fas", "circle"]}
               className={"m-l-10 text-gray-900 text-[10px]"}
             />
-            <span className={"ml-3 text-sm text-gray-400"}>{detail}</span>
+            <span className={"ml-3 text-sm"}>{detail}</span>
           </div>
         );
       });
 
       return (
         <div className=" m-t-10 py-3 mb-2 mt-2  divide-y divide-y-reverse divide-gray-500">
-          <span className="text-white mt-3">نسخه {item}</span>
+          <span className="font-bold mt-3">نسخه {item}</span>
           {a.map((w: any) => w)}
         </div>
       );
@@ -94,18 +100,20 @@ export function UpdatesModalComponent(props: any) {
 
   return (
     <MainModalComponent isOpen={isOpen} setIsOpen={setIsOpen}>
-      <h5 className="modal-title text-white">
-        <div className="avatar placeholder mr-3">
-          <div className="bg-emerald-300 text-gray-900 rounded-full w-8">
-            <FontAwesomeIcon icon={["fas", "s"]} />
+      <h5 className="modal-title">
+        <div className="flex">
+          <div className={"mr-2"}>
+            <Badge color={"ghost"}>🔔</Badge>
+          </div>
+          <div>
+            <p className={"font-bold"}>اطلاعـیه بروزرسـانی</p>
           </div>
         </div>
-        اطلاعیه بروزرسانی
       </h5>
 
       <div className={"modal-body overflow-y-auto h-[350px] w-[auto]"}>
         <h1 className="text-center mb-2 py-3"></h1>
-        <span className="text-gray-200">تغییرات جدید</span>
+        <span className="font-bold text-gray-500">تغییرات جدید</span>
         <div className="mt-[-19px] mb-2">
           <div className="row">
             <div className="col-12">
@@ -120,7 +128,7 @@ export function UpdatesModalComponent(props: any) {
           </div>
         </div>
         <div className="mt-[-13px]">
-          <span className="text-gray-400">نسخه های قدیمی</span>
+          <span className="font-bold text-gray-500">نسخه های قدیمی</span>
           <div className="row mt-[-40px]">
             <div className="col-12">
               <div className="card">
@@ -138,7 +146,13 @@ export function UpdatesModalComponent(props: any) {
       <div className="modal-footer">
         <div className="d-flex align-items-center mt-3">
           <FontAwesomeIcon icon={["fas", "notebook"]} className={"mr-2"} />
-          <span className="text-gray-200"> نسخه جدید: {version}</span>
+          <span className="text-gray-400 font-bold"> نسخه جدید: {version}</span>
+          <Alert className={"mt-2 mb-2"} status={"warning"}>
+            <Badge color={"ghost"} className={"mr-2"}>
+              ⚠️
+            </Badge>
+            <span>در صورت عدم دریافت بروزرسانی, یک بار صفحه رو رفرش کنید.</span>
+          </Alert>
         </div>
         <div className="text-center">
           <button className="btn btn-ghost" onClick={() => setIsOpen(false)}>
