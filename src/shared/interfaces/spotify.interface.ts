@@ -11,6 +11,12 @@ export interface SpotifySearchItem {
   photo: string;
   artist: string;
   platforms: Array<string>;
+  thumbnail: string;
+  timestamp: string;
+  author: {
+    name: string;
+    url: string;
+  };
 }
 
 export interface SpotifyAlbum {

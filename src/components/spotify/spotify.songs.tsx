@@ -1,81 +1,144 @@
-import React, { useState, useEffect, useContext } from "react";
-import { SpotifySongComponent } from "./spotify.song";
-import { toast } from "react-toastify";
-import { axiosError } from "../../handlers/error.handler";
-import { spotifyResultContext } from "../../contexts/spotifyResultContext";
-import { spotifyService } from "../../service/index.service";
-import { formContext } from "../../contexts/formContext";
-import { SpotifyResultContext } from "../../shared/interfaces/spotify.interface";
-import { FormContext } from "../../shared/interfaces/FormContext.interface";
+import React, {useContext} from "react";
+import {spotifyResultContext} from "../../contexts/spotifyResultContext";
+import {formContext} from "../../contexts/formContext";
+import {SpotifyResultContext, SpotifySearchItem,} from "../../shared/interfaces/spotify.interface";
+import {FormContext} from "../../shared/interfaces/FormContext.interface";
+import {Alert, Avatar, Button, RadialProgress,} from "react-daisyui";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
 interface Props {
-  className?: string;
+    className?: string;
 }
 
 export function SpotifySongsComponent(props: Props): JSX.Element {
-  const spotifyResultContextData: SpotifyResultContext =
-    useContext(spotifyResultContext);
-  const formContextData = useContext<FormContext>(formContext);
-  return (
-    <div className={props.className}>
-      <div
-        className={`grid grid-flow-row-dense grid-cols-1 grid-rows-1 md:grid-cols-3`}
-      >
-        {spotifyResultContextData.songs.map((song, index) => {
-          return (
-            <SpotifySongComponent
-              song={song}
-              key={index + 1}
-              index={index + 1}
-              downloadHandler={(setValueProgress: any, setWaiting: any) => {
-                downloadHandler(
-                  song.id,
-                  song.platforms,
-                  setValueProgress,
-                  setWaiting,
-                  formContextData
-                );
-              }}
-            />
-          );
-        })}
-      </div>
-    </div>
-  );
-}
-
-async function downloadHandler(
-  id: string,
-  platforms: string[],
-  setValueProgress: any,
-  setWaiting: any,
-  formContext: FormContext
-) {
-  try {
-    if (formContext.loading) {
-      return toast.info("لطفا تا پایان دانلود صبر کنید");
-    }
-    setWaiting(true);
-
-    await spotifyService.download(
-      { id, spotifyUrl: formContext.inputValue },
-      (res: any) => {
-        if (res == 100) {
-          setValueProgress(0);
-          formContext.setLoading(false);
-        }
-        if (res > 0) {
-          setValueProgress(res);
-        }
-        if (res == 1) {
-          setWaiting(false);
-        }
-      }
+    const spotifyResultContextData: SpotifyResultContext =
+        useContext(spotifyResultContext);
+    const formContextData = useContext<FormContext>(formContext);
+    return (
+        <div>
+            <div>
+                <div className={"mt-2 mb-2"}>
+                    <label className={"label-text"}>
+                        <Alert status={"info"}>
+                            نتیجه جستوجو زیر بر اساس جستوجو در یوتیوب با موضوع موزیک و ارتیست
+                            ها
+                        </Alert>
+                    </label>
+                </div>
+                <div className={"relative border border-gray-700 rounded shadow-2xl"}>
+                    <div className={"bg-gray-900 p-3"}>
+                        <span className={"label-text text-gray-50"}>نتیجه جستوجو:</span>
+                    </div>
+                    <div className={"card items-center"}>
+                        <div className={"overflow-x-auto card-body"} dir={"auto"}>
+                            <div className={"grid h-[300px] w-[350px] "}>
+                                {spotifyResultContextData.songs.map(
+                                    (song: SpotifySearchItem, index: number) => {
+                                        return (
+                                            <div>
+                                                <div className="grid gap-x-6 gap-y-3 grid-cols-1 md:grid-cols-1 py-2">
+                                                    <div>
+                                                        <Avatar
+                                                            shape={"square"}
+                                                            src={song.photo}
+                                                            size={"sm"}
+                                                            className={"avatar"}
+                                                        />
+                                                    </div>
+                                                    <div>
+                                                        <strong className="text-sm font-medium ">
+                                                            {song.title}
+                                                        </strong>
+                                                    </div>
+                                                    <div>
+                            <span className="text-sm font-medium ">
+                              {song.timestamp}
+                            </span>
+                                                    </div>
+                                                    <div className={""}>
+                                                        {song.name != "0" ? (
+                                                            <Button
+                                                                color={"ghost"}
+                                                                className={"border-gray-700 shadow-2xl"}
+                                                                disabled={formContextData.loading}
+                                                            >
+                                                                <FontAwesomeIcon icon={["fas", "download"]}/>
+                                                            </Button>
+                                                        ) : (
+                                                            <RadialProgress
+                                                                value={40}
+                                                                size="3rem"
+                                                                thickness="2px"
+                                                                color={"success"}
+                                                            >
+                                                                40%
+                                                            </RadialProgress>
+                                                        )}
+                                                    </div>
+                                                </div>
+                                                <hr
+                                                    className={
+                                                        "my-4 mx-auto w-48 h-0.5 bg-gray-600 rounded border-0 md:my-10 dark:bg-gray-700"
+                                                    }
+                                                />
+                                            </div>
+                                        );
+                                    }
+                                )}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     );
-  } catch (error) {
-    setValueProgress(0);
-    setWaiting(false);
-    axiosError(error, (err: any) => toast.error(err));
-    formContext.setLoading(false);
-  }
 }
+
+//  function YoutubeSelectorComponent(props: Props) {
+//     const { details, dlSelector } = props.details;
+//     const selectors: YoutubeDlSelectorWithId[] = dlSelector.map(
+//         (selector, index: number) => {
+//             index++;
+//             return {
+//                 ...selector,
+//                 id: String(index),
+//             };
+//         }
+//     );
+//     const formContextData: FormContext =
+//         react.useContext<FormContext>(formContext);
+//     return (
+//         <div>
+//             <div>
+//                 <div className={"mt-2 mb-2"}>
+//                     <label className={"label-text"}> {details.title}</label>
+//                 </div>
+//                 <div className={"relative border border-gray-700 rounded shadow-2xl"}>
+//                     <div className={"bg-gray-900 p-3"}>
+//             <span className={"label-text text-gray-50"}>
+//               نوع و کیفیت مورد نظر خود را انتخاب کنید:
+//             </span>
+//                     </div>
+//                     <div className={"card items-center"}>
+//                         <div className={"overflow-x-auto card-body"} dir={"auto"}>
+//                             <div className={"grid h-[300px] w-[350px] "}>
+//                                 {selectors.map(
+//                                     (selector: YoutubeDlSelectorWithId, index: number) => {
+//                                         return (
+//                                             <YtSelectorItemComponent
+//                                                 selector={selector}
+//                                                 details={props.details}
+//                                                 key={"ikjoeigj:" + index}
+//                                             />
+//                                         );
+//                                     }
+//                                 )}
+//                             </div>
+//                         </div>
+//                     </div>
+//                 </div>
+//             </div>
+//         </div>
+//     );
+// }
+

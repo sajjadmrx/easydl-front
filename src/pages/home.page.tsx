@@ -73,33 +73,6 @@ export function HomePage() {
                   </div>
                 </div>
               </div>
-
-              <div
-                className="mb-4 mt-2 md:mt-0"
-                hidden={spotifySongs.length <= 0}
-              >
-                <div className="flex items-center  mb-4 dark:text-gray-300 pl-3 ">
-                  <svg
-                    className="icon dark:text-gray-200"
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  >
-                    <rect x="2" y="7" width="20" height="14" rx="2" ry="2" />
-                    <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16" />
-                  </svg>
-                  <h2 className="mx-2 text-2xl font-semibold dark:text-gray-300 ">
-                    نتیجه جستجو ({spotifySongs.length} مورد یافت شد.)
-                  </h2>
-                </div>
-                <SpotifySongsComponent className={""} />
-              </div>
             </spotifyResultContext.Provider>
           </formContext.Provider>
           <UpdatesModalComponent />
