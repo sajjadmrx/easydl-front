@@ -7,6 +7,8 @@ import {} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { authModalContext } from "../contexts/authModalContext";
 import { pageLinks } from "../shared/constants/pages.constant";
+import { Button } from "react-daisyui";
+import { DonateModalComponent } from "./modals/donate.modal";
 
 export function NavbarComponent(): JSX.Element {
   const { isAuthenticated } = useContext(authContext);
@@ -51,6 +53,8 @@ export function NavbarComponent(): JSX.Element {
       </div>
 
       <div className="navbar-end">
+        <DonateModalComponent />
+
         <ThemeSelectorComponent />
         {isAuthenticated ? (
           <ProfileDropDownComponent />
