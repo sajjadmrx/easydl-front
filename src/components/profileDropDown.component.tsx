@@ -20,8 +20,10 @@ export function ProfileDropDownComponent(): JSX.Element {
     return (
       <div className="dropdown dropdown-end">
         <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
-          <div className="w-10 rounded-full">
-            <img src={user.avatar} alt={`${user.username} avatar`} />
+          <div className="avatar online">
+            <div className="w-10 rounded-full">
+              <img src={user.avatar} alt={`${user.username} avatar`} />
+            </div>
           </div>
         </label>
         <ul
@@ -31,7 +33,6 @@ export function ProfileDropDownComponent(): JSX.Element {
           <li>
             <Link className="justify-between" to="/profile">
               پروفایل
-              <span className="badge badge-success">جدید</span>
             </Link>
           </li>
           <li onClick={() => logoutHandler(authContextData)}>
