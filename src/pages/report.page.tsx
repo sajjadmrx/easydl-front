@@ -3,7 +3,7 @@ import { useEffect, useState, useContext } from "react";
 import { LoadingContext } from "react-router-loading";
 import { infoStore } from "../store/info.store";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { toast, ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 import { ApiService } from "../service/api.service";
 import { removeScript } from "../utils/regex.util";
 import { PageWrapper } from "../Wrappers/pages.wrapper";
@@ -11,10 +11,11 @@ import { PageWrapper } from "../Wrappers/pages.wrapper";
 const apiService = new ApiService();
 
 export function ReportPage() {
+  const pageTitle: string = "گزارش مشکلات و پیشنهادات";
   const loadingContext = useContext(LoadingContext);
   const [isLoading, setIsLoading] = useState(false);
   useEffect(() => {
-    document.title = `${infoStore.brandName.fa} - گزارش خطا`;
+    document.title = `${infoStore.brandName.fa} - ${pageTitle}`;
     loadingContext.done();
   }, []);
   return (
@@ -24,7 +25,7 @@ export function ReportPage() {
           <div className="hero min-h-screen ">
             <div className="hero-content text-center">
               <div className="max-w-md">
-                <h1 className="text-5xl font-bold">🪰 گزارش خطا</h1>
+                <h1 className="text-5xl font-bold">{pageTitle}</h1>
                 <p className="py-6">لطفا گزارش خود رو به صورت کامل شرح دهید.</p>
 
                 <div className="mt-0">
@@ -43,17 +44,17 @@ export function ReportPage() {
                           type="text"
                           placeholder="اختیاری"
                           name="name"
-                          className="input input-bordered  w-full max-w-xs"
+                          className="input input-bordered  w-full "
                         />
                       </div>
                       <div className="flex flex-col">
                         <label className=" text-sm font-bold mb-2">
-                          متن گزارش خطا
+                          متن گزارش
                         </label>
                         <textarea
                           className="textarea textarea-bordered"
                           name="desc"
-                          placeholder="متن گزارش خطا را بنویسید..."
+                          placeholder="متن گزارش  را بنویسید..."
                           rows={5}
                         ></textarea>
                       </div>
@@ -65,7 +66,7 @@ export function ReportPage() {
                         </button>
                       ) : (
                         <button
-                          className="btn btn-outline btn-success"
+                          className="btn btn-outline btn-ghost"
                           type="submit"
                         >
                           <FontAwesomeIcon icon={["fas", "paper-plane"]} />
@@ -94,9 +95,11 @@ async function submitHandler(e: any, isLoading: boolean, setIsLoading: any) {
     data[key] = value;
   });
   data.desc = removeScript(data.desc);
-
-  if (!data.desc) return;
-
+  const desc: string | undefined = data.desc;
+  if (!desc) return;
+  if (data.desc.length < 25) {
+    return toast.error("لطفا گزارش خود رو کامل کنید.");
+  }
   setIsLoading(true);
   try {
     const result = await apiService.post("report", data);
