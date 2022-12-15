@@ -1,5 +1,4 @@
 import React, { useEffect } from "react";
-import { spotifyService } from "../../service/index.service";
 import { axiosError } from "../../handlers/error.handler";
 import {
   isLink,
@@ -13,18 +12,12 @@ import { toast } from "react-toastify";
 import { ClearButtonComponent } from "../clearInput.component";
 import { authContext } from "../../contexts/authContext";
 
-// @ts-ignore
-import GetAudioId from "get-audio-id";
-
-import Swal from "sweetalert2";
-import withReactContent from "sweetalert2-react-content";
 import { AuthContext } from "../../shared/interfaces/authContext.interface";
 import { FormContext } from "../../shared/interfaces/FormContext.interface";
 import { SupportMediaComponent } from "../support-media.component";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { ProgressDownload } from "../progressDownload.component";
-
-const MySwal = withReactContent(Swal);
+import { SpotifyFormHandler } from "./spotify.formHandler";
 
 interface Props {}
 
@@ -125,75 +118,27 @@ async function submitHandler(
     toast.error("لطفا یک لینک معتبر وارد کنید");
     return;
   }
+
+  button.classList.add("loading");
   let targetUrl = "";
-  switch (true) {
-    case isSpotifyLink(value):
-      targetUrl = "track";
-      break;
-    case isSpotifyAlbumLink(value):
-      targetUrl = "album";
-      break;
-    case isSpotifyPlaylistLink(value):
-      targetUrl = "playlist";
-      break;
-    default:
-      targetUrl = "unknown";
-  }
-
-  if (targetUrl == "unknown") {
-    toast.warning("لطفا یک لینک معتبر وارد کنید");
-    return;
-  }
+  const spotifyFormHandler: SpotifyFormHandler = new SpotifyFormHandler(
+    formContext,
+    authContext,
+    setWaiting
+  );
   try {
-    if (targetUrl == "track") {
-      setWaiting(true);
-      formContext.setLoading(true);
-      let trackId = getId(value);
-      const indexOf = value.indexOf("&");
-      if (indexOf > 0) {
-        value = value.substring(0, indexOf);
-      }
-      button.classList.add("loading");
-      setButtonText("لطفا صبر کنید...");
-
-      await downloadTrack(trackId, setProgressValue, button);
-    } else if (targetUrl == "album") {
-      if (!authContext.isAuthenticated) {
-        return toast.error("برای این کار لازم است وارد حساب کاربری بشید.");
-      }
-
-      setButtonText("لطفا صبر کنید");
-      setWaiting(true);
-      formContext.setLoading(true);
-
-      const result = await spotifyService.album(value);
-      const album_name = result.data.album_name;
-      if (result.statusCode == 201) {
-        okyRequest(
-          album_name,
-          "دانلود البوم به صف پردازش اضافه شد و بعد از اتمام پردازش برای شما ایمیل خواهد شد"
-        );
-      } else if (result.statusCode == 200) {
-        okyRequest(album_name, "لینک دانلود برای  شما ایمیل شد", 3000);
-      }
-    } else if (targetUrl == "playlist") {
-      if (!authContext.isAuthenticated) {
-        return toast.error("برای این کار لازم است وارد حساب کاربری بشید.");
-      }
-
-      setButtonText("لطفا صبر کنید");
-      setWaiting(true);
-      formContext.setLoading(true);
-      const result = await spotifyService.playlist(value);
-      const response = result.data;
-      const playlist_name = response.playlist_name;
-      okyRequest(
-        playlist_name,
-        "پلی لیست به صف پردازش اضافه شد, بعد از اتمام پردازش برای شما ایمیل خواهد شد."
-      );
-    } else {
-      setWaiting(false);
-      toast.error("لطفا یک لینک معتبر وارد کنید");
+    switch (true) {
+      case isSpotifyLink(value):
+        await spotifyFormHandler.track(value, setProgressValue, button);
+        break;
+      case isSpotifyAlbumLink(value):
+        await spotifyFormHandler.album(value);
+        break;
+      case isSpotifyPlaylistLink(value):
+        await spotifyFormHandler.playlist(value);
+        break;
+      default:
+        toast.warning("لطفا یک لینک معتبر وارد کنید");
     }
   } catch (error) {
     axiosError(error, (err: any) => toast.error(err));
@@ -204,43 +149,4 @@ async function submitHandler(
     formContext.setLoading(false);
     setProgressValue(0);
   }
-}
-
-function okyRequest(title: any, text: any, timer = 0) {
-  MySwal.fire({
-    icon: "success",
-    title: title || null,
-    text: text,
-    confirmButtonText: "باشه",
-    confirmButtonColor: "#4ade80",
-    showConfirmButton: timer == 0,
-    timerProgressBar: timer > 0,
-    timer: timer,
-  });
-}
-
-function getId(value: string) {
-  return new GetAudioId(value).getId().id;
-}
-
-async function downloadTrack(
-  trackId: string,
-  setProgressValue: any,
-  button: Element
-) {
-  return new Promise(async (resolve, reject) => {
-    try {
-      await spotifyService.downloadTrack(trackId, (value: number) => {
-        button.classList.remove("loading");
-        if (value == 100) {
-          resolve(true);
-        } else {
-          setProgressValue(value);
-        }
-      });
-    } catch (e) {
-      axiosError(e, (err: any) => toast.error(err));
-      reject(e);
-    }
-  });
 }

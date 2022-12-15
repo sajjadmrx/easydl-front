@@ -121,15 +121,7 @@ async function DownloadHandle(
     await wait(1000);
     const videoId: string | undefined = details.details.id;
     if (!videoId) return toast.error("ایدی ناشناخته است");
-    // let x = 0;
-    // let intervalId = setInterval(() => {
-    //   x++;
-    //   if (x == 100) {
-    //     clearInterval(intervalId);
-    //     formContextData.setLoading(false);
-    //   } else setProgressValue(x);
-    // }, 1000);
-    // await wait(1600000);
+
     await youtubeService.downloadVideo(
       {
         videoId: videoId,

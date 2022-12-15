@@ -3,6 +3,7 @@ import {
   YoutubeDlSelector,
   YoutubeVideoDetails,
 } from "../shared/interfaces/youtube.interface";
+import { Response } from "../shared/interfaces/response.interface";
 
 export class YoutubeService extends ApiService {
   static PREFIX: string = "/youtube";
@@ -13,7 +14,8 @@ export class YoutubeService extends ApiService {
 
   async getDetails(videoId: string): Promise<YoutubeVideoDetails> {
     try {
-      const result = await this.get<YoutubeVideoDetails>(`/${videoId}`, {});
+      const result: Response<YoutubeVideoDetails> =
+        await this.get<YoutubeVideoDetails>(`/${videoId}`, {});
       result.data.details.id = videoId;
       return result.data;
     } catch (e) {

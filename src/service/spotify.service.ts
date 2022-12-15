@@ -29,11 +29,10 @@ export class SpotifyService extends ApiService {
 
   async album(albumUrl: string): Promise<Response<SpotifyAlbum>> {
     try {
-      const result: AxiosResponse<Response<SpotifyAlbum>> = await this.post(
-        "/albums",
-        { url: albumUrl }
-      );
-      return result.data;
+      const result = await this.post<Response<SpotifyAlbum>>("/albums", {
+        url: albumUrl,
+      });
+      return result;
     } catch (e) {
       throw e;
     }
@@ -41,11 +40,7 @@ export class SpotifyService extends ApiService {
 
   async playlist(playlist: string): Promise<Response<SpotifyPlaylist>> {
     try {
-      const result: AxiosResponse<Response<SpotifyPlaylist>> = await this.post(
-        "/playlists",
-        { url: playlist }
-      );
-      return result.data;
+      return await this.post("/playlists", { url: playlist });
     } catch (e) {
       throw e;
     }
