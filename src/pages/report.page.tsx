@@ -4,11 +4,9 @@ import { LoadingContext } from "react-router-loading";
 import { infoStore } from "../store/info.store";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { toast } from "react-toastify";
-import { ApiService } from "../service/api.service";
 import { removeScript } from "../utils/regex.util";
 import { PageWrapper } from "../Wrappers/pages.wrapper";
-
-const apiService = new ApiService();
+import { reportService } from "../service/index.service";
 
 export function ReportPage() {
   const pageTitle: string = "گزارش مشکلات و پیشنهادات";
@@ -102,7 +100,7 @@ async function submitHandler(e: any, isLoading: boolean, setIsLoading: any) {
   }
   setIsLoading(true);
   try {
-    const result = await apiService.post("report", data);
+    await reportService.post("report", data);
     toast.success("گزارش شما با موفقیت ارسال شد.", { rtl: true });
     form.reset();
   } catch (error) {

@@ -1,12 +1,15 @@
 import { ApiService } from "./api.service";
 
-export class SoundCloudService {
-  constructor(private apiService: ApiService) {}
+export class SoundCloudService extends ApiService {
+  static PREFIX: string = "/soundcloud";
+  protected getPrefix(): string {
+    return SoundCloudService.PREFIX;
+  }
 
-  async download(url: string, cbProgress: any) {
+  async downloadTrack(url: string, cbProgress: any) {
     try {
-      await this.apiService.download(
-        `soundcloud/tracks`,
+      await this.download(
+        `/tracks`,
         {
           url: url,
         },

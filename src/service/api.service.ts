@@ -1,74 +1,61 @@
-import axios, {AxiosResponse} from "axios";
-import {hostStore} from "../store/host.store";
-import myAxios from "../utils/axios.util";
+import { AxiosInstance, AxiosResponse } from "axios";
 import fileDownload from "js-file-download";
-import {Response} from "../shared/interfaces/response.interface";
-import {getFileName} from "../utils/regex.util";
+import { Response } from "../shared/interfaces/response.interface";
+import { getFileName } from "../utils/regex.util";
 
-const headers = {
-    "Access-Control-Allow-Origin": "*",
-    "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, PATCH, OPTIONS",
-    "Access-Control-Allow-Headers":
-        "X-Requested-With, content-type, Authorization",
-};
+export abstract class ApiService {
+  constructor(protected myAxios: AxiosInstance) {}
 
-export class ApiService {
-    constructor() {
+  protected abstract getPrefix(): string;
+
+  async post<T>(url: string, body: any): Promise<T> {
+    try {
+      const result = await this.myAxios.post(`${this.getPrefix() + url}`, body);
+      return result.data as T;
+    } catch (error) {
+      throw error;
     }
+  }
 
-    setToken(token: string) {
-        // @ts-ignore
-        myAxios.defaults.headers["Authorization"] = "Bearer " + token;
-    }
-
-    async post(url: string, body: any) {
-        try {
-            const result = await myAxios.post(url, body, {headers});
-            return result.data;
-        } catch (error) {
-            throw error;
+  async get<T extends object>(url: string, params: any): Promise<Response<T>> {
+    try {
+      const result: AxiosResponse<Response<T>> = await this.myAxios.get(
+        `${this.getPrefix() + url}`,
+        {
+          params: params,
         }
+      );
+      return result.data;
+    } catch (error) {
+      throw error;
     }
+  }
 
-    async postWithAxios<T>(url: string, body: any): Promise<T> {
-        try {
-            const result = await axios.post(hostStore.url + url, body, {headers});
-            return result.data as T;
-        } catch (error) {
-            throw error;
+  protected async download(
+    urlInput: string,
+    data: any,
+    cbProgress: (val: number) => number
+  ): Promise<void> {
+    try {
+      if (!urlInput.startsWith("/")) urlInput = "/" + urlInput;
+      const result = await this.myAxios.post(
+        `${this.getPrefix() + urlInput}`,
+        data,
+        {
+          responseType: "arraybuffer",
+          onDownloadProgress: (progressEvent) => {
+            const loaded = progressEvent.loaded;
+            const timeStamp = progressEvent.timeStamp;
+            const total = progressEvent.total || 1;
+            const percent: number = Math.floor((loaded / total) * 100);
+            cbProgress(percent);
+          },
         }
+      );
+      const filename = getFileName(result.headers["content-disposition"]);
+      fileDownload(result.data, filename, result.headers["content-type"]);
+    } catch (error) {
+      throw error;
     }
-
-    async get<T extends object>(url: string, params: any): Promise<Response<T>> {
-        try {
-            const result: AxiosResponse<Response<T>> = await myAxios.get(url, {
-                params: params,
-                headers,
-            });
-            return result.data;
-        } catch (error) {
-            throw error;
-        }
-    }
-
-    async download(urlInput: string, data: any, cbProgress: any) {
-        try {
-            if (!urlInput.startsWith("/")) urlInput = "/" + urlInput;
-            const result = await myAxios.post(urlInput, data, {
-                responseType: "arraybuffer",
-                onDownloadProgress: (progressEvent) => {
-                    const loaded = progressEvent.loaded;
-                    const timeStamp = progressEvent.timeStamp;
-                    const total = progressEvent.total || 1;
-                    const percent = Math.floor((loaded / total) * 100);
-                    cbProgress(percent);
-                },
-                headers: headers,
-            });
-            const filename = getFileName(result.headers["content-disposition"]);
-            fileDownload(result.data, filename, result.headers["content-type"]);
-        } catch (error) {
-            throw error;
-        }
-    }
+  }
 }

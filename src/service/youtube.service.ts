@@ -4,28 +4,30 @@ import {
   YoutubeVideoDetails,
 } from "../shared/interfaces/youtube.interface";
 
-export class YoutubeService {
-  constructor(private apiService: ApiService) {}
+export class YoutubeService extends ApiService {
+  static PREFIX: string = "/youtube";
 
-  async getDetails(videoId: string) {
+  protected getPrefix(): string {
+    return YoutubeService.PREFIX;
+  }
+
+  async getDetails(videoId: string): Promise<YoutubeVideoDetails> {
     try {
-      const result = await this.apiService.get<YoutubeVideoDetails>(
-        `/youtube/${videoId}`,
-        {}
-      );
+      const result = await this.get<YoutubeVideoDetails>(`/${videoId}`, {});
       result.data.details.id = videoId;
       return result.data;
     } catch (e) {
       throw e;
     }
   }
+
   async downloadVideo(
     { videoId, items }: { videoId: string; items: YoutubeDlSelector },
     cbProgress: any
   ): Promise<void> {
     try {
-      await this.apiService.download(
-        `youtube/${videoId}`,
+      await this.download(
+        `/${videoId}`,
         {
           ...items,
         },

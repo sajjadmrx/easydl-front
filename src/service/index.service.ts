@@ -1,19 +1,20 @@
-import { ApiService } from "./api.service";
 import { AuthService } from "./auth.service";
 import { RadioJavanService } from "./rj.service";
 import { UserService } from "./user.service";
 import { SpotifyService } from "./spotify.service";
 import { SoundCloudService } from "./soundCloud.service";
 import { YoutubeService } from "./youtube.service";
-const apiService = new ApiService();
+import myAxios from "../utils/axios.util";
+import { ReportService } from "./report.service";
 
-export const authService: AuthService = new AuthService(apiService);
-export const userService: UserService = new UserService(new ApiService());
+export const authService: AuthService = new AuthService(myAxios);
+export const userService: UserService = new UserService(myAxios);
 export const radioJavanService: RadioJavanService = new RadioJavanService(
-  apiService
+  myAxios
 );
-export const spotifyService: SpotifyService = new SpotifyService(apiService);
+export const spotifyService: SpotifyService = new SpotifyService(myAxios);
 export const soundcloudService: SoundCloudService = new SoundCloudService(
-  apiService
+  myAxios
 );
-export const youtubeService: YoutubeService = new YoutubeService(apiService);
+export const youtubeService: YoutubeService = new YoutubeService(myAxios);
+export const reportService: ReportService = new ReportService(myAxios);

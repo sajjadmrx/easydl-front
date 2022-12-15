@@ -1,12 +1,16 @@
 import { ApiService } from "./api.service";
 
-export class RadioJavanService {
-  constructor(private apiService: ApiService) {}
+export class RadioJavanService extends ApiService {
+  static PREFIX: string = "/rj";
+
+  protected getPrefix(): string {
+    return RadioJavanService.PREFIX;
+  }
 
   async downloadMp3(url: string, cbProgress: any): Promise<void> {
     try {
-      await this.apiService.download(
-        "rj/tracks",
+      await this.download(
+        "/tracks",
         {
           url: url,
         },
@@ -19,8 +23,8 @@ export class RadioJavanService {
 
   async downloadPodCast(url: string, cbProgress: any): Promise<void> {
     try {
-      await this.apiService.download(
-        "rj/podcasts",
+      await this.download(
+        "/podcasts",
         {
           url: url,
         },
@@ -32,8 +36,8 @@ export class RadioJavanService {
   }
   async downloadMusicVideo(url: string, cbProgress: any): Promise<void> {
     try {
-      await this.apiService.download(
-        "rj/music-videos",
+      await this.download(
+        "/music-videos",
         {
           url: url,
         },

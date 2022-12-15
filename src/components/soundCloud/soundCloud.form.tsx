@@ -75,7 +75,7 @@ async function downloadHandler(
     setWaiting(true);
     setButtonText("لطفا صبر کنید...");
     formContext.setLoading(true);
-    await soundcloudService.download(value, (prog: any) => {
+    await soundcloudService.downloadTrack(value, (prog: any) => {
       if (prog == 100) {
         setWaiting(false);
         setButtonText(null);
