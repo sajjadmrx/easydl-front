@@ -14,15 +14,13 @@ export function DonateModalComponent() {
         onClick={() => setShowModal(true)}
       >
         <FontAwesomeIcon icon={["fas", "donate"]} />
-        <span className={"hidden md:inline"}>
-          {donateText} <Badge color={"success"}>جدید</Badge>
-        </span>
+        <span className={"hidden md:inline"}>{donateText}</span>
       </Button>
       <Modal open={showModal} onClickBackdrop={() => setShowModal(false)}>
         <div className="">
           <div className={"py-2 p-2"}>
             <p className="font-normal">
-              ⚠️ برای رایگان ماندن دائمی سرویس ها, ما نیاز به حمایت شما داریم!
+              ⚠️ برای رایگان ماندن دائمی سرویس ها, به حمایت شما نیاز داریم!
             </p>
           </div>
           <div className="p-1">

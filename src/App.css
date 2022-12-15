@@ -1,3 +1,4 @@
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -137,3 +138,4 @@ html[data-theme="dark"]::-webkit-scrollbar {
     top: none !important;
     width: 0px !important;
 }
+

@@ -9,14 +9,10 @@ export function FooterComponent(): JSX.Element {
         <p>شبکه های اجتماعی</p>
         <div className="grid grid-flow-col gap-4">
           <a href={"https://discord.gg/EXfZkRHqwq"} target={"_blank"}>
-            <Badge className={"h-10"} variant={"outline"} color={"ghost"}>
-              <FontAwesomeIcon icon={["fab", "discord"]} size={"2x"} />
-            </Badge>
+            <FontAwesomeIcon icon={["fab", "discord"]} size={"2x"} />
           </a>
           <a href={"https://t.me/easydl_support"} target={"_blank"}>
-            <Badge className={"h-10"} variant={"outline"} color={"ghost"}>
-              <FontAwesomeIcon icon={["fab", "telegram"]} size={"2x"} />
-            </Badge>
+            <FontAwesomeIcon icon={["fab", "telegram"]} size={"2x"} />
           </a>
         </div>
       </div>

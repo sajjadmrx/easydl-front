@@ -59,7 +59,7 @@ export function Tab({ children, activeTab, currentTab, setActiveTab }: any) {
       ${
         activeTab === currentTab
           ? "bg-blue-500 text-white"
-          : "bg-gray-700 text-white"
+          : " bg-gray-700 text-white hover:border-blue-500 hover:border-2"
       } min-w flex flex-col items-center gap-2`}
         onClick={() => setActiveTab(currentTab)}
       >

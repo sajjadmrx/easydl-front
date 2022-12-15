@@ -1,6 +1,6 @@
 import React from "react";
 import { PlatformsTab } from "../components/PlatformsTab.component";
-import react, { useEffect, useState, useContext } from "react";
+import { useEffect, useState, useContext } from "react";
 
 import { LoadingContext } from "react-router-loading";
 
@@ -8,17 +8,12 @@ import { infoStore } from "../store/info.store";
 import { PageWrapper } from "../Wrappers/pages.wrapper";
 import { formContext } from "../contexts/formContext";
 import { UpdatesModalComponent } from "../components/modals/updates.modal";
-import { authContext } from "../contexts/authContext";
-import { SpotifySongsComponent } from "../components/spotify/spotify.songs";
 import { spotifyResultContext } from "../contexts/spotifyResultContext";
 
-import CookieConsent, { Cookies } from "react-cookie-consent";
-import { Alert } from "react-daisyui";
+import CookieConsent from "react-cookie-consent";
 
 export function HomePage() {
   const loadingContext = useContext(LoadingContext);
-  const authContextData = useContext(authContext);
-  const [showState, setShowState] = useState(false);
   const [inputValue, setInputValue] = useState("");
   const [loading, setLoading] = useState(false);
   const [spotifySongs, setSpotifySongs] = useState([]);
@@ -46,8 +41,8 @@ export function HomePage() {
             <spotifyResultContext.Provider
               value={{ songs: spotifySongs, setSongs: setSpotifySongs }}
             >
-              <div className="hero min-h-screen">
-                <div className="px-0 sm:p-4 hero-content text-center border-[4px] border-gray-600 rounded-[18px] max-w-[350px] md:max-w-[450px] md:min-w-[720px] mt-10   shadow-lg mb-1 ">
+              <div className="hero min-h-screen ">
+                <div className="px-0 sm:p-4 hero-content text-center border-[#5d7e9721] rounded-[18px] max-w-[350px] md:max-w-[450px] md:min-w-[720px]  border-[4px]  shadow-lg mb-1 ">
                   <div className="max-w-full sm:pt-[100px] sm:pb-[100px] sm:pr-[30px] sm:pl-[30px] p-1">
                     <div className={"flex justify-center mb-5"}>
                       <h1 className="text-5xl font-bold">ایــزی دانلود</h1>
