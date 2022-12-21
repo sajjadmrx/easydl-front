@@ -5,4 +5,12 @@ export class ReportService extends ApiService {
   protected getPrefix(): string {
     return ReportService.PREFIX;
   }
+
+  async send(data: any) {
+    try {
+      await this.post("/", data);
+    } catch (e) {
+      throw e;
+    }
+  }
 }

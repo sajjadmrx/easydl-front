@@ -8,7 +8,7 @@ export abstract class ApiService {
 
   protected abstract getPrefix(): string;
 
-  async post<T>(url: string, body: any): Promise<T> {
+  protected async post<T>(url: string, body: any): Promise<T> {
     try {
       const result = await this.myAxios.post(`${this.getPrefix() + url}`, body);
       return result.data as T;
@@ -17,7 +17,10 @@ export abstract class ApiService {
     }
   }
 
-  async get<T extends object>(url: string, params: any): Promise<Response<T>> {
+  protected async get<T extends object>(
+    url: string,
+    params: any
+  ): Promise<Response<T>> {
     try {
       const result: AxiosResponse<Response<T>> = await this.myAxios.get(
         `${this.getPrefix() + url}`,

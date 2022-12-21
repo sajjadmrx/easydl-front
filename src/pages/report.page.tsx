@@ -100,7 +100,7 @@ async function submitHandler(e: any, isLoading: boolean, setIsLoading: any) {
   }
   setIsLoading(true);
   try {
-    await reportService.post("report", data);
+    await reportService.send(data);
     toast.success("گزارش شما با موفقیت ارسال شد.", { rtl: true });
     form.reset();
   } catch (error) {
