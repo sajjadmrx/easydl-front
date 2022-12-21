@@ -11,6 +11,7 @@ import {
   SpotifyPlaylist,
 } from "../../shared/interfaces/spotify.interface";
 import { Response } from "../../shared/interfaces/response.interface";
+import { axiosError } from "../../handlers/error.handler";
 const MySwal = withReactContent(Swal);
 
 export class SpotifyFormHandler {
@@ -95,6 +96,7 @@ async function downloadTrack(
         }
       });
     } catch (e) {
+      axiosError(e, toast.error);
       reject(e);
     }
   });
