@@ -5,11 +5,13 @@ import { useContext } from "react";
 import { useState } from "react";
 import { formContext } from "../../contexts/formContext";
 import { soundcloudService } from "../../service/index.service";
-import { isLink } from "../../utils/regex.util";
-import axios, { AxiosError } from "axios";
+import {
+  isLink,
+  isSoundcloudLink,
+  isSoundCloudPlaylist,
+} from "../../utils/regex.util";
 import { toast } from "react-toastify";
 import { ClearButtonComponent } from "../clearInput.component";
-import { Badge } from "react-daisyui";
 import React from "react";
 import { axiosError } from "../../handlers/error.handler";
 import { SupportMediaComponent } from "../support-media.component";
@@ -48,7 +50,7 @@ export function SoundCloudFormComponent(props: any) {
           ""
         )}
       </div>
-      <SupportMediaComponent media={["music"]} />
+      <SupportMediaComponent media={["music", "playlist"]} />
 
       <button className={`btn btn-wide ${waiting && "loading"}`}>
         {!waiting && (
@@ -70,22 +72,32 @@ async function downloadHandler(
     e.preventDefault();
     if (formContext.loading)
       return toast.warning("لطفا تا پایان دانلود صبر کنید...");
+
     let value = e.target.querySelector("input").value;
-    if (!value || !isLink(value)) return toast.error("یک لینک معتبر وارد کنید");
+
+    if (!value || !isLink(value) || !isSoundcloudLink(value))
+      return toast.error("یک لینک معتبر وارد کنید");
+
     setWaiting(true);
     setButtonText("لطفا صبر کنید...");
     formContext.setLoading(true);
-    await soundcloudService.downloadTrack(value, (prog: any) => {
-      if (prog == 100) {
-        setWaiting(false);
-        setButtonText(null);
-      }
-    });
+    if (isSoundCloudPlaylist(value)) {
+      const playlistName: string = await soundcloudService.playlist(value);
+      toast.success(
+        `پلی لیست "${playlistName}" به صف پردازش اضافه شد, بعد از اتمام پردازش برای شما ایمیل خواهد شد. 📩`
+      );
+    } else {
+      await soundcloudService.downloadTrack(value, (prog: any) => {
+        if (prog == 100) {
+          setWaiting(false);
+          setButtonText(null);
+        }
+      });
+    }
   } catch (error: any) {
-    setWaiting(false);
-    setButtonText(null);
     axiosError(error, (er: any) => toast.error(er));
   } finally {
-    // formContext.setLoading(false)
+    setWaiting(false);
+    setButtonText(null);
   }
 }

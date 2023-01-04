@@ -2,38 +2,41 @@ export function isLink(value: string) {
   const regex = /^(http|https):\/\/[^ "]+$/;
   return regex.test(value);
 }
-export function isRjLinkMp3(value: string) {
+export function isRjLinkMp3(value: string): boolean {
   const links = ["https://rj.app/m/", "https://www.radiojavan.com/mp3s/mp3/"];
   return links.some((link) => value.startsWith(link));
 }
-export function isRjLinkPodCast(value: string) {
+export function isRjLinkPodCast(value: string): boolean {
   const links = ["https://rj.app/p/", "https://www.radiojavan.com/podcasts/"];
   return links.some((link) => value.startsWith(link));
 }
-export function isRjLinkMusicVideo(value: string) {
+export function isRjLinkMusicVideo(value: string): boolean {
   const links = [
     "https://rj.app/v/",
     "https://www.radiojavan.com/videos/video",
   ];
   return links.some((link) => value.startsWith(link));
 }
-export function isSpotifyLink(value: string) {
+export function isSpotifyLink(value: string): boolean {
   const regex = /^(http|https):\/\/open\.spotify\.com\/track\/[^ "]+$/;
   return regex.test(value);
 }
-export function isSpotifyAlbumLink(value: string) {
+export function isSpotifyAlbumLink(value: string): boolean {
   const regex = /^(http|https):\/\/open\.spotify\.com\/album\/[^ "]+$/;
   return regex.test(value);
 }
-export function isSpotifyPlaylistLink(value: string) {
+export function isSpotifyPlaylistLink(value: string): boolean {
   const regex = /^(http|https):\/\/open\.spotify\.com\/playlist\/[^ "]+$/;
   return regex.test(value);
 }
-export function isSoundcloudLink(value: string) {
+export function isSoundcloudLink(value: string): boolean {
   const regex = /^(http|https):\/\/soundcloud\.com\/[^ "]+$/;
   return regex.test(value);
 }
-export function removeScript(value: string) {
+export function isSoundCloudPlaylist(value: string): boolean {
+  return value.includes("/sets/");
+}
+export function removeScript(value: string): string {
   if (!value) return value;
   return value.replace(
     /<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi,

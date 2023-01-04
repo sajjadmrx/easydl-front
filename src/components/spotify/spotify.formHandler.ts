@@ -43,9 +43,8 @@ export class SpotifyFormHandler {
       );
       const response = result.data;
       const playlist_name = response.playlist_name;
-      okyRequest(
-        playlist_name,
-        "پلی لیست به صف پردازش اضافه شد, بعد از اتمام پردازش برای شما ایمیل خواهد شد."
+      toast.success(
+        `پلی لیست "${playlist_name}" به صف پردازش اضافه شد, بعد از اتمام پردازش برای شما ایمیل خواهد شد. 📩`
       );
     } catch (e) {
       throw e;
@@ -63,9 +62,8 @@ export class SpotifyFormHandler {
       const result: Response<SpotifyAlbum> = await spotifyService.album(value);
       const album_name = result.data.album_name;
       if (result.statusCode == 201) {
-        okyRequest(
-          album_name,
-          "دانلود البوم به صف پردازش اضافه شد و بعد از اتمام پردازش برای شما ایمیل خواهد شد"
+        toast.success(
+          ` آلبوم "${album_name}" به صف پردازش اضافه شد, بعد از اتمام پردازش برای شما ایمیل خواهد شد. 📩`
         );
       } else if (result.statusCode == 200) {
         okyRequest(album_name, "لینک دانلود برای  شما ایمیل شد", 3000);

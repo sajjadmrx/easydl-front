@@ -7,7 +7,7 @@ export function UpdatesModalComponent(props: any) {
   const [isOpen, setIsOpen] = useState(false);
   const [isRead, setIsRead] = useState(false);
   const [isReadV, setIsReadV] = useState(false);
-  let version = "1.3";
+  let version = "1.4";
 
   useEffect(() => {
     const hasVs = localStorage.getItem(`isReadV_${version}`);
@@ -23,7 +23,8 @@ export function UpdatesModalComponent(props: any) {
   }, [isReadV]);
 
   const update: any = {
-    new: [
+    new: ["اضافه شدن دانلود پلی لیـست از پلتفرم ساندکلود"],
+    "1.3": [
       "📥 اضافه شدن دانلود از پلتفرم یوتیوب",
       "👷 تغییر ظاهری دانلود از پلتفرم اسپاتیفای",
       "⚒️ رفع چند باگ جزئی",
