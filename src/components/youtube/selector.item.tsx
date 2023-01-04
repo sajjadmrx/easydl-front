@@ -99,7 +99,7 @@ export function YtSelectorItemComponent(props: Props) {
       </div>
       <hr
         className={
-          "my-4 mx-auto w-48 h-0.5 bg-gray-600 rounded border-0 md:my-10 dark:bg-gray-700"
+          "my-4 mx-auto w-48 h-0.5 bg-gray-300 rounded border-0 md:my-10"
         }
       />
     </div>

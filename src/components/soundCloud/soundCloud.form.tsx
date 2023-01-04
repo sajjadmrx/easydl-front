@@ -15,11 +15,15 @@ import { ClearButtonComponent } from "../clearInput.component";
 import React from "react";
 import { axiosError } from "../../handlers/error.handler";
 import { SupportMediaComponent } from "../support-media.component";
+import { FormContext } from "../../shared/interfaces/FormContext.interface";
+import { authContext } from "../../contexts/authContext";
+import { AuthContext } from "../../shared/interfaces/authContext.interface";
 
 export function SoundCloudFormComponent(props: any) {
   const [buttonText, setButtonText] = useState("دانلود");
   const [waiting, setWaiting] = useState(false);
   const formContextData = useContext(formContext);
+  const authContextData = useContext(authContext);
   const [localInput, setLocalInput] = useState("");
   useEffect(() => {
     if (!buttonText) {
@@ -31,7 +35,13 @@ export function SoundCloudFormComponent(props: any) {
     <form
       className="flex flex-col items-center"
       onSubmit={(e) =>
-        downloadHandler(e, setWaiting, setButtonText, formContextData)
+        downloadHandler(
+          e,
+          setWaiting,
+          setButtonText,
+          formContextData,
+          authContextData
+        )
       }
       id={"soundCloudForm"}
     >
@@ -66,7 +76,8 @@ async function downloadHandler(
   e: any,
   setWaiting: any,
   setButtonText: any,
-  formContext: any
+  formContext: FormContext,
+  authContext: AuthContext
 ) {
   try {
     e.preventDefault();
@@ -82,10 +93,14 @@ async function downloadHandler(
     setButtonText("لطفا صبر کنید...");
     formContext.setLoading(true);
     if (isSoundCloudPlaylist(value)) {
-      const playlistName: string = await soundcloudService.playlist(value);
-      toast.success(
-        `پلی لیست "${playlistName}" به صف پردازش اضافه شد, بعد از اتمام پردازش برای شما ایمیل خواهد شد. 📩`
-      );
+      if (authContext.isAuthenticated) {
+        const playlistName: string = await soundcloudService.playlist(value);
+        toast.success(
+          `پلی لیست "${playlistName}" به صف پردازش اضافه شد, بعد از اتمام پردازش برای شما ایمیل خواهد شد. 📩`
+        );
+      } else {
+        return toast.error("برای این کار لازم است وارد حساب کاربری بشید.");
+      }
     } else {
       await soundcloudService.downloadTrack(value, (prog: any) => {
         if (prog == 100) {

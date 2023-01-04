@@ -10,6 +10,7 @@ import { toast } from "react-toastify";
 import { FormContext } from "../../shared/interfaces/FormContext.interface";
 import react from "react";
 import { formContext } from "../../contexts/formContext";
+import { Avatar } from "react-daisyui";
 interface Props {
   details: YoutubeVideoDetails;
 }
@@ -31,7 +32,9 @@ export function YoutubeSelectorComponent(props: Props) {
     <div>
       <div>
         <div className={"mt-2 mb-2"}>
-          <label className={"label-text"}> {details.title}</label>
+          <Avatar src={details.thumbnails[2].url} shape={"square"}></Avatar>
+          <br />
+          <label className={"label-text"}>{details.title}</label>
         </div>
         <div className={"relative border border-gray-700 rounded shadow-2xl"}>
           <div className={"bg-gray-900 p-3"}>

@@ -7,7 +7,7 @@ export const mediaTypeConstant: any = {
   AUDIO_ONLY: {
     label: "audio only",
     icon: "file-audio",
-    isSupported: false,
+    isSupported: true,
   },
 };
 export const mediaQualityContent: any = {
