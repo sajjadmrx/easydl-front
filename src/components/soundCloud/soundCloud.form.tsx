@@ -84,10 +84,12 @@ async function downloadHandler(
     if (formContext.loading)
       return toast.warning("لطفا تا پایان دانلود صبر کنید...");
 
-    let value = e.target.querySelector("input").value;
+    let value: string | null = e.target.querySelector("input").value;
 
     if (!value || !isLink(value) || !isSoundcloudLink(value))
       return toast.error("یک لینک معتبر وارد کنید");
+
+    value = value.split("?")[0];
 
     setWaiting(true);
     setButtonText("لطفا صبر کنید...");
