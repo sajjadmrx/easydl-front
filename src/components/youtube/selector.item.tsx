@@ -10,7 +10,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   mediaQualityContent,
   mediaTypeConstant,
-} from "../../constants/media.constant";
+} from "../../shared/constants/media.constant";
 import {
   YoutubeDlSelector,
   YoutubeDlSelectorWithId,

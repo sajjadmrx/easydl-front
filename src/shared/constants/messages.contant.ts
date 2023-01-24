@@ -14,4 +14,5 @@ export const ResponseMessages = {
   SENDED_WITH_EMAIL: "به ایمیل شما ارسال شد",
   INVALID_TRACKS_COUNT: "تعداد ترک ها بیش از حد مجاز است.",
   INVALID_FORMAT: "فرمت نامعتبر است.",
+  INVALID_VIEW_COUNT: "تعداد بازدید این ویدیو/موزیک غیرمجاز هست.",
 };

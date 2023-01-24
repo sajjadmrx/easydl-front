@@ -1,4 +1,4 @@
-import { ResponseMessages } from "../constants/messages.contant";
+import { ResponseMessages } from "../shared/constants/messages.contant";
 
 export function axiosError(error: any, cb: any) {
   if (error.response && error.response.status > 0) {

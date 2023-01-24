@@ -1,4 +1,4 @@
-import { mediaTypeConstant } from "../../constants/media.constant";
+import { mediaTypeConstant } from "../constants/media.constant";
 
 export interface YoutubeDlSelector {
   readonly qualityLabel: string;
@@ -34,6 +34,8 @@ export interface YoutubeVideoDetails {
       verified: boolean;
       subscriber_count: boolean;
     };
+    viewCount: string;
   };
+  canDownload: boolean;
   dlSelector: Array<YoutubeDlSelector>;
 }

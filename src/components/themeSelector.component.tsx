@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import {} from "js-cookie";
-import themeList, { Theme } from "../constants/themes.constant";
+import themeList, { Theme } from "../shared/constants/themes.constant";
 import React from "react";
 interface Props {
   className?: string;
