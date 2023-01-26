@@ -45,9 +45,7 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start:react": "react-scripts start",
-    "start": "npm run winBuild && node server.js",
-    "start:dev:react": "react-scripts start",
+    "start": "react-scripts start",
     "build": "GENERATE_SOURCEMAP=false react-scripts build",
     "winBuild": "set \"GENERATE_SOURCEMAP=false\" && react-scripts build",
     "test": "jest",
