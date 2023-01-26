@@ -3,7 +3,6 @@ import { authContext } from "../contexts/authContext";
 import { PageLinkComponent } from "./pageLinkComponent";
 import { ProfileDropDownComponent } from "./profileDropDown.component";
 import { ThemeSelectorComponent } from "./themeSelector.component";
-import {} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { authModalContext } from "../contexts/authModalContext";
 import { pageLinks } from "../shared/constants/pages.constant";
@@ -53,6 +52,16 @@ export function NavbarComponent(): JSX.Element {
       </div>
 
       <div className="navbar-end">
+        <div>
+          <a
+            href={"https://github.com/sajjadmrx/easydl-front"}
+            target={"_blank"}
+          >
+            <Button className={"btn gap-2 normal-case btn-ghost"}>
+              <FontAwesomeIcon icon={["fab", "github"]} size={"lg"} />
+            </Button>
+          </a>
+        </div>
         <DonateModalComponent />
 
         <ThemeSelectorComponent />
