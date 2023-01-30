@@ -28,7 +28,7 @@ const platforms: Platform[] = [
     component: <RadioJavanComponent />,
     imgSrc: "/brands/rj.png",
     imgAlt: "ایزی دنلود,لوگو رادیوجوان",
-    isWorked: false,
+    isWorked: true,
   },
   {
     name: "ساندکلود",

@@ -3,17 +3,18 @@ export function isLink(value: string) {
   return regex.test(value);
 }
 export function isRjLinkMp3(value: string): boolean {
-  const links = ["https://rj.app/m/", "https://www.radiojavan.com/mp3s/mp3/"];
+  const links = ["https://rj.app/m/", "https://www.radiojavan.com/mp3s/mp3/","https://play.radiojavan.com/song/"];
   return links.some((link) => value.startsWith(link));
 }
 export function isRjLinkPodCast(value: string): boolean {
-  const links = ["https://rj.app/p/", "https://www.radiojavan.com/podcasts/"];
+  const links = ["https://rj.app/p/", "https://www.radiojavan.com/podcasts/","https://play.radiojavan.com/podcast/"];
   return links.some((link) => value.startsWith(link));
 }
 export function isRjLinkMusicVideo(value: string): boolean {
   const links = [
     "https://rj.app/v/",
     "https://www.radiojavan.com/videos/video",
+    "https://play.radiojavan.com/video"
   ];
   return links.some((link) => value.startsWith(link));
 }
