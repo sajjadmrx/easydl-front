@@ -12,6 +12,13 @@ export class PaymentService extends ApiService {
     return this.post(`/?serviceId=${planId}`, {});
   }
 
+  async verify(refId: string) {
+    return this.post(`/verify`, {
+      refId: refId,
+      status: "OK",
+    });
+  }
+
   protected getPrefix(): string {
     return PaymentService.PREFIX;
   }

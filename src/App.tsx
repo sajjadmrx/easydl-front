@@ -9,6 +9,7 @@ import { ProfilePage } from "./pages/profile.page";
 import { ReportPage } from "./pages/report.page";
 import { CookieUtil } from "./utils/cookie.util";
 import { SubscriptionPage } from "./pages/subscription.page";
+import { PaymentCallbackPage } from "./pages/PaymentCallback.page";
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(
@@ -41,6 +42,7 @@ function App() {
         {/* profile Page */}
         <Route path="/profile" component={ProfilePage} loading />
         <Route path={"/subscription"} component={SubscriptionPage} loading />
+        <Route path="/callbacks/payment" component={PaymentCallbackPage} />
       </Switch>
     </authContext.Provider>
   );

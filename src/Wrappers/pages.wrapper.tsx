@@ -58,10 +58,10 @@ export const PageWrapper = (props: Props) => {
   return (
     <div>
       <authModalContext.Provider value={AuthModalContextValues}>
+        <ToastContainer theme="dark" rtl />
         <NavbarComponent />
         {props.children}
         <FooterComponent />
-        <ToastContainer theme="dark" rtl />
         <AuthModalComponent show={showModal} />
       </authModalContext.Provider>
     </div>
