@@ -15,4 +15,7 @@ export const ResponseMessages = {
   INVALID_TRACKS_COUNT: "تعداد ترک ها بیش از حد مجاز است.",
   INVALID_FORMAT: "فرمت نامعتبر است.",
   INVALID_VIEW_COUNT: "تعداد بازدید این ویدیو/موزیک غیرمجاز هست.",
+  PAYMENT_ID_IS_INVALID: "شناسه پرداخت نامعتبر است.",
+  PAYMENT_IS_INVALID: "پرداخت نامعتبر است.",
+  SUBSCRIPTION_EXPIRED: "اشتراک شما تمام شده است",
 };

@@ -139,3 +139,25 @@ html[data-theme="dark"]::-webkit-scrollbar {
     width: 0px !important;
 }
 
+
+:root {
+    --primary-color: #3B82F6;
+    --secondary-color: #6B7280;
+    --dark-color: #1F2937;
+    --light-color: #F9FAFB;
+}
+
+
+.shopping-basket-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.shopping-basket-container h1 {
+
+}
+
+.shopping-basket-container svg {
+    font-size: 3rem;
+}

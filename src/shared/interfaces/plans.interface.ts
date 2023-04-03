@@ -1,4 +1,4 @@
-export interface Service {
-  id: number,
-  price: number
+export interface Plans {
+  id: number;
+  price: number;
 }

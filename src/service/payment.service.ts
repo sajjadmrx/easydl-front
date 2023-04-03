@@ -1,14 +1,18 @@
 import { ApiService } from "./api.service";
-import { User } from "../shared/interfaces/user.interface";
 import { Response } from "../shared/interfaces/response.interface";
+import { Plans } from "../shared/interfaces/plans.interface";
 
-export class UserService extends ApiService {
-  static PREFIX: string = "/users/@me";
-  async getProfile(): Promise<Response<User>> {
-    return this.get("/profile", {});
+export class PaymentService extends ApiService {
+  static PREFIX: string = "/payment";
+  async getPlans(): Promise<Response<Plans[]>> {
+    return this.get("/services", {});
+  }
+
+  async buy(planId: number): Promise<Response<string>> {
+    return this.post(`/?serviceId=${planId}`, {});
   }
 
   protected getPrefix(): string {
-    return UserService.PREFIX;
+    return PaymentService.PREFIX;
   }
 }
