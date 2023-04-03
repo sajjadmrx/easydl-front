@@ -10,9 +10,12 @@ import { CookieUtil } from "../utils/cookie.util";
 import React from "react";
 import { AuthContext } from "../shared/interfaces/authContext.interface";
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
+import { User } from "../shared/interfaces/user.interface";
+import moment from "moment-jalaali";
+import { TbVip, TbVipOff } from "react-icons/tb";
 export function ProfilePage() {
+  moment.loadPersian({ usePersianDigits: true });
   const loadingContext = useContext(LoadingContext);
-  const [downloads, setDownloads] = useState([]);
   useEffect(() => {
     document.title = `${infoStore.brandName.fa} - پروفایل`;
     loadingContext.done();
@@ -26,6 +29,14 @@ export function ProfilePage() {
     return <Redirect to="/" />;
   }
 
+  const user: User = authContextData.user;
+  const time = moment(user.subscription);
+  let expiredFa = time.locale("fa").fromNow().replace("در", "");
+  const isSub = isSubUser(user);
+  const subtext: string = isSub
+    ? `  ${time.format("YYYY-MM-DD")} | ${expiredFa} دیگر `
+    : `اشتراک ندارید`;
+
   return (
     <PageWrapper>
       <div className=" shadow-md rounded-3xl lg:flex-row dark:bg-zinc-900/95">
@@ -38,19 +49,15 @@ export function ProfilePage() {
                     <div className="stat">
                       <div className="stat-title">پروفایل</div>
 
-                      <div className="stat-title">
-                        {authContextData.user.username}
-                      </div>
-                      <div className="stat-desc ">
-                        {authContextData.user.email}
-                      </div>
+                      <div className="stat-title">{user.username}</div>
+                      <div className="stat-desc ">{user.email}</div>
 
                       <div className="stat-figure ">
                         <div className="avatar online">
                           <div className="w-14 rounded-full">
                             <img
-                              src={authContextData.user.avatar}
-                              alt={authContextData.user.username + " avatar"}
+                              src={user.avatar}
+                              alt={user.username + " avatar"}
                             />
                           </div>
                         </div>
@@ -59,13 +66,16 @@ export function ProfilePage() {
 
                     <div className="stat">
                       <div className="stat-figure ">
-                        <FontAwesomeIcon
-                          icon={["fas", "star"]}
-                          size={"2x"}
-                        ></FontAwesomeIcon>
+                        {isSub ? (
+                          <TbVip size={35} className="text-green-400" />
+                        ) : (
+                          <TbVipOff size={35} />
+                        )}
                       </div>
                       <div className="stat-title">وضعیت اشتراک</div>
-                      <div className="stat-value ">ندارید</div>
+                      <div className="stat-value ">
+                        <p className={"text-xs"}>{subtext}</p>
+                      </div>
                     </div>
                     <div className="stat">
                       <div className="stat-figure ">
@@ -90,4 +100,8 @@ export function ProfilePage() {
       </div>
     </PageWrapper>
   );
+}
+
+function isSubUser(user: User): boolean {
+  return moment(user.subscription).isAfter(moment());
 }

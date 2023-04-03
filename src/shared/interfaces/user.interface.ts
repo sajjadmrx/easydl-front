@@ -7,4 +7,5 @@ export interface User {
   updatedAt: string;
   email_verified: boolean;
   provider: string;
+  subscription: string;
 }
