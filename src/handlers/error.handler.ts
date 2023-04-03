@@ -6,13 +6,21 @@ export function axiosError(error: any, cb: any) {
     let text: any;
     if (typeof item == "object" && !item.message) {
       const enc = new TextDecoder("utf-8");
-      text = enc.decode(item);
-      text = JSON.parse(text).message;
+      item = JSON.parse(enc.decode(item));
+      text = item.message;
     } else if (item.message) {
       text = item.message;
     }
     // @ts-ignore
-    cb(ResponseMessages[text] || "خطایی رخ داده است");
+    let message = ResponseMessages[text] || "خطایی رخ داده است";
+    if (text == "LIMIT") {
+      console.log(item);
+      const remainingHours = Math.floor(item.time / 60 / 60);
+      const remainingMinutes = Math.floor((item.time % 3600) / 60);
+      const remainingSeconds = item.time % 60;
+      message = `${remainingHours} ساعت و ${remainingMinutes} دقیقه و ${remainingSeconds} ثانیه تا پایان محدودیت`;
+    }
+    cb(message);
   } else if (error.request) {
     cb("خطایی در ارتباط با سرور رخ داده است");
   } else {

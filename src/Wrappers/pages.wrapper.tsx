@@ -1,5 +1,5 @@
 import { FunctionComponent, useContext, useEffect, useState } from "react";
-import { ToastContainer } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
 import { FooterComponent } from "../components/footer.component";
 import { NavbarComponent } from "../components/navbar.component";
 import { authContext } from "../contexts/authContext";
@@ -9,6 +9,7 @@ import { authModalContext } from "../contexts/authModalContext";
 import { userService } from "../service/index.service";
 import React from "react";
 import { AuthContext } from "../shared/interfaces/authContext.interface";
+import { axiosError } from "../handlers/error.handler";
 
 interface Props {
   children: JSX.Element;
@@ -40,6 +41,7 @@ export const PageWrapper = (props: Props) => {
           setIsAuthenticated(false);
           setToken("");
         }
+        axiosError(error, toast.error);
       }
     }
 
