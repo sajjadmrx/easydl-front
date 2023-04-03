@@ -3,11 +3,13 @@ import { authContext } from "../contexts/authContext";
 import { PageLinkComponent } from "./pageLinkComponent";
 import { ProfileDropDownComponent } from "./profileDropDown.component";
 import { ThemeSelectorComponent } from "./themeSelector.component";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { authModalContext } from "../contexts/authModalContext";
 import { pageLinks } from "../shared/constants/pages.constant";
 import { Button } from "react-daisyui";
-import { DonateModalComponent } from "./modals/donate.modal";
+import { Link } from "react-router-dom";
+import { IoLogInOutline } from "react-icons/io5";
+import { AiOutlineGithub } from "react-icons/ai";
+import { RiVipCrown2Line } from "react-icons/ri";
 
 export function NavbarComponent(): JSX.Element {
   const { isAuthenticated } = useContext(authContext);
@@ -53,23 +55,23 @@ export function NavbarComponent(): JSX.Element {
 
       <div className="navbar-end">
         <div>
-          <a
-            href={"https://github.com/sajjadmrx/easydl-front"}
-            target={"_blank"}
-          >
+          <Link to={"/subscription"}>
             <Button className={"btn gap-2 normal-case btn-ghost"}>
-              <FontAwesomeIcon icon={["fab", "github"]} size={"lg"} />
+              <RiVipCrown2Line size={20} />
+              <span className={"hidden md:inline"}>خرید اشتراک</span>
             </Button>
-          </a>
+          </Link>
         </div>
-        <DonateModalComponent />
 
         <ThemeSelectorComponent />
         {isAuthenticated ? (
           <ProfileDropDownComponent />
         ) : (
-          <button className="btn btn-ghost" onClick={() => setShowModal(true)}>
-            <FontAwesomeIcon icon={["fas", "sign-in-alt"]} className="mr-2" />
+          <button
+            className="btn btn-ghost gap-2"
+            onClick={() => setShowModal(true)}
+          >
+            <IoLogInOutline size={20} />
             ورود
           </button>
         )}

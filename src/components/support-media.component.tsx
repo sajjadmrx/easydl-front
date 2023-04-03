@@ -1,35 +1,38 @@
 import { Badge } from "react-daisyui";
 import React from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { IconProp } from "@fortawesome/fontawesome-svg-core";
+import { BsMusicNoteBeamed } from "react-icons/bs";
+import { RiPlayListLine } from "react-icons/ri";
+import { MdMusicVideo, MdVideoLibrary } from "react-icons/md";
+import { FaPodcast, FaPhotoVideo } from "react-icons/fa";
+import { IoIosAlbums } from "react-icons/io";
 const mediaSupport = {
   music: {
     name: "موزیک",
-    icon: "music",
+    icon: <BsMusicNoteBeamed />,
   },
   playlist: {
     name: "پلی لیست",
-    icon: "fa-compact-disc",
+    icon: <RiPlayListLine />,
   },
   album: {
     name: "آلبوم",
-    icon: "fa-compact-disc",
+    icon: <IoIosAlbums />,
   },
   music_video: {
     name: "موزیک ویدیو",
-    icon: "fas fa-film",
+    icon: <MdMusicVideo />,
   },
   video: {
     name: "ویدیو",
-    icon: "video",
+    icon: <MdVideoLibrary />,
   },
   short_video: {
     name: "ویدیو کوتاه",
-    icon: "camera",
+    icon: <FaPhotoVideo />,
   },
   podcast: {
     name: "پادکست",
-    icon: "podcast",
+    icon: <FaPodcast />,
   },
 };
 interface Props {
@@ -49,13 +52,10 @@ export function SupportMediaComponent(props: Props) {
             <div>
               <Badge
                 color={"ghost"}
-                className={"mr-2  h-[25px] "}
+                className={"mr-2  h-[25px] gap-1"}
                 responsive={true}
               >
-                <FontAwesomeIcon
-                  icon={media.icon as IconProp}
-                  className={"mr-1 p-1"}
-                />
+                {media.icon}
                 {media.name}
               </Badge>
             </div>

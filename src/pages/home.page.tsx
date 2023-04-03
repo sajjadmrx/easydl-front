@@ -11,6 +11,8 @@ import { UpdatesModalComponent } from "../components/modals/updates.modal";
 import { spotifyResultContext } from "../contexts/spotifyResultContext";
 
 import CookieConsent from "react-cookie-consent";
+import { Alert, Button } from "react-daisyui";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 export function HomePage() {
   const loadingContext = useContext(LoadingContext);
@@ -47,7 +49,6 @@ export function HomePage() {
                     <div className={"flex justify-center mb-5"}>
                       <h1 className="text-5xl font-bold">ایــزی دانلود</h1>
                     </div>
-
                     <p className="py-6">
                       با ایزی دانلود به صورت رایگان با بهترین کیفیت دانلود
                       کنیـد.
