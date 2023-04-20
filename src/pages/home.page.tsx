@@ -59,7 +59,7 @@ export function HomePage() {
 
                   <PlatformsTab />
 
-                  {user && !isVip(user.subscription) ? null : (
+                  {user && isVip(user.subscription) ? null : (
                     <Link to={"/subscription"}>
                       <Alert
                         status={"warning"}
