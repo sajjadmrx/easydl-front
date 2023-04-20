@@ -10,6 +10,7 @@ import { ReportPage } from "./pages/report.page";
 import { CookieUtil } from "./utils/cookie.util";
 import { SubscriptionPage } from "./pages/subscription.page";
 import { PaymentCallbackPage } from "./pages/PaymentCallback.page";
+import { PageWrapper } from "./Wrappers/pages.wrapper";
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(
@@ -35,15 +36,16 @@ function App() {
 
   return (
     <authContext.Provider value={AuthContextValues}>
-      <Switch>
-        <Route exact path="/" component={HomePage} loading />
-        <Route path="/help" component={HelpPage} loading />
-        <Route path="/report" component={ReportPage} loading />
-        {/* profile Page */}
-        <Route path="/profile" component={ProfilePage} loading />
-        <Route path={"/subscription"} component={SubscriptionPage} loading />
-        <Route path="/callbacks/payment" component={PaymentCallbackPage} />
-      </Switch>
+      <PageWrapper>
+        <Switch>
+          <Route path="/profile" component={ProfilePage} loading />
+          <Route path="/subscription" component={SubscriptionPage} loading />
+          <Route path="/callback" component={PaymentCallbackPage} loading />
+          <Route exact path="/" component={HomePage} loading />
+          <Route path="/help" component={HelpPage} loading />
+          <Route path="/report" component={ReportPage} loading />
+        </Switch>
+      </PageWrapper>
     </authContext.Provider>
   );
 }
