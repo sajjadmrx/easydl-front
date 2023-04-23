@@ -1,8 +1,3 @@
-export interface SpotifyResultContext {
-  songs: SpotifySearchItem[];
-  setSongs: any;
-}
-
 export interface SpotifySearchItem {
   name: string;
   description: string;
@@ -25,4 +20,10 @@ export interface SpotifyAlbum {
 
 export interface SpotifyPlaylist {
   playlist_name: string;
+}
+export interface SpotifyConnectionContext {
+  isConnect: boolean;
+  setIsConnect: any;
+  info: any;
+  setInfo: any;
 }

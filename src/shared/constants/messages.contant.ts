@@ -18,4 +18,6 @@ export const ResponseMessages = {
   PAYMENT_ID_IS_INVALID: "شناسه پرداخت نامعتبر است.",
   PAYMENT_IS_INVALID: "پرداخت نامعتبر است.",
   SUBSCRIPTION_EXPIRED: "اشتراک شما تمام شده است",
+  INVALID_CODE_STATE: "خطا در ارسال دیتا",
+  INVALID_CONNECTION: "اتصال نامعتبر است.",
 };

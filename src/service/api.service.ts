@@ -17,10 +17,7 @@ export abstract class ApiService {
     }
   }
 
-  protected async get<T extends object>(
-    url: string,
-    params: any
-  ): Promise<Response<T>> {
+  protected async get<T>(url: string, params: any): Promise<Response<T>> {
     try {
       const result: AxiosResponse<Response<T>> = await this.myAxios.get(
         `${this.getPrefix() + url}`,
@@ -57,6 +54,15 @@ export abstract class ApiService {
       );
       const filename = getFileName(result.headers["content-disposition"]);
       fileDownload(result.data, filename, result.headers["content-type"]);
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  protected async put<T>(url: string, body: any) {
+    try {
+      const result = await this.myAxios.put(`${this.getPrefix() + url}`, body);
+      return result.data as T;
     } catch (error) {
       throw error;
     }

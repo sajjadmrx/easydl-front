@@ -7,6 +7,7 @@ import { YoutubeService } from "./youtube.service";
 import myAxios from "../utils/axios.util";
 import { ReportService } from "./report.service";
 import { PaymentService } from "./payment.service";
+import { ConnectionsService } from "./connection.service";
 
 export const authService: AuthService = new AuthService(myAxios);
 export const userService: UserService = new UserService(myAxios);
@@ -20,3 +21,6 @@ export const soundcloudService: SoundCloudService = new SoundCloudService(
 export const youtubeService: YoutubeService = new YoutubeService(myAxios);
 export const reportService: ReportService = new ReportService(myAxios);
 export const paymentService: PaymentService = new PaymentService(myAxios);
+export const connectionsService: ConnectionsService = new ConnectionsService(
+  myAxios
+);

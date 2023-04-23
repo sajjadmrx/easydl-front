@@ -7,7 +7,6 @@ import {
   isSpotifyPlaylistLink,
 } from "../../utils/regex.util";
 import { formContext } from "../../contexts/formContext";
-import { spotifyResultContext } from "../../contexts/spotifyResultContext";
 import { toast } from "react-toastify";
 import { ClearButtonComponent } from "../clearInput.component";
 import { authContext } from "../../contexts/authContext";
@@ -29,7 +28,6 @@ export function SpotifyFormComponent(props: Props) {
   const [progressValue, setProgressValue] = React.useState<number>(0);
   const fromContext = React.useContext(formContext);
   const authContextData: AuthContext = React.useContext(authContext);
-  const spotifyResultContextData = React.useContext(spotifyResultContext);
   useEffect(() => {
     if (!buttonText) {
       setButtonText("دانلود");
@@ -49,7 +47,6 @@ export function SpotifyFormComponent(props: Props) {
       onSubmit={(e) =>
         submitHandler(
           e,
-          spotifyResultContextData.setSongs,
           setErrorState,
           setButtonText,
           setWaiting,
@@ -99,7 +96,6 @@ export function SpotifyFormComponent(props: Props) {
 
 async function submitHandler(
   e: any,
-  setSongs: any,
   setErrorState: any,
   setButtonText: any,
   setWaiting: any,
@@ -109,7 +105,6 @@ async function submitHandler(
 ) {
   e.preventDefault();
 
-  setSongs([]);
   setErrorState(false);
   if (formContext.loading) return alert("تا پایان دانلود صبر کنید...");
   let value = e.target.querySelector("input").value;

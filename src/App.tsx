@@ -11,6 +11,7 @@ import { CookieUtil } from "./utils/cookie.util";
 import { SubscriptionPage } from "./pages/subscription.page";
 import { PaymentCallbackPage } from "./pages/PaymentCallback.page";
 import { PageWrapper } from "./Wrappers/pages.wrapper";
+import { SpotifyCallbackPage } from "./pages/spotifyCallback.page";
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(
@@ -41,6 +42,11 @@ function App() {
           <Route path="/profile" component={ProfilePage} loading />
           <Route path="/subscription" component={SubscriptionPage} loading />
           <Route path="/callback" component={PaymentCallbackPage} loading />
+          <Route
+            path="/callbacks/spotify"
+            component={SpotifyCallbackPage}
+            loading
+          />
           <Route exact path="/" component={HomePage} loading />
           <Route path="/help" component={HelpPage} loading />
           <Route path="/report" component={ReportPage} loading />
