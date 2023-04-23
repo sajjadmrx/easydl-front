@@ -12,6 +12,7 @@ import {
 } from "../../shared/interfaces/spotify.interface";
 import { Response } from "../../shared/interfaces/response.interface";
 import { axiosError } from "../../handlers/error.handler";
+import ms from "ms";
 const MySwal = withReactContent(Swal);
 
 export class SpotifyFormHandler {
@@ -20,12 +21,12 @@ export class SpotifyFormHandler {
     private authContext: AuthContext,
     private setWaiting: any
   ) {}
-  async track(value: string, setProgressValue: any, button: any) {
+  async track(value: string, setProgressValue: any) {
     try {
       this.setWaiting(true);
       this.formContext.setLoading(true);
       let trackId = getId(value);
-      await downloadTrack(trackId, setProgressValue, button);
+      await downloadTrack(trackId, setProgressValue);
     } catch (e) {
       throw e;
     }
@@ -78,15 +79,10 @@ function getId(value: string) {
   return new GetAudioId(value).getId().id;
 }
 
-async function downloadTrack(
-  trackId: string,
-  setProgressValue: any,
-  button: Element
-) {
+async function downloadTrack(trackId: string, setProgressValue: any) {
   return new Promise(async (resolve, reject) => {
     try {
       await spotifyService.downloadTrack(trackId, (value: number) => {
-        button.classList.remove("loading");
         if (value == 100) {
           resolve(true);
         } else {

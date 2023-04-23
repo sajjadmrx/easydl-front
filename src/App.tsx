@@ -12,7 +12,7 @@ import { SubscriptionPage } from "./pages/subscription.page";
 import { PaymentCallbackPage } from "./pages/PaymentCallback.page";
 import { PageWrapper } from "./Wrappers/pages.wrapper";
 import { SpotifyCallbackPage } from "./pages/spotifyCallback.page";
-
+import { spotifyConnectionContext } from "./contexts/spotify-con.context";
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(
     CookieUtil.has("token")
@@ -30,7 +30,8 @@ function App() {
     token,
     setToken,
   };
-
+  const [isConnect, setIsConnect] = useState<boolean>(false);
+  const [info, setInfo] = useState<any>();
   useEffect(() => {
     if (!token) CookieUtil.delete("token");
   }, [token]);
@@ -38,19 +39,23 @@ function App() {
   return (
     <authContext.Provider value={AuthContextValues}>
       <PageWrapper>
-        <Switch>
-          <Route path="/profile" component={ProfilePage} loading />
-          <Route path="/subscription" component={SubscriptionPage} loading />
-          <Route path="/callback" component={PaymentCallbackPage} loading />
-          <Route
-            path="/callbacks/spotify"
-            component={SpotifyCallbackPage}
-            loading
-          />
-          <Route exact path="/" component={HomePage} loading />
-          <Route path="/help" component={HelpPage} loading />
-          <Route path="/report" component={ReportPage} loading />
-        </Switch>
+        <spotifyConnectionContext.Provider
+          value={{ isConnect, setIsConnect, info, setInfo }}
+        >
+          <Switch>
+            <Route path="/profile" component={ProfilePage} loading />
+            <Route path="/subscription" component={SubscriptionPage} loading />
+            <Route path="/callback" component={PaymentCallbackPage} loading />
+            <Route
+              path="/callbacks/spotify"
+              component={SpotifyCallbackPage}
+              loading
+            />
+            <Route exact path="/" component={HomePage} loading />
+            <Route path="/help" component={HelpPage} loading />
+            <Route path="/report" component={ReportPage} loading />
+          </Switch>
+        </spotifyConnectionContext.Provider>
       </PageWrapper>
     </authContext.Provider>
   );

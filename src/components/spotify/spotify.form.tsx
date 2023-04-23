@@ -18,20 +18,22 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { ProgressDownload } from "../progressDownload.component";
 import { SpotifyFormHandler } from "./spotify.formHandler";
 
-interface Props {}
+interface Props {
+  url: string;
+}
 
 export function SpotifyFormComponent(props: Props) {
   const [errorState, setErrorState] = React.useState<boolean>(false);
   const [buttonText, setButtonText] = React.useState<string | undefined>("");
-  const [localInput, setLocalInput] = React.useState<string>("");
+  const [localInput, setLocalInput] = React.useState<string | null>(props.url);
   const [waiting, setWaiting] = React.useState<boolean>(false);
   const [progressValue, setProgressValue] = React.useState<number>(0);
-  const fromContext = React.useContext(formContext);
+  const fromContextData = React.useContext(formContext);
   const authContextData: AuthContext = React.useContext(authContext);
   useEffect(() => {
     if (!buttonText) {
       setButtonText("دانلود");
-      fromContext.setLoading(false);
+      fromContextData.setLoading(false);
       setWaiting(false);
     }
   }, [buttonText]);
@@ -41,20 +43,54 @@ export function SpotifyFormComponent(props: Props) {
     }
   }, [errorState]);
 
+  useEffect(() => {
+    if (props.url) {
+      setLocalInput(props.url);
+      setTimeout(() => {
+        document.getElementById("btn-f")?.click();
+      }, 100);
+    }
+  }, [props.url]);
+
+  async function submitHandler(e: any) {
+    e.preventDefault();
+
+    setErrorState(false);
+    if (fromContextData.loading) return alert("تا پایان دانلود صبر کنید...");
+    let value = localInput;
+    const button = e.target.querySelector("button");
+
+    if (!value || !isLink(value)) {
+      toast.error("لطفا یک لینک معتبر وارد کنید");
+      return;
+    }
+
+    button.classList.add("loading");
+    try {
+      button.classList.remove("loading");
+      const spotifyFormHandler: SpotifyFormHandler = new SpotifyFormHandler(
+        fromContextData,
+        authContextData,
+        () => {}
+      );
+
+      await spotifyDownloader(value, spotifyFormHandler, setProgressValue);
+    } catch (error) {
+      axiosError(error, (err: any) => toast.error(err));
+    } finally {
+      button.classList.remove("loading");
+      setButtonText("");
+      setWaiting(false);
+      fromContextData.setLoading(false);
+      setProgressValue(0);
+    }
+  }
+
   return (
     <form
       className="flex flex-col items-center"
-      onSubmit={(e) =>
-        submitHandler(
-          e,
-          setErrorState,
-          setButtonText,
-          setWaiting,
-          fromContext,
-          authContextData,
-          setProgressValue
-        )
-      }
+      id={"spotify-form"}
+      onSubmit={(e) => submitHandler(e)}
     >
       <div className="relative w-full max-w-xs">
         <div className={""}>
@@ -62,7 +98,7 @@ export function SpotifyFormComponent(props: Props) {
             type="text"
             placeholder="https://open.spotify.com/...."
             id={"spotify"}
-            value={localInput}
+            value={localInput || ""}
             className="input input-bordered  w-full max-w-xs mb-2"
             onChange={(e) => setLocalInput(e.target.value)}
             dir={"auto"}
@@ -75,7 +111,11 @@ export function SpotifyFormComponent(props: Props) {
         </div>
       </div>
       <SupportMediaComponent media={["music", "playlist", "album"]} />
-      <button className="btn btn-wide " disabled={fromContext.loading}>
+      <button
+        className="btn btn-wide "
+        id={"btn-f"}
+        disabled={fromContextData.loading}
+      >
         <div hidden={progressValue > 0}>
           {!waiting && (
             <FontAwesomeIcon icon={["fas", "download"]} className={"ml-2.5"} />
@@ -94,54 +134,22 @@ export function SpotifyFormComponent(props: Props) {
   );
 }
 
-async function submitHandler(
-  e: any,
-  setErrorState: any,
-  setButtonText: any,
-  setWaiting: any,
-  formContext: FormContext,
-  authContext: AuthContext,
-  setProgressValue: any
+export async function spotifyDownloader(
+  value: string,
+  spotifyFormHandler: SpotifyFormHandler,
+  cbProgress: (num: number) => void
 ) {
-  e.preventDefault();
-
-  setErrorState(false);
-  if (formContext.loading) return alert("تا پایان دانلود صبر کنید...");
-  let value = e.target.querySelector("input").value;
-  const button = e.target.querySelector("button");
-  if (!value || !isLink(value)) {
-    toast.error("لطفا یک لینک معتبر وارد کنید");
-    return;
-  }
-
-  button.classList.add("loading");
-  let targetUrl = "";
-  const spotifyFormHandler: SpotifyFormHandler = new SpotifyFormHandler(
-    formContext,
-    authContext,
-    setWaiting
-  );
-  try {
-    switch (true) {
-      case isSpotifyLink(value):
-        await spotifyFormHandler.track(value, setProgressValue, button);
-        break;
-      case isSpotifyAlbumLink(value):
-        await spotifyFormHandler.album(value);
-        break;
-      case isSpotifyPlaylistLink(value):
-        await spotifyFormHandler.playlist(value);
-        break;
-      default:
-        toast.warning("لطفا یک لینک معتبر وارد کنید");
-    }
-  } catch (error) {
-    axiosError(error, (err: any) => toast.error(err));
-  } finally {
-    button.classList.remove("loading");
-    setButtonText(null);
-    setWaiting(false);
-    formContext.setLoading(false);
-    setProgressValue(0);
+  switch (true) {
+    case isSpotifyLink(value):
+      await spotifyFormHandler.track(value, cbProgress);
+      break;
+    case isSpotifyAlbumLink(value):
+      await spotifyFormHandler.album(value);
+      break;
+    case isSpotifyPlaylistLink(value):
+      await spotifyFormHandler.playlist(value);
+      break;
+    default:
+      toast.warning("لطفا یک لینک معتبر وارد کنید");
   }
 }

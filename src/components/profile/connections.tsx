@@ -7,6 +7,7 @@ import { toast } from "react-toastify";
 import { Button, Tooltip } from "react-daisyui";
 import { spotifyConnectionContext } from "../../contexts/spotify-con.context";
 import { SpotifyConnectionContext } from "../../shared/interfaces/spotify.interface";
+import { VscDebugDisconnect } from "react-icons/vsc";
 
 export function ConnectionsComponent() {
   const [loading, setLoading] = useState<boolean>(false);
@@ -25,8 +26,8 @@ export function ConnectionsComponent() {
   }
   return (
     <div className="container mx-auto px-4">
-      <div className="container mx-auto px-4">
-        <div className="shadow-lg rounded-lg shadow-lg px-6 py-4">
+      <div className="container mx-auto px-4 md:flex md:items-center md:justify-center">
+        <div className="shadow-lg rounded-lg shadow-lg px-6 py-4 md:w-[50%] ">
           <div className="flex justify-between items-center mb-4">
             <h2 className="text-lg font-bold flex gap-2">
               <TbApps className={"mt-1"} />
@@ -42,10 +43,11 @@ export function ConnectionsComponent() {
               <Button disabled={true}>متصل است</Button>
             ) : (
               <Button
-                className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded"
+                className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded border-0 gap-2"
                 disabled={loading}
                 onClick={connectHandle}
               >
+                <VscDebugDisconnect />
                 اتصال
               </Button>
             )}
