@@ -1,4 +1,5 @@
 import { ApiService } from "./api.service";
+import { SpotifyConnectionInfo } from "../shared/interfaces/connection.interface";
 
 export class ConnectionsService extends ApiService {
   static PREFIX: string = "/connections";
@@ -16,7 +17,8 @@ export class ConnectionsService extends ApiService {
     return await this.put("/spotify/back", { code, state });
   }
 
-  async getSpotifyMe() {
-    return await this.get<any>("/spotify/me", {});
+  async getSpotifyMe(): Promise<SpotifyConnectionInfo> {
+    const data = await this.get<SpotifyConnectionInfo>("/spotify/me", {});
+    return data.data;
   }
 }

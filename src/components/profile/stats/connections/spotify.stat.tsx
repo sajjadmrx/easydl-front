@@ -3,8 +3,6 @@ import { BsSpotify } from "react-icons/bs";
 import { connectionsService } from "../../../../service/index.service";
 import { spotifyConnectionContext } from "../../../../contexts/spotify-con.context";
 import { SpotifyConnectionContext } from "../../../../shared/interfaces/spotify.interface";
-import { axiosError } from "../../../../handlers/error.handler";
-import { toast } from "react-toastify";
 
 export function SpotifyConnectionStat() {
   const spotifyConnectionContextData = useContext<SpotifyConnectionContext>(
@@ -14,10 +12,10 @@ export function SpotifyConnectionStat() {
   useEffect(() => {
     async function fetchMe() {
       try {
-        const result = await connectionsService.getSpotifyMe();
-        setMe(result.data);
+        const info = await connectionsService.getSpotifyMe();
+        setMe(info);
         spotifyConnectionContextData.setIsConnect(true);
-        spotifyConnectionContextData.setInfo(result.data);
+        spotifyConnectionContextData.setInfo(info);
       } catch (e) {
         setMe(null);
       }

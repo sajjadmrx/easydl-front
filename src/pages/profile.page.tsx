@@ -12,6 +12,8 @@ import { SpotifyConnectionStat } from "../components/profile/stats/connections/s
 import { spotifyConnectionContext } from "../contexts/spotify-con.context";
 import { ConnectionsComponent } from "../components/profile/connections";
 import { SubscriptionStat } from "../components/profile/stats/connections/subscription.stat";
+import { TbApps } from "react-icons/tb";
+import { BsSpotify } from "react-icons/bs";
 export function ProfilePage() {
   const loadingContext = useContext(LoadingContext);
 
