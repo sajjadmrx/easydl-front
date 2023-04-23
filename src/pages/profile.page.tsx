@@ -17,9 +17,6 @@ import { BsSpotify } from "react-icons/bs";
 export function ProfilePage() {
   const loadingContext = useContext(LoadingContext);
 
-  const [isConnect, setIsConnect] = useState<boolean>(false);
-  const [info, setInfo] = useState<any>();
-
   useEffect(() => {
     document.title = `${infoStore.brandName.fa} - پروفایل`;
     loadingContext.done();
