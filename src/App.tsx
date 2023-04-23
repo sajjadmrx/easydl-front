@@ -46,11 +46,7 @@ function App() {
             <Route path="/profile" component={ProfilePage} loading />
             <Route path="/subscription" component={SubscriptionPage} loading />
             <Route path="/callback" component={PaymentCallbackPage} loading />
-            <Route
-              path="/callbacks/spotify"
-              component={SpotifyCallbackPage}
-              loading
-            />
+            <Route path="/cb-spotify" component={SpotifyCallbackPage} loading />
             <Route exact path="/" component={HomePage} loading />
             <Route path="/help" component={HelpPage} loading />
             <Route path="/report" component={ReportPage} loading />
