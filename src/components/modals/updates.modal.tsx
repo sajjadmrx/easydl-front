@@ -7,7 +7,7 @@ export function UpdatesModalComponent(props: any) {
   const [isOpen, setIsOpen] = useState(false);
   const [isRead, setIsRead] = useState(false);
   const [isReadV, setIsReadV] = useState(false);
-  let version = "1.4";
+  let version = "1.5";
 
   useEffect(() => {
     const hasVs = localStorage.getItem(`isReadV_${version}`);
@@ -22,8 +22,16 @@ export function UpdatesModalComponent(props: any) {
     if (isReadV) saveHanlder(version);
   }, [isReadV]);
 
-  const update: any = {
+  type Update = {
+    [key: string]: string[];
+  };
+  const update: Update = {
     new: [
+      "🔗 اضافه شدن اتصال به اکانت اسپاتیفای",
+      "📥 اضافه شدن دانلود موزیک فعلی در اسپاتیفای",
+      "🌟 اضافه شدن اشتراک ویژه",
+    ],
+    "1.4": [
       "اضافه شدن دانلود پلی لیـست از پلتفرم ساندکلود",
       "🎵 اضافه شدن دانلود فایل صوتی از یوتیوب",
     ],
@@ -151,12 +159,6 @@ export function UpdatesModalComponent(props: any) {
         <div className="d-flex align-items-center mt-3">
           <FontAwesomeIcon icon={["fas", "notebook"]} className={"mr-2"} />
           <span className="text-gray-400 font-bold"> نسخه جدید: {version}</span>
-          <Alert className={"mt-2 mb-2"} status={"warning"}>
-            <Badge color={"ghost"} className={"mr-2"}>
-              ⚠️
-            </Badge>
-            <span>در صورت عدم دریافت بروزرسانی, یک بار صفحه رو رفرش کنید.</span>
-          </Alert>
         </div>
         <div className="text-center">
           <button className="btn btn-ghost" onClick={() => setIsOpen(false)}>
